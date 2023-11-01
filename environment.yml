@@ -1,0 +1,12 @@
+name: mlds2
+channels:
+- conda-forge
+- pytorch
+dependencies:
+- lightning
+- python=3.10
+- pytorch
+- pytorch-cuda=12.1
+- torchaudio
+- torchvision
+
