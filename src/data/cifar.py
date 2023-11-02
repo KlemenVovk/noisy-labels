@@ -6,7 +6,6 @@ from data.synthetic_noise import generate_instance_dependent_noise
 import lightning as L
 
 # TODO: transforms
-# TODO: val dataset
 
 class CIFAR10DataModule(L.LightningDataModule):
     def __init__(self, train_transform, data_dir='../data/cifar10', batch_size=32, num_workers=8, noise_rate=0.2, add_synthetic_noise=False):
@@ -32,13 +31,20 @@ class CIFAR10DataModule(L.LightningDataModule):
                 y_noisy = generate_instance_dependent_noise(self.train_dataset.data, y, self.noise_rate, num_classes=self.num_classes)
                 print('Noise rate:', (y != y_noisy).sum().item() / len(y))
                 self.train_dataset.targets = y_noisy
+                # Noise prior is just the class probabilities
+                class_probabilities = torch.tensor([0] * self.num_classes)
+                for y in y_noisy:
+                    class_probabilities[y] += 1
+                self.noise_prior = class_probabilities / class_probabilities.sum().float()
+
             self.test_dataset = CIFAR10(root=self.data_dir, train=False, transform=transforms.ToTensor())
 
     
     def train_dataloader(self):
         return torch.utils.data.DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
 
+    # TODO: change val to test and add val
 
-    def test_dataloader(self):
+    def val_dataloader(self):
         return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
     
