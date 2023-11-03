@@ -47,6 +47,7 @@ def main(args):
     )
 
     data_module = data_module_cls(**dataset_args)
+    data_module.prepare_data()
     data_module.setup()
     #! Datamodule is always passed to the model so that we can access the dataset directly from the model class, i.e. if you want to get data_module.num_classes
     model = model_cls(**model_args, datamodule=data_module)
