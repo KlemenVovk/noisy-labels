@@ -37,7 +37,8 @@ def generate_instance_dependent_noise(x: torch.Tensor,y: torch.Tensor, noise_rat
     n_samples = len(y)
 
     # Probability that instance's label is flipped (to any label)
-    instance_flip_rates = np.random.normal(noise_rate, 0.1, size=n_samples).clip(0, 1)
+    instance_flip_rates = torch.nn.init.trunc_normal_(torch.empty(n_samples), mean=noise_rate, std=0.1, a=0, b=1)
+    np.random.normal(noise_rate, )
     # Probability that instance's label is flipped to each label (not really a probability)
     instance_label_noise = np.random.normal(0, 1, size=(feature_dim, num_classes))
     noisy_labels = []
