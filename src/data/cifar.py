@@ -11,6 +11,7 @@ class NoisyCIFAR10Dataset(CIFAR10):
     def __init__(self, noise_rate, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.noise_rate = noise_rate
+        # Instance dependent noise! # TODO: add symmetric and asymetric noise
         self.noisy_targets, _ = noisify_instance(self.data, self.targets, self.noise_rate)
 
     def __getitem__(self, index):
@@ -19,7 +20,7 @@ class NoisyCIFAR10Dataset(CIFAR10):
 
 
 
-class CIFAR10InstanceDependentNoise(L.LightningDataModule):
+class CIFAR10DataModule(L.LightningDataModule):
     def __init__(self, train_transform, test_transform, data_dir='../data/cifar10', batch_size=64, num_workers=4, noise_rate=0.2):
         super().__init__()
         self.train_transform = train_transform

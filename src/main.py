@@ -1,6 +1,6 @@
 import lightning as L
 from models.cores2 import SampleSieve
-from data.cifar import CIFAR10InstanceDependentNoise
+from data.cifar import CIFAR10DataModule
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
 from aim.pytorch_lightning import AimLogger
 
@@ -24,7 +24,7 @@ aim_logger = AimLogger(
     val_metric_prefix='val_',
 )
 
-data_module = CIFAR10InstanceDependentNoise(train_transform=train_cifar10_transform, test_transform=test_cifar10_transform, noise_rate=NOISE_RATE, batch_size=BATCH_SIZE)
+data_module = CIFAR10DataModule(train_transform=train_cifar10_transform, test_transform=test_cifar10_transform, noise_rate=NOISE_RATE, batch_size=BATCH_SIZE)
 data_module.setup()
 model = SampleSieve(INITIAL_LR, MOMENTUM, WEIGHT_DECAY, data_module.num_classes, initial_noise_prior=data_module.noise_prior, num_training_samples=data_module.num_training_samples)
 trainer = L.Trainer(max_epochs=EPOCHS, logger=aim_logger)
