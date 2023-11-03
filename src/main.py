@@ -48,8 +48,9 @@ def main(args):
 
     data_module = data_module_cls(**dataset_args)
     data_module.setup()
+    #! Datamodule is always passed to the model so that we can access the dataset directly from the model class, i.e. if you want to get data_module.num_classes
     model = model_cls(**model_args, datamodule=data_module)
-    trainer = L.Trainer(logger=aim_logger, **trainer_args)
+    trainer = L.Trainer(logger=aim_logger, **trainer_args) # logger is fixed as it should be always the same
     trainer.fit(model, data_module)
 
 
