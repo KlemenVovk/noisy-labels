@@ -8,6 +8,8 @@ from utils.cores2 import loss_cores, f_beta
 
 # TODO: LR scheduling should be more flexible (current model works only for exactly 100 epochs like the authors proposed).
 # TODO: implement cores2* - the second phase from the paper (consistency training).
+# TODO: log the warmup!
+# TODO: maybe it would be good to log the accuracy with the noisy labels as a sanity check to see if the loss is working and making a difference (because it can happen that a NN is just powerful enough to work even with a bad/baseline loss)
 
 # First phase from the paper: https://arxiv.org/abs/2010.02347
 # Uses resnet34 as the backbone (not pretrained). Trained with CORES loss.
@@ -28,18 +30,18 @@ class SampleSieve(L.LightningModule):
         self.noisy_class_frequency = torch.tensor([0] * self.num_classes).cuda()
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        x, y = batch
+        x, y_noisy, y_true = batch
         logits = self.model(x)        
         # clean_indicators is a list of 0s and 1s, where 1 means that the label is "predicted" to be clean, 0 means that the label is "predicted" to be noisy
-        loss, clean_indicators = loss_cores(self.current_epoch, logits, y, noise_prior=self.cur_noise_prior)
-        self.train_acc(logits, y)
+        loss, clean_indicators = loss_cores(self.current_epoch, logits, y_noisy, noise_prior=self.cur_noise_prior)
+        self.train_acc(logits, y_true)
         self.log('train_loss', loss, prog_bar=True)
         self.log('train_acc', self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
         
         # Record the frequency of predicted noisy classes
         for i, clean_indicator in enumerate(clean_indicators):
             if clean_indicator == 0:
-                self.noisy_class_frequency[y[i]] += 1
+                self.noisy_class_frequency[y_noisy[i]] += 1
         return loss
 
     def on_train_epoch_end(self):
@@ -53,7 +55,7 @@ class SampleSieve(L.LightningModule):
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y = batch
         logits = self.model(x)
-        loss, _ = loss_cores(self.current_epoch, logits, y)
+        loss, _ = loss_cores(self.current_epoch, logits, y, noise_prior=self.cur_noise_prior)
         self.val_acc(logits, y)
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
