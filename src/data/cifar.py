@@ -21,7 +21,17 @@ class NoisyCIFAR10Dataset(CIFAR10):
 
 
 class CIFAR10DataModule(L.LightningDataModule):
-    def __init__(self, train_transform, test_transform, data_dir='../data/cifar10', batch_size=64, num_workers=4, noise_rate=0.2):
+
+    @property
+    def num_classes(self):
+        return 10
+    
+    @property
+    def num_training_samples(self):
+        return 50000
+
+    def __init__(self, train_transform, test_transform, data_dir='../data/cifar10', batch_size=64, num_workers=4, noise_rate=0.2, noise_type=None):
+        # TODO: different noise types
         super().__init__()
         self.train_transform = train_transform
         self.test_transform = test_transform
@@ -29,9 +39,8 @@ class CIFAR10DataModule(L.LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.noise_rate = noise_rate
-        self.num_classes = 10
-        self.num_training_samples = 50000
-    
+        self.noise_type = noise_type
+
     def prepare_data(self):
         # Just to download the dataset
         CIFAR10(root=self.data_dir, train=True, download=True)
@@ -40,12 +49,6 @@ class CIFAR10DataModule(L.LightningDataModule):
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
             self.train_dataset = NoisyCIFAR10Dataset(self.noise_rate, root=self.data_dir, train=True, transform=self.train_transform)
-            # Noise prior is just the class probabilities
-            class_frequency = torch.tensor([0] * self.num_classes)
-            for y in self.train_dataset.noisy_targets:
-                class_frequency[y] += 1
-            self.noise_prior = class_frequency / class_frequency.sum()
-            self.noise_prior = self.noise_prior.cuda()
             # Test dataset has no noise so use the original CIFAR10 class!
             self.test_dataset = CIFAR10(root=self.data_dir, train=False, transform=self.test_transform)
     

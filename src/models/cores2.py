@@ -15,19 +15,27 @@ from utils.cores2 import loss_cores, f_beta
 # Uses resnet34 as the backbone (not pretrained). Trained with CORES loss.
 # Basically works on priors of the label noise and iteratively updates the priors after each epoch.
 class SampleSieve(L.LightningModule):
-    def __init__(self, initial_lr, momentum, weight_decay, num_classes, initial_noise_prior, num_training_samples):
+    def __init__(self, initial_lr, momentum, weight_decay, datamodule):
         super().__init__()
-
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        self.save_hyperparameters(ignore=["num_classes", "initial_noise_prior", "num_training_samples"])
-        self.initial_noise_prior = initial_noise_prior
-        self.cur_noise_prior = initial_noise_prior
-        self.num_training_samples = num_training_samples
-        self.num_classes = num_classes
-        self.model = resnet34(weights=None, num_classes=num_classes) # don't use pretrained weights
+        self.save_hyperparameters(ignore=["datamodule"])
+        self.num_training_samples = datamodule.num_training_samples
+        self.num_classes = datamodule.num_classes
+        self._compute_initial_noise_prior(datamodule)
+        self.model = resnet34(weights=None, num_classes=self.num_classes) # don't use pretrained weights
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.noisy_class_frequency = torch.tensor([0] * self.num_classes).cuda()
+        
+    def _compute_initial_noise_prior(self, datamodule):
+        # Noise prior is just the class probabilities
+        class_frequency = torch.tensor([0] * self.num_classes)
+        for y in datamodule.train_dataset.noisy_targets:
+            class_frequency[y] += 1
+        self.initial_noise_prior = class_frequency / class_frequency.sum()
+        self.initial_noise_prior = self.initial_noise_prior.cuda()
+        self.cur_noise_prior = self.initial_noise_prior
+
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_noisy, y_true = batch
