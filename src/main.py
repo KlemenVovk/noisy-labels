@@ -1,22 +1,31 @@
 import lightning as L
-from torchvision import transforms
-from models.samplesieve import SampleSieve
-from data.cifar import CIFAR10DataModule
+from models.cores2 import SampleSieve
+from data.cifar import CIFAR10InstanceDependentNoise
+from utils.cores2 import train_cifar10_transform, test_cifar10_transform
+from aim.pytorch_lightning import AimLogger
 
-# TODO: callbacks
+# TODO: test instead of val
+# TODO: saving
 # TODO: aim logger
-# TODO: data transforms
 
-NOISE_RATE = 0.2
+NOISE_RATE = 0.6
 BATCH_SIZE = 64
-INITIAL_LR = 0.1
-MOMENTUM = 0.9
-WEIGHT_DECAY = 5e-4
+INITIAL_LR = 0.1 # TODO: investigate, paper says 0.1, but code says 0.05
+MOMENTUM = 0.9 # TODO: investigate, paper says 0.9, but code says 0
+WEIGHT_DECAY = 5e-4 # TODO: investigate, paper says 5e-4, but code says 0
 EPOCHS = 100
-NUM_CLASSES = 10
 
+L.seed_everything(0)
 
-model = SampleSieve(INITIAL_LR, MOMENTUM, WEIGHT_DECAY, NUM_CLASSES)
-trainer = L.Trainer(max_epochs=EPOCHS)
-dm = CIFAR10DataModule(train_transform=transforms.ToTensor(), batch_size=BATCH_SIZE, noise_rate=NOISE_RATE, add_synthetic_noise=True)
-trainer.fit(model, dm)
+aim_logger = AimLogger(
+    experiment='cores',
+    train_metric_prefix='train_',
+    test_metric_prefix='test_',
+    val_metric_prefix='val_',
+)
+
+data_module = CIFAR10InstanceDependentNoise(train_transform=train_cifar10_transform, test_transform=test_cifar10_transform, noise_rate=NOISE_RATE, batch_size=BATCH_SIZE)
+data_module.setup()
+model = SampleSieve(INITIAL_LR, MOMENTUM, WEIGHT_DECAY, data_module.num_classes, initial_noise_prior=data_module.noise_prior, num_training_samples=data_module.num_training_samples)
+trainer = L.Trainer(max_epochs=EPOCHS, logger=aim_logger)
+trainer.fit(model, data_module)
