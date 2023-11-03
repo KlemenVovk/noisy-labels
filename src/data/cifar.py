@@ -3,8 +3,9 @@ from torchvision.datasets import CIFAR10
 from utils.noise_generators import generate_instance_dependent_noise, noisify_instance
 import lightning as L
 
-# TODO: add real validation set (currently we are using the test set as validation, just because validation is automatically run after each epoch so we can see progress)
+# TODO: add real validation set (currently we are using the test set as validation, just because validation is automatically run after each epoch so we can see progress in real time)
 # TODO: switch to own implementation of instance-dependent noise generation
+# TODO: would be a good idea to log a few images (before and after transform) so that we can view them in aim and make sure they are correct
 
 class CIFAR10InstanceDependentNoise(L.LightningDataModule):
     def __init__(self, train_transform, test_transform, data_dir='../data/cifar10', batch_size=64, num_workers=4, noise_rate=0.2):
@@ -45,3 +46,6 @@ class CIFAR10InstanceDependentNoise(L.LightningDataModule):
     def val_dataloader(self):
         return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
     
+
+    def test_dataloader(self):
+        return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
