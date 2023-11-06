@@ -1,6 +1,7 @@
 import lightning as L
 from models.cores2 import SampleSieve
 from data.cifar import CIFAR10DataModule
+from data.noisylabels import NoisylabelsDataModule
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
 from aim.pytorch_lightning import AimLogger
 import yaml
@@ -15,6 +16,7 @@ models = {
 
 datamodules = {
     'cifar10': CIFAR10DataModule,
+    'noisylabels': NoisylabelsDataModule,
 }
 
 # TODO: What will we do with transforms? Is something like this ok?
@@ -22,9 +24,11 @@ datamodules = {
 # So if someone runs the cores2 model with cifar10 dataset, the train transform is then simply train_transforms['cores2_cifar10'].
 train_transforms = {
     'cores2_cifar10': train_cifar10_transform,
+    'cores2_noisylabels': train_cifar10_transform,
 }
 test_transforms = {
     'cores2_cifar10': test_cifar10_transform,
+    'cores2_noisylabels': test_cifar10_transform,
 }
 
 def main(args):
