@@ -28,7 +28,7 @@ test_transforms = {
 }
 
 def main(args):
-    L.seed_everything(args["seed"])
+    L.seed_everything(args["seed"], workers=True)
     model_cls = models[args["model_name"]]
     data_module_cls = datamodules[args["dataset_name"]]
 
@@ -51,7 +51,7 @@ def main(args):
     data_module.setup()
     #! Datamodule is always passed to the model so that we can access the dataset directly from the model class, i.e. if you want to get data_module.num_classes
     model = model_cls(**model_args, datamodule=data_module)
-    trainer = L.Trainer(logger=aim_logger, **trainer_args) # logger is fixed as it should be always the same
+    trainer = L.Trainer(logger=aim_logger, deterministic=True, **trainer_args) # logger is fixed as it should be always the same
     trainer.fit(model, data_module)
 
 
