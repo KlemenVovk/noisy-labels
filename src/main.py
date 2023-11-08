@@ -1,7 +1,15 @@
 import lightning as L
 from models.cores2 import SampleSieve
+from models.fdivergence import FDivergence
 from data.cifar import CIFAR10DataModule
-from utils.cores2 import train_cifar10_transform, test_cifar10_transform
+from utils.cores2 import (
+    train_cifar10_transform as train_cores2_cifar10_transform,
+    test_cifar10_transform as test_cores2_cifar10_transform,
+)
+from utils.fdivergence import (
+    train_cifar10_transform as train_fdivergence_cifar10_transform,
+    test_cifar10_transform as test_fdivergence_cifar10_transform,
+)
 from aim.pytorch_lightning import AimLogger
 import yaml
 import argparse
@@ -10,21 +18,25 @@ import os
 # TODO: test instead of val
 # To add a new model, add the relevant classes/transforms to the following dictionaries. That's it!
 models = {
-    'cores2': SampleSieve,
+    "cores2": SampleSieve,
+    "fdivergence": FDivergence,
 }
 
 datamodules = {
-    'cifar10': CIFAR10DataModule,
+    "cifar10": CIFAR10DataModule,
 }
 
 # TODO: What will we do with transforms? Is something like this ok?
 # My proposal is to automatically determine the correct transforms.
 # So if someone runs the cores2 model with cifar10 dataset, the train transform is then simply train_transforms['cores2_cifar10'].
+# TODO: We should probably rename the transforms to include the model name so we don't run into problems
 train_transforms = {
-    'cores2_cifar10': train_cifar10_transform,
+    "cores2_cifar10": train_cores2_cifar10_transform,
+    "fdivergence_cifar10": train_fdivergence_cifar10_transform,
 }
 test_transforms = {
-    'cores2_cifar10': test_cifar10_transform,
+    "cores2_cifar10": test_cores2_cifar10_transform,
+    "fdivergence_cifar10": test_fdivergence_cifar10_transform,
 }
 
 def main(args):
