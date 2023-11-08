@@ -33,26 +33,27 @@ class FDivergence(L.LightningModule):
         else:
             self.warmup = False
     
-    def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        x, y_noisy, y_true = batch
-        logits = self.model(x)
+    def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:        
+        (x_1, y_1_noisy, y_1_true), (x_2, y_2_noisy, y_2_true) = batch
+        logits_1 = self.model(x_1)
         
         # TODO: problems
         # 1) we need 2 dataloaders for noisy train set
         # 2) we compute loss differently for warmup
         if self.warmup:
-            prob_reg = - self.criterion_prob(logits, y_noisy)
+            # regular CE with noisy labels (NOTE: their implementation of CE)
+            loss = self.criterion(logits_1, y_1_noisy)
+        else:
+            prob_reg = - self.criterion_prob(logits_1, y_1_noisy)
             loss_regular = self.divergence.activation(prob_reg)
             
-            prob_peer = - self.criterion_prob(..., ...)
+            logits_2 = self.model(x_2)
+            prob_peer = - self.criterion_prob(logits_2, y_2_noisy)
             loss_peer = self.divergence.conjugate(prob_peer)
             
             loss = loss_regular - loss_peer
-        else:
-            # regular CE with noisy labels (NOTE: their implementation of CE)
-            loss = self.criterion(logits, y_noisy)
         
-        self.train_acc(logits, y_true)
+        self.train_acc(logits_1, y_1_true)
         self.log("train_loss", loss, prog_bar=True)
         self.log("train_acc", self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
@@ -60,9 +61,10 @@ class FDivergence(L.LightningModule):
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y = batch
         logits = self.model(x)
-
+        
         # TODO: which loss should we report here? The authors only compute accuracy in the validation and test steps...
-        loss = ...
+        # just report the regular CE loss for now
+        loss = self.criterion(logits, y)
 
         self.val_acc(logits, y)
         self.log("val_loss", loss, prog_bar=True)

@@ -5,6 +5,9 @@ dataset_args:
   noise_rate: 0.6
   noise_type: instance
   batch_size: 128
+  # sample 2 times for train set
+  train_samples: 2
+  train_sample_mode: "max_size_cycle"
 model_args:
   initial_lr: 0.1 # TODO: sometimes different initial_lr is used
   momentum: 0.9
@@ -14,3 +17,5 @@ model_args:
 trainer_args:
   max_epochs: 100
 seed: 0
+
+# TODO: maybe add args for dataloader, transforms, optimizer, scheduler, etc. More general and we can always ignore them if not needed.

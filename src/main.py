@@ -1,7 +1,7 @@
 import lightning as L
 from models.cores2 import SampleSieve
 from models.fdivergence import FDivergence
-from data.cifar import CIFAR10DataModule
+from data.cifar import CIFAR10DataModule, MultiSampleCIFAR10DataModule
 from utils.cores2 import (
     train_cifar10_transform as train_cores2_cifar10_transform,
     test_cifar10_transform as test_cores2_cifar10_transform,
@@ -22,8 +22,10 @@ models = {
     "fdivergence": FDivergence,
 }
 
+# TODO: need new naming conventions IF we will have different datamodules for the same dataset
 datamodules = {
-    "cifar10": CIFAR10DataModule,
+    # "cifar10": CIFAR10DataModule,
+    "cifar10": MultiSampleCIFAR10DataModule,
 }
 
 # TODO: What will we do with transforms? Is something like this ok?
