@@ -11,7 +11,7 @@ from torchvision.datasets import CIFAR10, CIFAR100
 import lightning as L
 
 
-class NoisyLabels:
+class NoisyLabelsLoader:
     """
     Handles downloading and loading of noisylabels targets
     """
@@ -41,7 +41,7 @@ class NoisyLabels:
                 noise_dict = torch.load(f)
             return noise_dict
         else:
-            raise ValueError
+            raise ValueError(f"Cannot find label file at {self.save_path}.")
 
     def download(self) -> None:
         """
@@ -71,7 +71,7 @@ class NoisyLabelsCIFAR10Dataset(CIFAR10):
                 "worse_label",
                 "random_label1",
                 "random_label2",
-                "random_label",
+                "random_label3",
                 ],
             noise_dir: str,
             cifar_dir: str,
@@ -79,7 +79,7 @@ class NoisyLabelsCIFAR10Dataset(CIFAR10):
             *args, **kwargs,
             ) -> None:
         super().__init__(cifar_dir, *args, download=download, train=True, **kwargs)
-        noise_dict = NoisyLabels("cifar10", noise_dir, download).load()
+        noise_dict = NoisyLabelsLoader("cifar10", noise_dir, download).load()
         self.noisy_targets = noise_dict[noise_type]
         
     def __getitem__(self, index):
@@ -103,7 +103,7 @@ class NoisyLabelsCIFAR100Dataset(CIFAR100):
             *args, **kwargs,
             ) -> None:
         super().__init__(cifar_dir, *args, download=download, train=True, **kwargs)
-        noise_dict = NoisyLabels("cifar100", noise_dir, download).load()
+        noise_dict = NoisyLabelsLoader("cifar100", noise_dir, download).load()
         self.noisy_targets = noise_dict[noise_type]
         
     def __getitem__(self, index):
@@ -145,24 +145,25 @@ class NoisylabelsDataModule(L.LightningDataModule):
 
     def prepare_data(self) -> None:
         # Download CIFAR and noisylabels data if needed
-        NoisyLabels(self.dataset_name, self.noisylabels_dir, True)
+        NoisyLabelsLoader(self.dataset_name, self.noisylabels_dir, download=True)
         if self.dataset_name == "cifar10":
+            CIFAR10(root=self.cifar_dir, train=True, download=True)
             CIFAR10(root=self.cifar_dir, train=False, download=True)
         else:
+            CIFAR100(root=self.cifar_dir, train=True, download=True)
             CIFAR100(root=self.cifar_dir, train=False, download=True)
 
     
-    def setup(self, stage=None) -> None:
-        if stage == 'fit' or stage is None:
-            if self.dataset_name == "cifar10":
-                self.train_dataset = NoisyLabelsCIFAR10Dataset(self.noise_type, self.noisylabels_dir, self.cifar_dir, False, transform=self.test_transform)
-                self.test_dataset = CIFAR10(self.cifar_dir, train=False, transform=self.test_transform)
-            else:
-                self.train_dataset = NoisyLabelsCIFAR100Dataset(self.noise_type, self.noisylabels_dir, self.cifar_dir, False, transform=self.test_transform)
-                self.test_dataset = CIFAR100(self.cifar_dir, train=False, transform=self.test_transform)
+    def setup(self, stage: str = None) -> None:
+        if self.dataset_name == "cifar10":
+            self.train_dataset = NoisyLabelsCIFAR10Dataset(self.noise_type, self.noisylabels_dir, self.cifar_dir, False, transform=self.train_transform)
+            self.test_dataset = CIFAR10(self.cifar_dir, train=False, transform=self.test_transform)
+        else:
+            self.train_dataset = NoisyLabelsCIFAR100Dataset(self.noise_type, self.noisylabels_dir, self.cifar_dir, False, transform=self.train_transform)
+            self.test_dataset = CIFAR100(self.cifar_dir, train=False, transform=self.test_transform)
 
     def train_dataloader(self) -> DataLoader:
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
 
     def val_dataloader(self) -> DataLoader:
         return DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
