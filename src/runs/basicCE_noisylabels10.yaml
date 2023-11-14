@@ -1,4 +1,4 @@
-model_name: cores2
+model_name: CE
 dataset_name: noisylabels
 dataset_args:
   dataset_name: cifar10

@@ -1,5 +1,5 @@
 import lightning as L
-from models.cores2 import SampleSieve
+from models import SampleSieve, CE, ForwardBackwardT
 from data.cifar import CIFAR10DataModule
 from data.noisylabels import NoisylabelsDataModule
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
@@ -12,6 +12,8 @@ import os
 # To add a new model, add the relevant classes/transforms to the following dictionaries. That's it!
 models = {
     'cores2': SampleSieve,
+    'CE': CE,
+    'FBT': ForwardBackwardT
 }
 
 datamodules = {
@@ -25,10 +27,14 @@ datamodules = {
 train_transforms = {
     'cores2_cifar10': train_cifar10_transform,
     'cores2_noisylabels': train_cifar10_transform,
+    'CE_noisylabels': train_cifar10_transform,
+    'FBT_noisylabels': train_cifar10_transform,
 }
 test_transforms = {
     'cores2_cifar10': test_cifar10_transform,
     'cores2_noisylabels': test_cifar10_transform,
+    'CE_noisylabels': test_cifar10_transform,
+    'FBT_noisylabels': test_cifar10_transform,
 }
 
 def main(args):
