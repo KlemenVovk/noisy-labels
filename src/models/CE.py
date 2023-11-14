@@ -10,7 +10,6 @@ from torch.nn.functional import cross_entropy
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
-# TODO check if augmentations are applied
 
 class CE(L.LightningModule):
     def __init__(self, initial_lr, momentum, weight_decay, datamodule):

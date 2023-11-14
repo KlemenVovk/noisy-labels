@@ -1,7 +1,8 @@
 import lightning as L
-from models import SampleSieve, CE, ForwardBackwardT
-from data.cifar import CIFAR10DataModule
-from data.noisylabels import NoisylabelsDataModule
+
+from models import SampleSieve, CE, ForwardBackwardT, GCE
+from data import CIFAR10DataModule, NoisylabelsDataModule, NoisylabelsWithIndexDataModule
+
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
 from aim.pytorch_lightning import AimLogger
 import yaml
@@ -13,12 +14,14 @@ import os
 models = {
     'cores2': SampleSieve,
     'CE': CE,
-    'FBT': ForwardBackwardT
+    'FBT': ForwardBackwardT,
+    'GCE': GCE,
 }
 
 datamodules = {
     'cifar10': CIFAR10DataModule,
     'noisylabels': NoisylabelsDataModule,
+    'noisylabels_with_index': NoisylabelsWithIndexDataModule,
 }
 
 # TODO: What will we do with transforms? Is something like this ok?
@@ -29,12 +32,14 @@ train_transforms = {
     'cores2_noisylabels': train_cifar10_transform,
     'CE_noisylabels': train_cifar10_transform,
     'FBT_noisylabels': train_cifar10_transform,
+    'GCE_noisylabels_with_index': train_cifar10_transform,
 }
 test_transforms = {
     'cores2_cifar10': test_cifar10_transform,
     'cores2_noisylabels': test_cifar10_transform,
     'CE_noisylabels': test_cifar10_transform,
     'FBT_noisylabels': test_cifar10_transform,
+    'GCE_noisylabels_with_index': test_cifar10_transform,
 }
 
 def main(args):
