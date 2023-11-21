@@ -15,10 +15,6 @@ conda install -c conda-forge lightning aim
 aim init
 ```
 
-## What's currently implemented
-
-Currently working on the reproduction of the [CORES2](https://arxiv.org/abs/2010.02347) paper (author's code can be found [here](https://github.com/haochenglouis/cores)). The first phase (sample sieving) should be mostly implemented. It just needs testing.
-
 ## How to run?
 The model and dataset to use along with all the hyperparameters is defined in a single yaml file inside the `src/runs` folder. The following structure is enforced:
 - `model_name: str` - needed to define what model to use (see models dictionary in main.py for valid keys)
@@ -49,6 +45,7 @@ The repository is more or less following the [Data Science Cookie Cutter project
 Briefly:
 - `.aim` - logger storage
 - `data` - stores the raw datasets (cifar automatically downloaded on run)
+- `docs` - documentation about specific methods (mostly non-trivial implementation choices and differences between code and papers)
 - `src` - everything code
   - `data` - Lightning data modules for working with data.
   - `models` - models and everything regarding their training
