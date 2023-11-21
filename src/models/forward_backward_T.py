@@ -19,6 +19,8 @@ from utils.noisylabels_resnet import ResNet34
 # on end of warmup, the loss switches from CE to corrected Loss
 # this could be handled inside of the loss but it's not as transparent
 
+# TODO: figure out how to set optimizer to another model
+
 class ForwardBackwardT(L.LightningModule):
 
     def __init__(self, loss_type: Literal["forward", "backward"], n_warmup_epochs, initial_lr, momentum, weight_decay, datamodule):
@@ -30,7 +32,8 @@ class ForwardBackwardT(L.LightningModule):
         self.num_training_samples = datamodule.num_training_samples
         self.num_classes = datamodule.num_classes
         #self.model = resnet34(weights=None, num_classes=self.num_classes) # don't use pretrained weights
-        self.model = ResNet34(self.num_classes)
+        self.model = resnet34(weights=None, num_classes=self.num_classes)
+        self.model_reinit = resnet34(weights=None, num_classes=self.num_classes)
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -83,8 +86,12 @@ class ForwardBackwardT(L.LightningModule):
             all_preds = torch.cat(self.training_step_outputs, dim=0)
             X_prob = F.softmax(all_preds, dim=-1)
             T = estimate_noise_mtx(X_prob, filter_outlier=False)
+
             # switch criterion to corrected version
             self.criterion = self.alt_criterion_cls(T).to(self.device)
+
+            # reinit the model
+            self.model = self.model_reinit
 
             # clear training step outputs
             self.training_step_outputs = []
@@ -104,7 +111,7 @@ class ForwardBackwardT(L.LightningModule):
             weight_decay=self.hparams.weight_decay,
         )
         optim_warmup = SGD(params=self.model.parameters(), **optim_args)
-        optim = SGD(params=self.model.parameters(), **optim_args)
+        optim = SGD(params=self.model_reinit.parameters(), **optim_args)
 
         # TODO: make pass schedule args at mudule init
         schedule_args = dict(
@@ -112,9 +119,6 @@ class ForwardBackwardT(L.LightningModule):
             gamma=0.1
         )
         scheduler_warmup = MultiStepLR(optim_warmup, **schedule_args)
-        scheduler = MultiStepLR(
-            optim,
-            **schedule_args,
-            )
+        scheduler = MultiStepLR(optim, **schedule_args)
         
         return [optim_warmup, optim], [scheduler_warmup, scheduler]
