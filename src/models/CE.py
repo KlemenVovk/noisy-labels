@@ -10,6 +10,8 @@ from torch.nn.functional import cross_entropy
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
+from utils.noisylabels_resnet import ResNet34
+
 
 class CE(L.LightningModule):
     def __init__(self, initial_lr, momentum, weight_decay, datamodule):
@@ -18,8 +20,8 @@ class CE(L.LightningModule):
         self.save_hyperparameters(ignore=["datamodule"])
         self.num_training_samples = datamodule.num_training_samples
         self.num_classes = datamodule.num_classes
-        self.model = resnet34(weights=None, num_classes=self.num_classes) # don't use pretrained weights
-        #self.model = ResNet34(num_classes=self.num_classes) # noisylabels resnet performs much better
+        #self.model = resnet34(weights=None, num_classes=self.num_classes) # don't use pretrained weights
+        self.model = ResNet34(num_classes=self.num_classes) # noisylabels resnet performs much better
         self.criterion = cross_entropy # basic CE
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")

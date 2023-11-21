@@ -80,5 +80,5 @@ class GCE(L.LightningModule):
     
     def configure_optimizers(self):
         optim = SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)
-        scheduler = MultiStepLR(optim, [60], 0.1)
-        return [optim], [scheduler]
+        #scheduler = MultiStepLR(optim, [60], 0.1)
+        return optim #, [scheduler]

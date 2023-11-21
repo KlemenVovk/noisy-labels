@@ -1,6 +1,6 @@
 import lightning as L
 
-from models import SampleSieve, CE, ForwardBackwardT, GCE
+from models import SampleSieve, CE, ForwardBackwardT, GCE, PositiveLS
 from data import CIFAR10DataModule, NoisylabelsDataModule, NoisylabelsWithIndexDataModule
 
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
@@ -16,6 +16,7 @@ models = {
     'CE': CE,
     'FBT': ForwardBackwardT,
     'GCE': GCE,
+    'PLS': PositiveLS,
 }
 
 datamodules = {
@@ -33,6 +34,7 @@ train_transforms = {
     'CE_noisylabels': train_cifar10_transform,
     'FBT_noisylabels': train_cifar10_transform,
     'GCE_noisylabels_with_index': train_cifar10_transform,
+    'PLS_noisylabels': train_cifar10_transform,
 }
 test_transforms = {
     'cores2_cifar10': test_cifar10_transform,
@@ -40,6 +42,7 @@ test_transforms = {
     'CE_noisylabels': test_cifar10_transform,
     'FBT_noisylabels': test_cifar10_transform,
     'GCE_noisylabels_with_index': test_cifar10_transform,
+    'PLS_noisylabels': test_cifar10_transform,
 }
 
 def main(args):

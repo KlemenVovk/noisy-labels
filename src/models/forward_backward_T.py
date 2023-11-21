@@ -14,6 +14,10 @@ from torchvision.models.resnet import resnet34
 from utils.forward_backward_T import ForwardT, BackwardT, estimate_noise_mtx
 from utils.noisylabels_resnet import ResNet34
 
+# 2 optimizers -> one for warmup, one for loss corrected training
+# that's why manual optimization
+# on end of warmup, the loss switches from CE to corrected Loss
+# this could be handled inside of the loss but it's not as transparent
 
 class ForwardBackwardT(L.LightningModule):
 

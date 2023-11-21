@@ -5,12 +5,12 @@ dataset_args:
   noise_type: "random_label1"
   batch_size: 128
 model_args:
-  prune_start_epoch: 10
+  prune_start_epoch: 40
   prune_freq: 10
   initial_lr: 0.01
   momentum: 0.9
-  weight_decay: 0.0005
+  weight_decay: 0.0001
   checkpoint_dir: "../models/GCE"
 trainer_args:
-  max_epochs: 100
+  max_epochs: 120
 seed: 1337
