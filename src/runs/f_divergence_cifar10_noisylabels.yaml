@@ -4,7 +4,7 @@ dataset_args:
   data_dir: ../data/cifar10
   noise_rate: 0.6
   noise_type: instance
-  batch_size: 128
+  batch_size: 128 
   # sample 2 times for train set
   train_samples: 3 # f-divergence method uses 3 samples
   train_sample_mode: "max_size_cycle"
@@ -13,7 +13,7 @@ model_args:
   momentum: 0.9
   weight_decay: 0.0005 # 5e-4
   divergence: "Total-Variation"
-  warmup_epochs: 120
+  warmup_epochs: 0 # noisylabels doesn't use warmup epochs
 trainer_args:
   max_epochs: 100
 seed: 0

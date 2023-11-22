@@ -87,6 +87,8 @@ class MultiSampleCIFAR10DataModule(L.LightningDataModule):
         self.noise_rate = noise_rate
         self.noise_type = noise_type
         
+        # TODO: specify if we want noisy or clean labels for train/val/test
+        
         # params for multiple samples
         # TODO: we could have different params for each sample... Maybe add in the future if we see the need
         # TODO: we could have multiple samples for val/test
@@ -101,6 +103,13 @@ class MultiSampleCIFAR10DataModule(L.LightningDataModule):
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
             self.train_dataset = NoisyCIFAR10Dataset(self.noise_rate, root=self.data_dir, train=True, transform=self.train_transform)
+            self.val_dataset = NoisyCIFAR10Dataset(self.noise_rate, root=self.data_dir, train=False, transform=self.test_transform)
+        
+        if stage == 'validate' or stage is None:
+            # TODO: noisy or not noisy
+            self.val_dataset = NoisyCIFAR10Dataset(self.noise_rate, root=self.data_dir, train=False, transform=self.test_transform)
+        
+        if stage == 'test' or stage is None:
             # Test dataset has no noise so use the original CIFAR10 class!
             self.test_dataset = CIFAR10(root=self.data_dir, train=False, transform=self.test_transform)
     
@@ -110,8 +119,8 @@ class MultiSampleCIFAR10DataModule(L.LightningDataModule):
 
 
     def val_dataloader(self):
-        return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
-    
+        return torch.utils.data.DataLoader(self.val_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
+
 
     def test_dataloader(self):
         return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
