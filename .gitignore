@@ -190,6 +190,8 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
 
 data
+checkpoints
+logs
 !src/data
 lightning_logs
 .aim

@@ -1,0 +1,19 @@
+model_name: divide_mix
+dataset_name: divide_mix_cifar10
+dataset_args:
+  data_dir: ../data/cifar10
+  noise_rate: 0.5
+  noise_type: symmetric
+  batch_size: 64
+model_args:
+  initial_lr: 0.02
+  momentum: 0.9
+  weight_decay: 0.0005
+  noise_type: symmetric
+  warmup_epochs: 10
+  p_thresh: 0.5
+  temperature: 0.5
+  alpha: 4
+trainer_args:
+  max_epochs: 300
+seed: 0

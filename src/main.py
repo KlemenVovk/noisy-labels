@@ -1,10 +1,11 @@
 import lightning as L
 
-from models import SampleSieve, CE, ForwardBackwardT, GCE, PositiveLS
-from data import CIFAR10DataModule, NoisylabelsDataModule, NoisylabelsWithIndexDataModule
+from models import SampleSieve, CE, ForwardBackwardT, GCE, PositiveLS, DivideMix
+from data import CIFAR10DataModule, NoisylabelsDataModule, NoisylabelsWithIndexDataModule, DivideMixCIFAR10DataModule
 
 from utils.cores2 import train_cifar10_transform, test_cifar10_transform
 from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 import yaml
 import argparse
 import os
@@ -17,12 +18,14 @@ models = {
     'FBT': ForwardBackwardT,
     'GCE': GCE,
     'PLS': PositiveLS,
+    'divide_mix': DivideMix,
 }
 
 datamodules = {
     'cifar10': CIFAR10DataModule,
     'noisylabels': NoisylabelsDataModule,
     'noisylabels_with_index': NoisylabelsWithIndexDataModule,
+    'divide_mix_cifar10': DivideMixCIFAR10DataModule
 }
 
 # TODO: What will we do with transforms? Is something like this ok?
@@ -35,6 +38,7 @@ train_transforms = {
     'FBT_noisylabels': train_cifar10_transform,
     'GCE_noisylabels_with_index': train_cifar10_transform,
     'PLS_noisylabels': train_cifar10_transform,
+    'divide_mix_divide_mix_cifar10': train_cifar10_transform,
 }
 test_transforms = {
     'cores2_cifar10': test_cifar10_transform,
@@ -43,6 +47,7 @@ test_transforms = {
     'FBT_noisylabels': test_cifar10_transform,
     'GCE_noisylabels_with_index': test_cifar10_transform,
     'PLS_noisylabels': test_cifar10_transform,
+    'divide_mix_divide_mix_cifar10': test_cifar10_transform,
 }
 
 def main(args):

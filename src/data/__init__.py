@@ -1,3 +1,4 @@
 from .cifar import CIFAR10DataModule
 from .noisylabels import NoisylabelsDataModule
 from .noisylabels_with_index import NoisylabelsWithIndexDataModule
+from .divide_mix import DivideMixCIFAR10DataModule

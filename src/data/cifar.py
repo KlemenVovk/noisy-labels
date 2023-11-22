@@ -1,6 +1,6 @@
 import torch
 from torchvision.datasets import CIFAR10
-from utils.noise_generators import synthetic_noise, noisify_instance
+from utils.noise_generators import generate_instance_dependent_noise, noisify_instance, synthetic_noise
 import lightning as L
 
 
@@ -58,7 +58,7 @@ class CIFAR10DataModule(L.LightningDataModule):
     
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = NoisyCIFAR10Dataset(self.noise_rate, root=self.data_dir, train=True, transform=self.train_transform)
+            self.train_dataset = NoisyCIFAR10Dataset(self.noise_rate, self.noise_type, root=self.data_dir, train=True, transform=self.train_transform)
             # Test dataset has no noise so use the original CIFAR10 class!
             self.test_dataset = CIFAR10(root=self.data_dir, train=False, transform=self.test_transform)
     
