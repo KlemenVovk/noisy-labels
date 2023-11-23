@@ -1,18 +1,28 @@
 import torch
 from torchvision.datasets import CIFAR10
-from utils.noise_generators import generate_instance_dependent_noise, noisify_instance
+from utils.noise_generators import synthetic_noise, noisify_instance
 import lightning as L
+
 
 # TODO: add real validation set (currently we are using the test set as validation, just because validation is automatically run after each epoch so we can see progress in real time)
 # TODO: switch to own implementation of instance-dependent noise generation
 # TODO: would be a good idea to log a few images (before and after transform) so that we can view them in aim and make sure they are correct
 
 class NoisyCIFAR10Dataset(CIFAR10):
-    def __init__(self, noise_rate, *args, **kwargs):
+    def __init__(self, noise_rate, noise_type, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.noise_type = noise_type
         self.noise_rate = noise_rate
-        # Instance dependent noise! # TODO: add symmetric and asymetric noise
-        self.noisy_targets, _ = noisify_instance(self.data, self.targets, self.noise_rate)
+        
+        if noise_type == 'instance':
+            self.noisy_targets, _ = noisify_instance(self.data, self.targets, self.noise_rate)
+        elif noise_type == 'symmetric':
+            self.noisy_targets = synthetic_noise(self.targets, self.noise_rate, noise_mode='sym')
+        elif noise_type == 'asymmetric':
+            # TODO: add transition matrix
+            self.noisy_targets = synthetic_noise(self.targets, self.noise_rate, noise_mode='asym', transition_matrix=self.transition_matrix)
+        else:
+            raise ValueError("Invalid noise type")
 
     def __getitem__(self, index):
         img, true_target = super().__getitem__(index)

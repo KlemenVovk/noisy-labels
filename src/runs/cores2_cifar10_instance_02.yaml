@@ -1,0 +1,15 @@
+model_name: cores2
+dataset_name: cifar10
+dataset_args:
+  data_dir: ../data/cifar10
+  noise_rate: 0.2
+  noise_type: instance
+  batch_size: 64
+model_args:
+  initial_lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  use_author_resnet: True
+trainer_args:
+  max_epochs: 100
+seed: 0

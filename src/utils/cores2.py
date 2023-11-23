@@ -36,7 +36,7 @@ def loss_cores(epoch, y, t, noise_prior = None):
     
     loss_div_numpy = loss_sel.data.cpu().numpy()
     for i in range(len(loss_numpy)):
-        if epoch <= 30: # TODO: first 10 epochs are warmup and we use only cross entropy loss, extract this
+        if epoch <= 10: # TODO: first 10 epochs are warmup and we use only cross entropy loss, extract this
             loss_v[i] = 1.0
         elif loss_div_numpy[i] <= 0:
             loss_v[i] = 1.0

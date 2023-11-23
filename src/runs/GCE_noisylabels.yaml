@@ -1,0 +1,16 @@
+model_name: GCE
+dataset_name: noisylabels_with_index
+dataset_args:
+  dataset_name: cifar10
+  noise_type: "random_label1"
+  batch_size: 128
+model_args:
+  prune_start_epoch: 40
+  prune_freq: 10
+  initial_lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0001
+  checkpoint_dir: "../models/GCE"
+trainer_args:
+  max_epochs: 120
+seed: 1337
