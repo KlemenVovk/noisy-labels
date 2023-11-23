@@ -1,0 +1,13 @@
+model_name: cores2
+dataset_name: noisylabels
+dataset_args:
+  dataset_name: cifar10
+  noise_type: "random_label1"
+  batch_size: 128
+model_args:
+  initial_lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+trainer_args:
+  max_epochs: 100
+seed: 1337
