@@ -15,7 +15,7 @@ model_args:
   divergence: "Total-Variation"
   warmup_epochs: 120
 trainer_args:
-  max_epochs: 100
+  max_epochs: 220 # 120 warmup + 100 divergence
 seed: 0
 
 # TODO: maybe add args for dataloader, transforms, optimizer, scheduler, etc. More general and we can always ignore them if not needed.

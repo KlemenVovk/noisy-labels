@@ -1,0 +1,14 @@
+model_name: model_name # name of the model
+dataset_name: dataset_name # name of the dataset
+dataset_args:
+  data_dir: ../data/cifar10
+  noise_rate: 0.6
+  noise_type: instance
+  batch_size: 128
+model_args:
+  initial_lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+trainer_args:
+  max_epochs: 100
+seed: 0
