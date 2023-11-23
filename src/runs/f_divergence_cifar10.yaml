@@ -1,0 +1,21 @@
+model_name: fdivergence
+dataset_name: cifar10
+dataset_args:
+  data_dir: ../data/cifar10
+  noise_rate: 0.6
+  noise_type: instance
+  batch_size: 128
+  # sample 2 times for train set
+  train_samples: 3 # f-divergence method uses 3 samples
+  train_sample_mode: "max_size_cycle"
+model_args:
+  initial_lr: 0.1 # TODO: sometimes different initial_lr is used
+  momentum: 0.9
+  weight_decay: 0.0005 # 5e-4
+  divergence: "Total-Variation"
+  warmup_epochs: 120
+trainer_args:
+  max_epochs: 220 # 120 warmup + 100 divergence
+seed: 0
+
+# TODO: maybe add args for dataloader, transforms, optimizer, scheduler, etc. More general and we can always ignore them if not needed.
