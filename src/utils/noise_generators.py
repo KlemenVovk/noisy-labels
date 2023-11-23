@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 import torch.nn.functional as F
+import random
 
 # TODO DELETE: this is from the authors just to test, below is our implementation
 def noisify_instance(train_data,train_labels,noise_rate):
@@ -57,3 +58,22 @@ def generate_instance_dependent_noise(x: torch.Tensor,y: torch.Tensor, noise_rat
         # Randomly choose a label according to the probabilities p
         noisy_labels.append(np.random.choice(num_classes, p=p))
     return torch.tensor(noisy_labels)
+
+def synthetic_noise(train_labels, noise_rate, noise_mode='sym', transition=None):
+    # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/dataloader_cifar.py#L59-L76
+    noisy_labels = []
+    num_classes = len(np.unique(train_labels))
+    idx = list(range(len(train_labels)))
+    random.shuffle(idx)
+    num_noise = int(noise_rate * len(train_labels))            
+    noise_idx = idx[:num_noise]
+    for i in range(50000):
+        if i in noise_idx:
+            if noise_mode=='sym':
+                noisy_label = random.randint(0,num_classes-1)
+            elif noise_mode=='asym':   
+                noisy_label = transition[train_labels[i]]
+            noisy_labels.append(noisy_label)       
+        else:    
+            noisy_labels.append(train_labels[i]) 
+    return noisy_labels
