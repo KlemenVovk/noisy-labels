@@ -21,12 +21,12 @@ test_cifar10_transform = transforms.Compose([
 
 def loss_cores(epoch, y, t, noise_prior = None):
     beta = f_beta(epoch)
-    loss = F.cross_entropy(y, t, reduce = False)
+    loss = F.cross_entropy(y, t, reduction="none")
     loss_numpy = loss.data.cpu().numpy()
     num_batch = len(loss_numpy)
     loss_v = np.zeros(num_batch)
-    loss_div_numpy = float(np.array(0))
-    loss_ = -torch.log(F.softmax(y) + 1e-8)
+    loss_div_numpy = float(np.array(0)) # ???
+    loss_ = -torch.log(F.softmax(y, dim=-1) + 1e-8)
     # sel metric
     loss_sel =  loss - torch.mean(loss_,1) 
     if noise_prior is None:

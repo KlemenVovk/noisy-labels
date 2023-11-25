@@ -1,84 +1,135 @@
 import lightning as L
-from models.cores2 import SampleSieve
-from data.cifar import CIFAR10DataModule
-from utils.cores2 import train_cifar10_transform, test_cifar10_transform
 from aim.pytorch_lightning import AimLogger
 import yaml
 import argparse
 import os
 
-# TODO: test instead of val
-# To add a new model, add the relevant classes/transforms to the following dictionaries. That's it!
-models = {
-    'cores2': SampleSieve,
-}
+########################################################################
+# TODO: automatically build from config - utils/config_builder.py
+# TODO: figure out a cleaner way than just importing * from 
+#       from modules as this will not automatically work for custom
+#       modules added in the future
+# TODO: try this: perhaps, this idea of yaml configs is not as good
+#       - if you have some sort of object defined config, you could
+#       define a basic config, and then extend it and only
+#       change the necessary stuff for new experiment/run
+########################################################################
 
-datamodules = {
-    'cifar10': CIFAR10DataModule,
-}
-
-# TODO: What will we do with transforms? Is something like this ok?
-# My proposal is to automatically determine the correct transforms.
-# So if someone runs the cores2 model with cifar10 dataset, the train transform is then simply train_transforms['cores2_cifar10'].
-train_transforms = {
-    'cores2_cifar10': train_cifar10_transform,
-}
-test_transforms = {
-    'cores2_cifar10': test_cifar10_transform,
-}
+# importing * only to populate registries
+from data.datamodules.basic import *
+from data.datamodules.noise import *
+from data.datasets.cifar10 import *
+from data.noise.noises import *
+from data.transforms.cifar10 import *
+from models.classifiers.resnet import *
+from models.learning_strategies.cores2.cores2 import *
+from utils.registry import REGISTER
 
 def main(args):
     L.seed_everything(args["seed"], workers=True)
-    model_cls = models[args["model_name"]]
-    data_module_cls = datamodules[args["dataset_name"]]
 
-    model_args = args["model_args"]
-    trainer_args = args["trainer_args"]
+    strats = REGISTER["strategies"]
+    classifiers = REGISTER["classifiers"]
+    datasets = REGISTER["datasets"]
+    noises = REGISTER["noises"]
+    datamodules = REGISTER["datamodules"]
+    transforms = REGISTER["transforms"]
+
+    ####################
+    # get module classes
+    ####################
+
+    # classifier - e.g. resnet34
+    classifier_cls = classifiers[args["classifier"]]
+    classifier_kws = args["classifier_args"]
+
+    # learning strategy - e.g. cores2
+    strat_cls = strats[args["strategy"]]
+    strat_kws = args["strategy_args"]
+
+    # noise
+    try: # this happens when you build configs by hand heh
+        noise_cls = noises[args["datamodule_args"].pop("noise")]
+        noise_args = args["datamodule_args"].pop("noise_args")
+        noise = noise_cls(**noise_args)
+    except KeyError:
+        noise = None
+
+    # datamodule
+    datamodule_cls = datamodules[args["datamodule"]]
+    datamodule_kws = args["datamodule_args"]
+
+    # transforms
+    train_transform = transforms[args["train_dataset_args"].pop("transform")]
+    val_transform = transforms[args["val_dataset_args"].pop("transform")]
+
+    # datasets
+    train_dataset_cls = val_dataset_cls = test_datset_cls = datasets[args["dataset"]]
     dataset_args = args["dataset_args"]
-    dataset_args["train_transform"] = train_transforms[args["model_name"] + "_" + args["dataset_name"]]
-    dataset_args["test_transform"] = test_transforms[args["model_name"] + "_" + args["dataset_name"]]
+    train_kws = {"transform": train_transform, **dataset_args, **args["train_dataset_args"]}
+    val_kws = {"transform": val_transform, **dataset_args, **args["val_dataset_args"]}
+    test_kws = val_kws # TODO extend
 
+    ##############
+    # init modules
+    ##############
+    datamodule_kws["train_dataset_cls"] = train_dataset_cls
+    datamodule_kws["train_dataset_kws"] = train_kws
+    datamodule_kws["val_dataset_cls"] = val_dataset_cls
+    datamodule_kws["val_dataset_kws"] = val_kws
+    datamodule_kws["test_dataset_cls"] = test_datset_cls
+    datamodule_kws["test_dataset_kws"] = test_kws
+    if noise is not None: datamodule_kws["noise"] = noise
+
+    datamodule = datamodule_cls(**datamodule_kws)
+
+    strategy = strat_cls(
+        classifier_cls, classifier_kws,
+        datamodule,
+        **strat_kws)
+    
+    ##############
+    # init trainer
+    ##############
+
+    trainer_args = args["trainer_args"]
 
     aim_logger = AimLogger(
-        experiment=args["model_name"],
+        experiment=args["strategy"],
         train_metric_prefix='train_',
         test_metric_prefix='test_',
         val_metric_prefix='val_',
     )
 
-    data_module = data_module_cls(**dataset_args)
-    data_module.prepare_data()
-    data_module.setup()
-    #! Datamodule is always passed to the model so that we can access the dataset directly from the model class, i.e. if you want to get data_module.num_classes
-    model = model_cls(**model_args, datamodule=data_module)
     trainer = L.Trainer(logger=aim_logger, deterministic=True, **trainer_args) # logger is fixed as it should be always the same
-    trainer.fit(model, data_module)
+    trainer.fit(strategy, datamodule)
 
 
-def parse_hyperparameters(hyperparameters_path):
-    hyperparameters = None
-    if not os.path.exists(hyperparameters_path):
-        raise FileNotFoundError(f'Hyperparameters file {hyperparameters_path} not found.')
+def parse_config(config_path):
+    config = None
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f'Config file {config_path} not found.')
     
-    with open(hyperparameters_path, 'r') as f:
-        hyperparameters = yaml.load(f, Loader=yaml.FullLoader)
+    with open(config_path, 'r') as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
     
     # Sanity checks
-    assert "model_name" in hyperparameters, "Hyperparameters file must contain the model_name."
-    assert "dataset_name" in hyperparameters, "Hyperparameters file must contain the dataset_name."
-    assert "seed" in hyperparameters, "Hyperparameters file must contain the seed."
-    assert isinstance(hyperparameters["seed"], int), "Seed must be an int."
-    assert "model_args" in hyperparameters, "Hyperparameters file must contain the model_args section."
-    assert "dataset_args" in hyperparameters, "Hyperparameters file must contain the dataset_args section."
-    assert "trainer_args" in hyperparameters, "Hyperparameters file must contain the trainer_args section."
-    return hyperparameters
+    #assert "model_name" in config, "Config file must contain the model_name."
+    #assert "dataset_name" in config, "Config file must contain the dataset_name."
+    #assert "seed" in config, "Config file must contain the seed."
+    #assert isinstance(config["seed"], int), "Seed must be an int."
+    #assert "model_args" in config, "Config file must contain the model_args section."
+    #assert "dataset_args" in config, "Config file must contain the dataset_args section."
+    #assert "trainer_args" in config, "Config file must contain the trainer_args section."
+    return config
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('hyperparameters', type=str, help='Path to the hyperparameters yaml file.')
+    parser.add_argument('--config', type=str, help='Path to the hyperparameters yaml file.', default="configs/cores_cifar10_noise.yaml", required=False)
+    #parser.add_argument('config', type=str, help='Path to the hyperparameters yaml file.')
     args = parser.parse_args()
-    hyperparameters = parse_hyperparameters(args.hyperparameters)
-    hyperparameters["hp_file"] = args.hyperparameters # save the path to the hyperparameters file so that we can quickly reference it from the aim logger
+    hyperparameters = parse_config(args.config)
+    hyperparameters["hp_file"] = args.config # save the path to the hyperparameters file so that we can quickly reference it from the aim logger
     main(hyperparameters)
 
