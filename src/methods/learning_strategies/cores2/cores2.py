@@ -1,12 +1,9 @@
 from typing import Any
 from lightning.pytorch.utilities.types import STEP_OUTPUT
-from torchvision.models.resnet import resnet34
 import lightning as L
 import torch
 import torchmetrics
-from models.learning_strategies.cores2.utils import loss_cores, f_beta
-
-from ..registry import STRATEGIES
+from methods.learning_strategies.cores2.utils import loss_cores, f_beta
 
 # TODO: LR scheduling should be more flexible (current model works only for exactly 100 epochs like the authors proposed).
 # TODO: implement cores2* - the second phase from the paper (consistency training).
@@ -17,22 +14,21 @@ from ..registry import STRATEGIES
 # Uses resnet34 as the backbone (not pretrained). Trained with CORES loss.
 # Basically works on priors of the label noise and iteratively updates the priors after each epoch.
 
-@STRATEGIES.register_module("cores2")
 class SampleSieve(L.LightningModule):
     def __init__(self, 
-                 classifier_cls, classifier_kws, 
+                 classifier_cls, classifier_args, 
                  datamodule, 
                  initial_lr, momentum, weight_decay):
         super().__init__()
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        self.save_hyperparameters(ignore=["classifier_cls", "classifier_kws", "datamodule"])
+        self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule"])
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
 
         self._compute_initial_noise_prior(datamodule)
         
-        self.model = classifier_cls(**classifier_kws)
+        self.model = classifier_cls(**classifier_args)
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -40,16 +36,17 @@ class SampleSieve(L.LightningModule):
         
     def _compute_initial_noise_prior(self, datamodule):
         # Noise prior is just the class probabilities
+        train_dataset = datamodule.train_datasets[0]
         class_frequency = torch.zeros(self.num_classes)
-        for i in range(len(datamodule.train_dataset)):
-            y = datamodule.train_dataset[i][1]
+        for i in range(len(train_dataset)):
+            y = train_dataset[i][1]
             class_frequency[y] += 1
         self.initial_noise_prior = class_frequency / class_frequency.sum()
         self.initial_noise_prior = self.initial_noise_prior
         self.cur_noise_prior = self.initial_noise_prior
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        x, y = batch
+        [[x, y]] = batch
         logits = self.model(x)        
         # clean_indicators is a list of 0s and 1s, where 1 means that the label is "predicted" to be clean, 0 means that the label is "predicted" to be noisy
         loss, clean_indicators = loss_cores(self.current_epoch, logits, y, noise_prior=self.cur_noise_prior.to(self.device))

@@ -7,9 +7,6 @@ from lightning.pytorch.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADER
 
 from torch.utils.data import DataLoader
 
-from .basic import BasicDataModule
-from .registry import DATAMODULES
-
 # broadcastable: seq lenghts: 1, 1 ok; 1, n ok; n, 1 ok; n, n ok; n, m err
 
 def to_list(obj):
@@ -35,24 +32,24 @@ def broadcast_init(classes: Callable | List[Callable], kwss: dict | List[dict]) 
     return [class_(**kwss[0]) for class_ in classes] # 1, n 
 
 
-@DATAMODULES.register_module("multisample")
 class MultiSampleDataModule(LightningDataModule):
 
     def __init__(self, 
-                 train_dataset_cls, train_dataset_kws: dict | List[dict],
-                 val_dataset_cls, val_dataset_kws: dict | List[dict],
-                 test_dataset_cls, test_dataset_kws: dict | List[dict],
+                 train_dataset_cls, train_dataset_args: dict | List[dict],
+                 val_dataset_cls, val_dataset_args: dict | List[dict],
+                 test_dataset_cls, test_dataset_args: dict | List[dict],
                  batch_size, num_workers,
                  *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
 
-        err_msg = lambda type, dataset, kws: f"Mismatched {type} dataset cls and kws lengths: {len(dataset)}, {len(kws)}"
-        assert broadcastable(train_dataset_cls, train_dataset_kws), err_msg("train", train_dataset_cls, train_dataset_kws)
-        assert broadcastable(val_dataset_cls,   val_dataset_kws),   err_msg("val",   val_dataset_cls,   val_dataset_kws)
-        assert broadcastable(test_dataset_cls,  test_dataset_kws),  err_msg("test",  test_dataset_cls,  test_dataset_kws)
+        err_msg = lambda type, dataset, args: f"Mismatched {type} dataset cls and args lengths: {len(dataset)}, {len(args)}"
+        assert broadcastable(train_dataset_cls, train_dataset_args), err_msg("train", train_dataset_cls, train_dataset_args)
+        assert broadcastable(val_dataset_cls,   val_dataset_args),   err_msg("val",   val_dataset_cls,   val_dataset_args)
+        assert broadcastable(test_dataset_cls,  test_dataset_args),  err_msg("test",  test_dataset_cls,  test_dataset_args)
 
-        self.train_datasets = broadcast_init(train_dataset_cls, train_dataset_kws)
-        self.val_datasets   = broadcast_init(val_dataset_cls,   val_dataset_kws)
-        self.test_datasets  = broadcast_init(test_dataset_cls,  test_dataset_kws)
+        self.train_datasets = broadcast_init(train_dataset_cls, train_dataset_args)
+        self.val_datasets   = broadcast_init(val_dataset_cls,   val_dataset_args)
+        self.test_datasets  = broadcast_init(test_dataset_cls,  test_dataset_args)
 
         self.batch_size = batch_size
         self.num_workers = num_workers

@@ -4,8 +4,6 @@ from abc import abstractmethod
 import torch
 from torch import Tensor
 
-from .registry import NOISES
-
 # TODO: looking at this now, perhaps, it would be better
 # if you just apply noise to whole vector of targets
 # instead of on individual labels
@@ -49,7 +47,6 @@ class Noise:
         pass
 
 
-@NOISES.register_module("instance")
 class InstanceNoise(Noise):
 
     def __init__(self, noisy_targets: Tensor) -> None:
@@ -60,7 +57,6 @@ class InstanceNoise(Noise):
         return self.noisy_targets[index]
 
 
-@NOISES.register_module("asymmetric")
 class AsymmetricNoise(Noise):
 
     def __init__(self, transition_matrix: Tensor) -> None:
@@ -71,7 +67,6 @@ class AsymmetricNoise(Noise):
         return torch.multinomial(self.transition_matrix[target], num_samples=1).item()
     
 
-@NOISES.register_module("symmetric")
 class SymmetricNoise(AsymmetricNoise):
 
     def __init__(self, num_classes: int, noise_rate: float) -> None:
@@ -88,7 +83,6 @@ class SymmetricNoise(AsymmetricNoise):
         return T
     
 
-@NOISES.register_module("lambda")
 class LambdaNoise(Noise):
 
     def __init__(self, fcn: Callable) -> None:
