@@ -2,7 +2,7 @@ from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.cores2.cores2 import SampleSieve
 
 from configs.base import MethodConfig
-from configs.cifar10 import cifar10_base_config
+from configs.data.cifar10 import cifar10_base_config
 
 class cores_cifar10_clean(MethodConfig):
 

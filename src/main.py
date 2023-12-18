@@ -8,7 +8,7 @@ def run(method_config):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', type=str, help='Path to the config .py file.', default="configs/cores_cifar10_clean.py", required=False)
+    parser.add_argument('--config', type=str, help='Path to the config .py file.', default="configs/methods/cores2/cores_cifar10_clean.py", required=False)
     parser.add_argument('--method', type=str, help='Name of MethodConfig class to run.', default="cores_cifar10_clean", required=False)
     args = parser.parse_args()
 

@@ -1,8 +1,8 @@
 from data.pipelines.noise.pipeline import NoisePipeline
 from data.pipelines.noise.noises import SymmetricNoise
 
-from configs.cores_cifar10_clean import cores_cifar10_clean
-from configs.cifar10 import cifar10_base_config
+from configs.methods.cores2.cores_cifar10_clean import cores_cifar10_clean
+from configs.data.cifar10 import cifar10_base_config
 
 
 class cifar10_noise(cifar10_base_config):

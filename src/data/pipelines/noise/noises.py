@@ -1,8 +1,10 @@
-from typing import Any, Callable
-from abc import abstractmethod
+from typing import Any, Callable, Dict
+from abc import abstractmethod, ABC
 
 import torch
 from torch import Tensor
+
+# EARLY ALPHA STUFF; SUBJECT TO CHANGES
 
 # TODO: looking at this now, perhaps, it would be better
 # if you just apply noise to whole vector of targets
@@ -15,7 +17,12 @@ from torch import Tensor
 #         way to do so, is to iterate through the original dataset
 #         with __getitem__(i) (or [i])
 
-class Noise:
+class Noise(ABC):
+    """Base class for noise functions.
+    _generated dict instance variable holds cached noisy labels {index: noisy_label},
+    so they can be shared among different dataset instances.
+    """
+    _generated: Dict[int, int]
 
     def __init__(self) -> None:
         # to save and mark generated noisy labels
@@ -48,9 +55,12 @@ class Noise:
 
 
 class InstanceNoise(Noise):
+    """Generates noisy targets from a precomputed vector of noisy targets.
+    """
 
     def __init__(self, noisy_targets: Tensor) -> None:
         super().__init__()
+        # TODO: _generated can be precached here
         self.noisy_targets = noisy_targets # vector of noisy labels
 
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
@@ -58,7 +68,8 @@ class InstanceNoise(Noise):
 
 
 class AsymmetricNoise(Noise):
-
+    """Generates noisy labels with an arbitrary noise transtion matrix.
+    """
     def __init__(self, transition_matrix: Tensor) -> None:
         super().__init__()
         self.transition_matrix = transition_matrix
@@ -68,6 +79,8 @@ class AsymmetricNoise(Noise):
     
 
 class SymmetricNoise(AsymmetricNoise):
+    """Generates noisy targets with a symmetric noise transition matrix.
+    """
 
     def __init__(self, num_classes: int, noise_rate: float) -> None:
         transition_matrix = self.generate_transition_matrix(num_classes, noise_rate)
@@ -84,8 +97,15 @@ class SymmetricNoise(AsymmetricNoise):
     
 
 class LambdaNoise(Noise):
+    """Generates noisy targets using a custom function.
+    The custom function must accept feature, target, index and return a noisy target.
+    """
+    def __init__(self, fcn: Callable[[Tensor, int, int], int]) -> None:
+        """Initialises LambdaNoise object.
 
-    def __init__(self, fcn: Callable) -> None:
+        Args:
+            fcn (Callable): The custom function must accept feature, target, index and return a noisy target.
+        """
         super().__init__()
         self.fcn = fcn
 

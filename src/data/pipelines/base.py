@@ -5,9 +5,19 @@ from ..datasets.base import DatasetFW
 
 
 class AugmentationPipeline(ABC):
-    # gets Dataset cls as an input and returns transformed Dataset cls 
+    """Base class for dataset augmentation pipelines.
+    Dataset augmentation pipeline should transform() DatasetFW class and return DatasetFW class
+    """
 
     def __call__(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
+        """Applies transform() to dataset class.
+
+        Args:
+            dataset_cls (Type[DatasetFW]): Dataset class to transform.
+
+        Returns:
+            Type[DatasetFW]: Transformed dataset class.
+        """
         return self.transform(dataset_cls)
 
     @abstractmethod
@@ -16,8 +26,16 @@ class AugmentationPipeline(ABC):
     
 
 class ComposePipeline(AugmentationPipeline):
+    """Composition of different dataset augmentation pipelines.
+    Applies each augmentation sequentially.
+    """
 
     def __init__(self, augmentations: List[AugmentationPipeline]) -> None:
+        """Initialises ComposePipeline object.
+
+        Args:
+            augmentations (List[AugmentationPipeline]): Sequence of augmentations to apply to dataset class.
+        """
         super().__init__()
         self.augmentations = augmentations
 
@@ -28,6 +46,9 @@ class ComposePipeline(AugmentationPipeline):
     
     
 class IdentityPipeline(AugmentationPipeline):
+    """Identity transformation of a dataset class (no changes applied).
+    Useful for placeholders in default configs.
+    """
 
     def transform(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
         return dataset_cls

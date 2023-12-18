@@ -20,7 +20,16 @@ def _apply_augmentations(
         augmentations: AugmentationPipeline | List[AugmentationPipeline], 
         num_samples: int = 1
         ) -> List[Type[DatasetFW]]:
-    
+    """Helper function for applying augmentations to dataset_cls in batches.
+
+    Args:
+        dataset_cls (Type[DatasetFW]): Dataset class on which the augmentations will be applied.
+        augmentations (AugmentationPipeline | List[AugmentationPipeline]): Augmentation pipeline or list of augmentation pipelines to apply over a dataset.
+        num_samples (int, optional): Number of samples if only a single Augmentation pipeline is provided. Defaults to 1.
+
+    Returns:
+        List[Type[DatasetFW]]: List of augmented datasets (even if a single augmentation was applied).
+    """
     if num_samples != 1:
         assert isinstance(augmentations, AugmentationPipeline),\
             "Multiple samples only supported for a single augmentation."
@@ -30,6 +39,15 @@ def _apply_augmentations(
 
 
 def _merge_args(base_args: dict, update_args: dict | List[dict]) -> List[dict]:
+    """Helper function for merging args in batches.
+
+    Args:
+        base_args (dict): Base arguments dict to update/extend.
+        update_args (dict | List[dict]): List or a single argument dict to update the base_args.
+
+    Returns:
+        List[dict]: List of updated dicts (even if a single update_args dict was provided).
+    """
     update_args = ensure_list(update_args)
     return [{**base_args, **update} for update in update_args]
 
@@ -43,6 +61,9 @@ class Config(ABC):
 
 
 class DataConfig(Config):
+    """Data configuration. Holds all classes and arguments needed to generate a datamodule for a specific method.
+    To configure a new data pipeline, inherit from this class and change the needed class variables.
+    """
 
     dataset_cls: Type[DatasetFW] = None
     dataset_args: Dict = dict()
@@ -62,7 +83,7 @@ class DataConfig(Config):
     dataset_val_args:   dict | List[dict] = dict()
     dataset_test_args:  dict | List[dict] = dict()
 
-    # datamodule config
+    # datamodule class and args that are not {train/test/val}_dataset_{cls/args}
     datamodule_cls: type = MultiSampleDataModule
     datamodule_args: dict = dict()
 
@@ -92,18 +113,27 @@ class DataConfig(Config):
 
 
 class MethodConfig(Config):
+    """Method configuration. Holds all classes and arguments
+    needed to generate datamodule, lightningmodule and trainer for a specific method.
+    To configure a new method configuration, inherit from this class and change the needed class variables.
+    """
     
+    # data pipeline configuration used for generating datamodule
     data_config: DataConfig = DataConfig()
 
+    # function or class and needed args to initalize a classifier
     classifier: Callable  = None
     classifier_args: dict = dict()
 
+    # module of the strategy and additional parameters that are not classifier, or datamodule
     learning_strategy_cls: Type[LightningModule] = None
     learning_strategy_args: dict = dict()
 
+    # lightning trainer and additional parameters that are not logger
     trainer: Type[Trainer] = Trainer
     trainer_args: dict = dict(deterministic=True)
 
+    # god seed
     seed: int = 1337
 
     @classmethod
