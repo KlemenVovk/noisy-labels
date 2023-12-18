@@ -1,52 +1,85 @@
-from abc import abstractmethod
-from typing import List, Union, Dict, Any, Tuple
+from abc import abstractmethod, ABC
+from typing import List, Dict, Any, Tuple, Type, Callable
 
 from lightning import LightningModule, LightningDataModule, Trainer, seed_everything
 from aim.pytorch_lightning import AimLogger
 
-from data.datasets.base import Dataset
-from data.datamodule import MultiSampleDataModule
+from data.datasets.base import DatasetFW
+from data.datamodule import MultiSampleDataModule, ensure_list
 from data.pipelines.base import AugmentationPipeline, IdentityPipeline
 
-#TODO typehints
-#TODO add support for train, test and val augmentations
-#TODO add support for multiple samples in DataConfig
+#TODO think about: when you inherit from base config and want to change
+# some_args dict, you would want to only update the dict
+# which can be done by _merge_args(super().some_args, new_args), which is not the cleanest thing
+# there are probably some libraries for configs that are more intuitive than our approach
+# so maybe it's better to look at other options also
 #TODO add support for different loggers in MethodConfig
 
-class Config:
+def _apply_augmentations(
+        dataset_cls: Type[DatasetFW], 
+        augmentations: AugmentationPipeline | List[AugmentationPipeline], 
+        num_samples: int = 1
+        ) -> List[Type[DatasetFW]]:
+    
+    if num_samples != 1:
+        assert isinstance(augmentations, AugmentationPipeline),\
+            "Multiple samples only supported for a single augmentation."
+    if not isinstance(augmentations, list):
+        augmentations = [augmentations for _ in range(num_samples)]
+    return [aug(dataset_cls) for aug in augmentations]
+
+
+def _merge_args(base_args: dict, update_args: dict | List[dict]) -> List[dict]:
+    update_args = ensure_list(update_args)
+    return [{**base_args, **update} for update in update_args]
+
+
+class Config(ABC):
 
     @classmethod
     @abstractmethod
-    def build_modules() -> Any:
+    def build_modules(cls) -> Any:
         raise NotImplementedError
 
 
 class DataConfig(Config):
 
-    dataset_cls: type = None
+    dataset_cls: Type[DatasetFW] = None
     dataset_args: Dict = dict()
-    dataset_train_augmentation: AugmentationPipeline = IdentityPipeline()
-    dataset_val_augmentation:   AugmentationPipeline = IdentityPipeline()
-    dataset_test_augmentation:  AugmentationPipeline = IdentityPipeline()
-    dataset_train_args: Dict = dict()
-    dataset_val_args: Dict = dict()
-    dataset_test_args: Dict = dict()
 
+    # augmentation pipelines for subsets
+    dataset_train_augmentation: AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
+    dataset_val_augmentation:   AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
+    dataset_test_augmentation:  AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
+
+    # number of samples for each subset
+    num_train_samples: int = 1
+    num_val_samples:   int = 1
+    num_test_samples:  int = 1
+
+    # changes to dataset_args for subset
+    dataset_train_args: dict | List[dict] = dict()
+    dataset_val_args:   dict | List[dict] = dict()
+    dataset_test_args:  dict | List[dict] = dict()
+
+    # datamodule config
     datamodule_cls: type = MultiSampleDataModule
-    datamodule_args: Dict = dict()
+    datamodule_args: dict = dict()
 
     @classmethod
     def build_modules(cls) -> LightningDataModule:
-        # TODO add support for multiple samples
         # datasets
-        train_dataset_cls = cls.dataset_train_augmentation(cls.dataset_cls)
-        val_dataset_cls =   cls.dataset_test_augmentation(cls.dataset_cls)
-        test_dataset_cls =  cls.dataset_val_augmentation(cls.dataset_cls)
+        train_dataset_cls = _apply_augmentations(
+            cls.dataset_cls, cls.dataset_train_augmentation, cls.num_train_samples)
+        val_dataset_cls =   _apply_augmentations(
+            cls.dataset_cls, cls.dataset_val_augmentation, cls.num_val_samples)
+        test_dataset_cls =  _apply_augmentations(
+            cls.dataset_cls, cls.dataset_test_augmentation, cls.num_test_samples)
 
         # dataset args
-        train_args = {**cls.dataset_args, **cls.dataset_train_args}
-        val_args   = {**cls.dataset_args, **cls.dataset_val_args}
-        test_args  = {**cls.dataset_args, **cls.dataset_test_args}
+        train_args = _merge_args(cls.dataset_args, cls.dataset_train_args)
+        val_args   = _merge_args(cls.dataset_args, cls.dataset_val_args)
+        test_args  = _merge_args(cls.dataset_args, cls.dataset_test_args)
 
         # datamodule
         datamodule = cls.datamodule_cls(
@@ -62,16 +95,16 @@ class MethodConfig(Config):
     
     data_config: DataConfig = DataConfig()
 
-    classifier = None
-    classifier_args = dict()
+    classifier: Callable  = None
+    classifier_args: dict = dict()
 
-    learning_strategy = None
-    learning_strategy_args = dict()
+    learning_strategy_cls: Type[LightningModule] = None
+    learning_strategy_args: dict = dict()
 
-    trainer = Trainer
-    trainer_args = dict(deterministic=True)
+    trainer: Type[Trainer] = Trainer
+    trainer_args: dict = dict(deterministic=True)
 
-    seed = 1337
+    seed: int = 1337
 
     @classmethod
     def build_modules(cls) -> Tuple[LightningModule, LightningDataModule, Trainer]:
@@ -82,7 +115,7 @@ class MethodConfig(Config):
         datamodule = cls.data_config.build_modules()
 
         # lightning module
-        model = cls.learning_strategy(
+        model = cls.learning_strategy_cls(
             classifier_cls=cls.classifier, classifier_args=cls.classifier_args,
             datamodule=datamodule, **cls.learning_strategy_args
         )
@@ -90,7 +123,7 @@ class MethodConfig(Config):
         # TODO: support for different loggers
         # logger
         aim_logger = AimLogger(
-            experiment=cls.learning_strategy.__name__,
+            experiment=cls.learning_strategy_cls.__name__,
             train_metric_prefix='train_',
             test_metric_prefix='test_',
             val_metric_prefix='val_',

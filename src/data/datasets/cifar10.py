@@ -2,10 +2,10 @@ from typing import Callable, Any
 from torchvision.datasets import CIFAR10 as CIFAR10PT
 from torchvision import transforms
 
-from .base import Dataset
+from .base import DatasetFW
 
 
-class CIFAR10(CIFAR10PT, Dataset): # this is perhaps not very nice
+class CIFAR10(CIFAR10PT, DatasetFW): # this is perhaps not very nice
     
     def __init__(self, 
                  root: str, 

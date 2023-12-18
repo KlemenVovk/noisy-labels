@@ -1,6 +1,6 @@
 #TODO inherit from basic and just wrap each train dataset with noise
 
-from typing import List, Callable
+from typing import List, Callable, Any
 
 from lightning import LightningDataModule
 from lightning.pytorch.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADERS
@@ -9,18 +9,18 @@ from torch.utils.data import DataLoader
 
 # broadcastable: seq lenghts: 1, 1 ok; 1, n ok; n, 1 ok; n, n ok; n, m err
 
-def to_list(obj):
+def ensure_list(obj: list | Any) -> List[Any]:
     return obj if isinstance(obj, list) else [obj]
 
 def broadcastable(obj1, obj2):
-    obj1, obj2 = to_list(obj1), to_list(obj2)
+    obj1, obj2 = ensure_list(obj1), ensure_list(obj2)
     return len(obj1) == 1 or\
         len(obj2) == 1 or\
         len(obj1) == len(obj2)
 
 def broadcast_init(classes: Callable | List[Callable], kwss: dict | List[dict]) -> List[object]:
     # assume that classes and kws have are broadcastable
-    classes, kwss = to_list(classes), to_list(kwss)
+    classes, kwss = ensure_list(classes), ensure_list(kwss)
     if len(classes) == 1:
         if len(kwss) == 1: 
             return [classes[0](**kwss[0])] # 1, 1

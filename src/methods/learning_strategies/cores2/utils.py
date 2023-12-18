@@ -7,17 +7,6 @@ from torchvision import transforms
 
 # TODO: warmup (n epochs where we are using only cross entropy loss should be a hyperparameter)
 # Taken from: https://github.com/haochenglouis/cores
-train_cifar10_transform = transforms.Compose([
-    transforms.RandomCrop(32, padding=4),
-    transforms.RandomHorizontalFlip(),
-    transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-])
-
-test_cifar10_transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-])
 
 def loss_cores(epoch, y, t, noise_prior = None):
     beta = f_beta(epoch)

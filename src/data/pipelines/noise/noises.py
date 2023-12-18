@@ -74,12 +74,12 @@ class SymmetricNoise(AsymmetricNoise):
         super().__init__(transition_matrix)
 
     @staticmethod
-    def generate_transition_matrix(n_classes: int, noise_rate: float) -> Tensor:
+    def generate_transition_matrix(num_classes: int, noise_rate: float) -> Tensor:
         # transition matrix with (1 - noise_rate) on diagonal
-        # and noise_rate / (n_classes - 1) elsewhere
-        eps = noise_rate / (n_classes - 1)
-        T = eps * torch.ones(n_classes, n_classes)
-        T += (1 - eps - noise_rate) * torch.eye(n_classes)
+        # and noise_rate / (num_classes - 1) elsewhere
+        eps = noise_rate / (num_classes - 1)
+        T = eps * torch.ones(num_classes, num_classes)
+        T += (1 - eps - noise_rate) * torch.eye(num_classes)
         return T
     
 

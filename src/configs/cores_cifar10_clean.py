@@ -14,7 +14,7 @@ class cores_cifar10_clean(MethodConfig):
         num_classes=10
     )
 
-    learning_strategy = SampleSieve
+    learning_strategy_cls = SampleSieve
     learning_strategy_args = dict(
         initial_lr=0.1,
         momentum=0.9,

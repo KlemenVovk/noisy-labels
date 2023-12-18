@@ -1,10 +1,10 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from typing import Any
 
 from torch.utils.data.dataset import Dataset as DatasetPT
 
 
-class Dataset(DatasetPT):
+class DatasetFW(DatasetPT, ABC):
 
     @abstractmethod
     def __getitem__(self, index) -> Any:
