@@ -8,6 +8,11 @@ from data.datasets.base import DatasetFW
 from data.datamodule import MultiSampleDataModule, ensure_list
 from data.pipelines.base import AugmentationPipeline, IdentityPipeline
 
+# TODO I think I finally realised what's bothering me about this config system.
+# The thing is that though it is better than doing yaml files, the hierarchy
+# still doesn't make sense. You have to know how the modules are initialised
+# in the background to effectively write a config with no errors.
+# For a normal user this will not be the case. Think about how this could be improved.
 #TODO think about: when you inherit from base config and want to change
 # some_args dict, you would want to only update the dict
 # which can be done by _merge_args(super().some_args, new_args), which is not the cleanest thing
@@ -63,10 +68,29 @@ class Config(ABC):
 class DataConfig(Config):
     """Data configuration. Holds all classes and arguments needed to generate a datamodule for a specific method.
     To configure a new data pipeline, inherit from this class and change the needed class variables.
+
+    Class vars:
+        dataset_cls (Type[DatasetFW]):  Class of dataset. 
+        dataset_args: (dict) :          Dict of keyword args to initialise the dataset_cls. Can be incomplete and will be updated by dataset_{train/val/test}_args class var.
+
+        dataset_train_augmentation (AugmentationPipeline | List[AugmentationPipeline]): Augmentation pipeline to transform dataset_cls for train. If list is provided, multiple samples will be returned at each step.
+        dataset_val_augmentation:  (AugmentationPipeline | List[AugmentationPipeline]): Augmentation pipeline to transform dataset_cls for val. If list is provided, multiple samples will be returned at each step.
+        dataset_test_augmentation: (AugmentationPipeline | List[AugmentationPipeline]): Augmentation pipeline to transform dataset_cls for test. If list is provided, multiple samples will be returned at each step.
+
+        num_train_samples (int): Number of samples of train dataset for each train step, only supported if a single augmentation is provided. Raises AssertionError if dataset_train_augmentation is a list.
+        num_val_samples   (int): Number of samples of val dataset for each val step, only supported if a single augmentation is provided. Raises AssertionError if dataset_val_augmentation is a list.
+        num_test_samples  (int): Number of samples of test dataset for each test step, only supported if a single augmentation is provided. Raises AssertionError if dataset_test_augmentation is a list.
+
+        dataset_train_args (dict | List[dict]): Dict or list of dicts of keyword arguments to be added to dataset_args class var. If list is provided, must be broadcastable with number of samples.
+        dataset_val_args (dict | List[dict]): Dict or list of dicts of keyword arguments to be added to dataset_args class var. If list is provided, must be broadcastable with number of samples.
+        dataset_test_args (dict | List[dict]): Dict or list of dicts of keyword arguments to be added to dataset_args class var. If list is provided, must be broadcastable with number of samples.
+
+        datamodule_cls (Type[MultiSampleDataModule]): Class of datamodule.
+        datamodule_args (dict): Dict of remaining keyword arguments to initialise datamodule_cls, that are not train {train/val/test}_dataset_{cls/args}.
     """
 
     dataset_cls: Type[DatasetFW] = None
-    dataset_args: Dict = dict()
+    dataset_args: dict = dict()
 
     # augmentation pipelines for subsets
     dataset_train_augmentation: AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
@@ -84,7 +108,7 @@ class DataConfig(Config):
     dataset_test_args:  dict | List[dict] = dict()
 
     # datamodule class and args that are not {train/test/val}_dataset_{cls/args}
-    datamodule_cls: type = MultiSampleDataModule
+    datamodule_cls: Type[MultiSampleDataModule] = MultiSampleDataModule
     datamodule_args: dict = dict()
 
     @classmethod
@@ -116,6 +140,18 @@ class MethodConfig(Config):
     """Method configuration. Holds all classes and arguments
     needed to generate datamodule, lightningmodule and trainer for a specific method.
     To configure a new method configuration, inherit from this class and change the needed class variables.
+
+    Class vars:
+        data_config: Configuration object for data. See DataConfig class.
+
+        classifier (Callable): Class of function to initialise a classifier torch model.
+        classifier_args (dict): Dict of keyword arguments passed to classifier.
+
+        learning_strategy_cls (Type[LightningModule]): Class of LightningModule learning strategy.
+        learning_strategy_args (dict): Dict of keyword arguments to initialise learning_strategy_cls, that are not classifier_{cls/args} or datamodule.
+
+        trainer (Type[Trainer]): Lightning trainer class
+        trainer_args (dict): Dict of keyword arguments to initialise trainer, that are not logger.
     """
     
     # data pipeline configuration used for generating datamodule
