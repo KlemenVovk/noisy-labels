@@ -43,15 +43,15 @@ class Noise(ABC):
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
         raise NotImplementedError
     
-    @classmethod
-    def from_file(cls, fpath: str) -> "Noise":
-        #TODO
-        pass
-    
-    @classmethod
-    def from_vector(cls, noisy_targets: Tensor) -> "Noise":
-        #TODO
-        pass
+    # TODO: could be improved in the future,
+    # saving only _generated does not work
+    # as you need to save fcn as well for LambdaNoise for example
+    def save_state(self, fpath: str) -> "Noise":
+        torch.save(self, fpath)
+
+    @staticmethod
+    def load_state(fpath: str) -> "Noise":
+        return torch.load(fpath)
 
 
 class InstanceNoise(Noise):
