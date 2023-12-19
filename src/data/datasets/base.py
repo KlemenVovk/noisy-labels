@@ -1,8 +1,10 @@
 from abc import abstractmethod, ABC
-from typing import Any
+from typing import Tuple, Any
 
 from torch.utils.data.dataset import Dataset as DatasetPT
+from torch import Tensor
 
+# TODO setup needs to be changed somehow as it is currently broken
 
 class DatasetFW(DatasetPT, ABC):
     """Abstract base class for datasets in this (F)rame(W)ork.
@@ -17,7 +19,7 @@ class DatasetFW(DatasetPT, ABC):
     """
 
     @abstractmethod
-    def __getitem__(self, index) -> Any:
+    def __getitem__(self, index: int) -> tuple[Tensor, int, Any]:
         raise NotImplementedError
     
     @abstractmethod
