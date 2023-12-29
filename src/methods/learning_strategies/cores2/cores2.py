@@ -1,9 +1,12 @@
-from typing import Any
+from typing import Any, Type
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
 import torch
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
-from methods.learning_strategies.cores2.utils import loss_cores, f_beta
+from methods.learning_strategies.cores2.utils import loss_cores
+from methods.learning_strategies.base import LearningStrategyModule
 
 # TODO: LR scheduling should be more flexible (current model works only for exactly 100 epochs like the authors proposed).
 # TODO: implement cores2* - the second phase from the paper (consistency training).
@@ -14,13 +17,17 @@ from methods.learning_strategies.cores2.utils import loss_cores, f_beta
 # Uses resnet34 as the backbone (not pretrained). Trained with CORES loss.
 # Basically works on priors of the label noise and iteratively updates the priors after each epoch.
 
-class SampleSieve(L.LightningModule):
-    def __init__(self, 
-                 classifier_cls, classifier_args, 
-                 datamodule,
-                 optimizer_cls, optimizer_args,
-                 scheduler_cls, scheduler_args):
-        super().__init__()
+class SampleSieve(LearningStrategyModule):
+    
+    def __init__(self, datamodule: L.LightningDataModule,
+                 classifier_cls: type, classifier_args: dict,
+                 optimizer_cls: type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 *args: Any, **kwargs: Any) -> None:
+        super().__init__(
+            datamodule, classifier_cls, classifier_args,
+            optimizer_cls, optimizer_args, 
+            scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
         # self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule"])
 
@@ -30,12 +37,8 @@ class SampleSieve(L.LightningModule):
         
         # init model
         self.model = classifier_cls(**classifier_args)
-
-        self.optimizer_cls = optimizer_cls
-        self.optimizer_args = optimizer_args
-        self.scheduler_cls = scheduler_cls
-        self.scheduler_args = scheduler_args
         
+        # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.noisy_class_frequency = torch.zeros(self.num_classes)

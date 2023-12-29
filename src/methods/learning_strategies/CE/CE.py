@@ -1,32 +1,32 @@
-from typing import Any
+from typing import Any, Type
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LRScheduler
 
 import torchmetrics
 from torch.nn.functional import cross_entropy
-from torch.optim import SGD
-from torch.optim.lr_scheduler import MultiStepLR
+
+from methods.learning_strategies.base import LearningStrategyModule
 
 
-class CE(L.LightningModule):
-    def __init__(self, 
-                 classifier_cls, classifier_args,
-                 datamodule,
-                 optimizer_cls, optimizer_args,
-                 scheduler_cls, scheduler_args):
-        super().__init__()
+class CE(LearningStrategyModule):
+
+    def __init__(self, datamodule: L.LightningDataModule,
+                 classifier_cls: type, classifier_args: dict,
+                 optimizer_cls: type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 *args: Any, **kwargs: Any) -> None:
+        super().__init__(
+            datamodule, classifier_cls, classifier_args, 
+            optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
         
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
         
         self.model = classifier_cls(**classifier_args)
         self.criterion = cross_entropy # basic CE
-        
-        self.optimizer_cls = optimizer_cls
-        self.optimizer_args = optimizer_args
-        self.scheduler_cls = scheduler_cls
-        self.scheduler_args = scheduler_args
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
