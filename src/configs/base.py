@@ -1,6 +1,9 @@
 from abc import abstractmethod, ABC
 from typing import List, Dict, Any, Tuple, Type, Callable
 
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LRScheduler
+
 from lightning import LightningModule, LightningDataModule, Trainer, seed_everything
 from aim.pytorch_lightning import AimLogger
 
@@ -165,6 +168,11 @@ class MethodConfig(Config):
     learning_strategy_cls: Type[LightningModule] = None
     learning_strategy_args: dict = dict()
 
+    optimizer_cls: Type[Optimizer] = None
+    optimizer_args: dict = dict()
+    scheduler_cls: Type[LRScheduler] = None
+    scheduler_args: dict = dict()
+
     # lightning trainer and additional parameters that are not logger
     trainer: Type[Trainer] = Trainer
     trainer_args: dict = dict(deterministic=True)
@@ -183,7 +191,10 @@ class MethodConfig(Config):
         # lightning module
         model = cls.learning_strategy_cls(
             classifier_cls=cls.classifier, classifier_args=cls.classifier_args,
-            datamodule=datamodule, **cls.learning_strategy_args
+            datamodule=datamodule,
+            optimizer_cls=cls.optimizer_cls, optimizer_args=cls.optimizer_args,
+            scheduler_cls=cls.scheduler_cls, scheduler_args=cls.scheduler_args,
+            **cls.learning_strategy_args
         )
 
         # TODO: support for different loggers

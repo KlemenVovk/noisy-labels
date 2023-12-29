@@ -1,3 +1,6 @@
+from torch.optim import SGD
+from torch.optim.lr_scheduler import MultiStepLR
+
 from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.CE.CE import CE
 
@@ -15,11 +18,11 @@ class CE_cifar10_clean(MethodConfig):
     )
 
     learning_strategy_cls = CE
-    learning_strategy_args = dict(
-        initial_lr=0.1,
-        momentum=0.9,
-        weight_decay=5e-4
-    )
+
+    optimizer_cls = SGD
+    optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=5e-4)
+    scheduler_cls = MultiStepLR
+    scheduler_args = dict(milestones=[60], gamma=0.1)
 
     trainer_args = dict(
         deterministic=True,

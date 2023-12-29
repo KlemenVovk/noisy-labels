@@ -13,15 +13,20 @@ class CE(L.LightningModule):
     def __init__(self, 
                  classifier_cls, classifier_args,
                  datamodule,
-                 initial_lr, momentum, weight_decay):
+                 optimizer_cls, optimizer_args,
+                 scheduler_cls, scheduler_args):
         super().__init__()
-        self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule"])
         
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
         
         self.model = classifier_cls(**classifier_args)
         self.criterion = cross_entropy # basic CE
+        
+        self.optimizer_cls = optimizer_cls
+        self.optimizer_args = optimizer_args
+        self.scheduler_cls = scheduler_cls
+        self.scheduler_args = scheduler_args
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
@@ -42,6 +47,8 @@ class CE(L.LightningModule):
         self.log("val_acc", self.val_acc(y_pred, y_true))
     
     def configure_optimizers(self):
-        optim = SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)
-        scheduler = MultiStepLR(optim, [60], 0.1)
-        return [optim], [scheduler]
+        #optim = SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)
+        #scheduler = MultiStepLR(optim, [60], 0.1)
+        optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
+        scheduler = self.scheduler_cls(optimizer, **self.scheduler_args)
+        return [optimizer], [scheduler]

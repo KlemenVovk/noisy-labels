@@ -17,18 +17,24 @@ from methods.learning_strategies.cores2.utils import loss_cores, f_beta
 class SampleSieve(L.LightningModule):
     def __init__(self, 
                  classifier_cls, classifier_args, 
-                 datamodule, 
-                 initial_lr, momentum, weight_decay):
+                 datamodule,
+                 optimizer_cls, optimizer_args,
+                 scheduler_cls, scheduler_args):
         super().__init__()
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule"])
+        # self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule"])
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
-
         self._compute_initial_noise_prior(datamodule)
         
+        # init model
         self.model = classifier_cls(**classifier_args)
+
+        self.optimizer_cls = optimizer_cls
+        self.optimizer_args = optimizer_args
+        self.scheduler_cls = scheduler_cls
+        self.scheduler_args = scheduler_args
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -79,7 +85,9 @@ class SampleSieve(L.LightningModule):
     
     def configure_optimizers(self):
         # Here multiple optimizers and schedulers can be set. Currently we have hardcoded the lr scheduling to exactly like it is in the paper.
-        optimizer = torch.optim.SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)
-        lr_plan = [0.1] * 50 + [0.01] * (50 + 1) # +1 because lr is set before the check if the training should stop due to reaching max_epochs (so its updated at the end of each epoch, for the next epoch)
-        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda epoch: lr_plan[epoch]/(1+f_beta(epoch)))
+        #optimizer = torch.optim.SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)
+        #lr_plan = [0.1] * 50 + [0.01] * (50 + 1) # +1 because lr is set before the check if the training should stop due to reaching max_epochs (so its updated at the end of each epoch, for the next epoch)
+        #scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda epoch: lr_plan[epoch]/(1+f_beta(epoch)))
+        optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
+        scheduler = self.scheduler_cls(optimizer, **self.scheduler_args)
         return [optimizer], [scheduler]
