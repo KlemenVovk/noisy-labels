@@ -13,7 +13,7 @@ class CIFAR100N(CIFAR100):
                 ],
             noise_dir: str,
             cifar_dir: str,
-            train: bool,
+            train: bool = True,
             transform: Callable[..., Any] | None = None,
             target_transform: Callable[..., Any] | None = None,
             download: bool = False,

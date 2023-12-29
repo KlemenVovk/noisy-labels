@@ -7,6 +7,7 @@ from methods.learning_strategies.CE.CE import CE
 from configs.base import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
+
 class CE_cifar10_clean(MethodConfig):
 
     data_config = cifar10_base_config
