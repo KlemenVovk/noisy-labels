@@ -1,3 +1,6 @@
+from lightning import Trainer
+from aim.pytorch_lightning import AimLogger
+
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
@@ -26,6 +29,9 @@ class CE_cifar10_clean(MethodConfig):
     scheduler_args = dict(milestones=[60], gamma=0.1)
 
     trainer_args = dict(
+        max_epochs=100,
         deterministic=True,
-        max_epochs=100
+        logger=AimLogger(experiment="CE")
     )
+
+    seed = 1337

@@ -1,3 +1,6 @@
+from lightning import Trainer
+from aim.pytorch_lightning import AimLogger
+
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
 
@@ -28,6 +31,9 @@ class cores_cifar10_clean(MethodConfig):
     scheduler_args = dict(lr_lambda=lambda epoch: lr_plan[epoch] / (1+f_beta(epoch)))
 
     trainer_args = dict(
+        max_epochs=100,
         deterministic=True,
-        max_epochs=100
+        logger=AimLogger(experiment="cores2")
     )
+
+    seed = 1337

@@ -1,11 +1,11 @@
 from abc import abstractmethod, ABC
-from typing import List, Dict, Any, Tuple, Type, Callable
+from typing import List, Any, Tuple, Type, Callable
 
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 
 from lightning import LightningModule, LightningDataModule, Trainer, seed_everything
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import Logger, CSVLogger # typing
 
 from data.datasets.base import DatasetFW
 from data.datamodule import MultiSampleDataModule, ensure_list
@@ -16,12 +16,6 @@ from data.pipelines.base import AugmentationPipeline, IdentityPipeline
 # still doesn't make sense. You have to know how the modules are initialised
 # in the background to effectively write a config with no errors.
 # For a normal user this will not be the case. Think about how this could be improved.
-#TODO think about: when you inherit from base config and want to change
-# some_args dict, you would want to only update the dict
-# which can be done by _merge_args(super().some_args, new_args), which is not the cleanest thing
-# there are probably some libraries for configs that are more intuitive than our approach
-# so maybe it's better to look at other options also
-#TODO add support for different loggers in MethodConfig
 
 def _apply_augmentations(
         dataset_cls: Type[DatasetFW], 
@@ -153,8 +147,7 @@ class MethodConfig(Config):
         learning_strategy_cls (Type[LightningModule]): Class of LightningModule learning strategy.
         learning_strategy_args (dict): Dict of keyword arguments to initialise learning_strategy_cls, that are not classifier_{cls/args} or datamodule.
 
-        trainer (Type[Trainer]): Lightning trainer class
-        trainer_args (dict): Dict of keyword arguments to initialise trainer, that are not logger.
+        trainer_args (dict): Dict of keyword arguments to initialise trainer.
     """
     
     # data pipeline configuration used for generating datamodule
@@ -174,16 +167,16 @@ class MethodConfig(Config):
     scheduler_args: dict = dict()
 
     # lightning trainer and additional parameters that are not logger
-    trainer: Type[Trainer] = Trainer
-    trainer_args: dict = dict(deterministic=True)
+    trainer_args: dict = dict()
 
     # god seed
-    seed: int = 1337
+    seed: int | None = None
 
     @classmethod
     def build_modules(cls) -> Tuple[LightningModule, LightningDataModule, Trainer]:
         # seed
-        seed_everything(cls.seed, workers=True)
+        if cls.seed is not None:
+            seed_everything(cls.seed, workers=True)
 
         # datamodule
         datamodule = cls.data_config.build_modules()
@@ -197,19 +190,7 @@ class MethodConfig(Config):
             **cls.learning_strategy_args
         )
 
-        # TODO: support for different loggers
-        # logger
-        aim_logger = AimLogger(
-            experiment=cls.learning_strategy_cls.__name__,
-            train_metric_prefix='train_',
-            test_metric_prefix='test_',
-            val_metric_prefix='val_',
-        )
-
-        # trainer
-        trainer = cls.trainer(
-            logger=aim_logger,
-            **cls.trainer_args
-        )
+        # trainer - needs to be initialised here because seed active needs to be run beforehand
+        trainer = Trainer(**cls.trainer_args)
 
         return model, datamodule, trainer
