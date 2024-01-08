@@ -13,7 +13,6 @@ class NoisyLabelsLoader:
     """
     Handles downloading and loading of noisylabels targets
     """
-    # TODO: check file integrity before skipping download (partial downloads break downloading currently)
 
     _name_map = {
         "cifar10": "CIFAR-10",
@@ -24,6 +23,16 @@ class NoisyLabelsLoader:
         "cifar10": "96644db5574813cae939af5f7f2a0aec",
         "cifar100": "a67b45c1d7992051865b5c755bd68bb1",
     }
+
+    cifar10_label_names = [
+        "clean_label", "aggre_label", "worse_label",
+        "random_label1", "random_label2", "random_label3"
+    ]
+
+    cifar100_label_names = [
+        "clean_label", "noisy_label",
+        "noisy_coarse_label", "clean_coarse_label"
+    ]
 
     @classmethod
     def get_filename(cls, dataset: Literal["cifar10", "cifar100"]) -> str:
@@ -48,8 +57,8 @@ class NoisyLabelsLoader:
     
     def load_label(
             self, 
-            label_name = Literal["clean_label", "noisy_label",
-                                 "noisy_coarse_label", "clean_coarse_label"] # if cifar-10
+            label_name = Literal["clean_label", "aggre_label", "worse_label",
+                                 "random_label1", "random_label2", "random_label3"] # if cifar-10
                         | Literal["clean_label", "noisy_label",
                                   "noisy_coarse_label", "clean_coarse_label"] # if cifar-100
             ) -> Tensor:
