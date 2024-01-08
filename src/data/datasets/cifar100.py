@@ -7,8 +7,9 @@ from .base import DatasetFW
 
 class CIFAR100(CIFAR100PT, DatasetFW): # yeah its basically a copy of CIFAR10 :)
     
-    def setup(self) -> None:
-        self.download()
+    @classmethod
+    def setup(cls) -> None:
+        pass # TODO fix this
 
     @property
     def num_classes(self) -> int:

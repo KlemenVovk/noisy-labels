@@ -25,4 +25,4 @@ class CIFAR100N(CIFAR100):
         img, true_target = super().__getitem__(index)
         if not self.train: # test set has no labels
             return img, true_target
-        return img, self.noisy_targets[index]
+        return img, int(self.noisy_targets[index])

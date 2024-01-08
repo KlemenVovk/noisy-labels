@@ -26,8 +26,9 @@ class DatasetFW(DatasetPT, ABC):
     def __len__(self) -> int:
         raise NotImplementedError
     
+    @classmethod
     @abstractmethod
-    def setup(self) -> None:
+    def setup(cls) -> None:
         # download data and whatnot if needed
         raise NotImplementedError
     

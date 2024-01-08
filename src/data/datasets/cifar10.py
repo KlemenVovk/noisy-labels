@@ -7,8 +7,9 @@ from .base import DatasetFW
 
 class CIFAR10(CIFAR10PT, DatasetFW): # this is perhaps not very nice
     
-    def setup(self) -> None:
-        self.download()
+    @classmethod
+    def setup(cls) -> None:
+        pass # TODO: fix this
 
     @property
     def num_classes(self) -> int:
