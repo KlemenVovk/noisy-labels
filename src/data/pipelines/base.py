@@ -25,7 +25,7 @@ class AugmentationPipeline(ABC):
         raise NotImplementedError
     
 
-class ComposePipeline(AugmentationPipeline):
+class Compose(AugmentationPipeline):
     """Composition of different dataset augmentation pipelines.
     Applies each augmentation sequentially.
     """
@@ -45,7 +45,7 @@ class ComposePipeline(AugmentationPipeline):
         return dataset_cls
     
     
-class IdentityPipeline(AugmentationPipeline):
+class Identity(AugmentationPipeline):
     """Identity transformation of a dataset class (no changes applied).
     Useful for placeholders in default configs.
     """

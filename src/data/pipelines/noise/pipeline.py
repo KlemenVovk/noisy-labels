@@ -2,7 +2,7 @@ from .noises import Noise
 from ..base import AugmentationPipeline
 
 
-class NoisePipeline(AugmentationPipeline):
+class AddNoise(AugmentationPipeline):
     """Augments the dataset by transforming labels with Noise.
 
     Args:

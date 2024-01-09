@@ -9,7 +9,7 @@ from lightning.pytorch.loggers import Logger, CSVLogger # typing
 
 from data.datasets.base import DatasetFW
 from data.datamodule import MultiSampleDataModule, ensure_list
-from data.pipelines.base import AugmentationPipeline, IdentityPipeline
+from data.pipelines.base import AugmentationPipeline, Identity
 
 # TODO I think I finally realised what's bothering me about this config system.
 # The thing is that though it is better than doing yaml files, the hierarchy
@@ -90,9 +90,9 @@ class DataConfig(Config):
     dataset_args: dict = dict()
 
     # augmentation pipelines for subsets
-    dataset_train_augmentation: AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
-    dataset_val_augmentation:   AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
-    dataset_test_augmentation:  AugmentationPipeline | List[AugmentationPipeline] = IdentityPipeline()
+    dataset_train_augmentation: AugmentationPipeline | List[AugmentationPipeline] = Identity()
+    dataset_val_augmentation:   AugmentationPipeline | List[AugmentationPipeline] = Identity()
+    dataset_test_augmentation:  AugmentationPipeline | List[AugmentationPipeline] = Identity()
 
     # number of samples for each subset
     num_train_samples: int = 1

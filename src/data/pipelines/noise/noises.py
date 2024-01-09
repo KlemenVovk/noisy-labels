@@ -37,7 +37,7 @@ class Noise(ABC):
         if noisy_target is None:
             noisy_target = self._noisify_target(feature, target, index)
             self._generated[index] = noisy_target
-        return noisy_target
+        return int(noisy_target)
 
     @abstractmethod
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
