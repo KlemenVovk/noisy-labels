@@ -1,12 +1,10 @@
-#TODO inherit from basic and just wrap each train dataset with noise
-
 from typing import List, Callable, Any, Type
 
 from lightning import LightningDataModule
 from lightning.pytorch.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADERS
 
 from torch.utils.data import DataLoader
-from data.datasets.base import DatasetFW
+from .datasets.base import DatasetFW
 
 def ensure_list(obj: list | Any) -> List[Any]:
     """Helper function that promotes objects to list if not already list
@@ -19,7 +17,7 @@ def ensure_list(obj: list | Any) -> List[Any]:
     """
     return obj if isinstance(obj, list) else [obj]
 
-def broadcastable(obj1: Any, obj2: Any) -> bool:
+def is_broadcastable(obj1: Any, obj2: Any) -> bool:
     """Helper function that checks if two objects are broadcastable.
     Object must have implemented __len__ method.
     Objects are broadcastable when their lenghts are: (1, 1) or (1, n) or (n, 1) or (n, n).
@@ -48,6 +46,7 @@ def broadcast_init(classes: Callable[[Any], object] | List[Callable[[Any], objec
     Returns:
         List[object]: List of initialised object (even if a single object was initalised).
     """
+    assert is_broadcastable(classes, kwss)
     classes, kwss = ensure_list(classes), ensure_list(kwss)
     if len(classes) == 1:
         if len(kwss) == 1: 
@@ -61,7 +60,7 @@ def broadcast_init(classes: Callable[[Any], object] | List[Callable[[Any], objec
 
 
 class MultiSampleDataModule(LightningDataModule):
-    """Lightning datamodule that supports multisampling for each of the train/val/test subests.
+    """Lightning datamodule that supports multiple samples for each of the train/val/test subests.
     """
 
     def __init__(self, 
@@ -85,9 +84,9 @@ class MultiSampleDataModule(LightningDataModule):
         super().__init__(*args, **kwargs)
 
         err_msg = lambda type, dataset, args: f"Mismatched {type} dataset cls and args lengths: {len(dataset)}, {len(args)}"
-        assert broadcastable(train_dataset_cls, train_dataset_args), err_msg("train", train_dataset_cls, train_dataset_args)
-        assert broadcastable(val_dataset_cls,   val_dataset_args),   err_msg("val",   val_dataset_cls,   val_dataset_args)
-        assert broadcastable(test_dataset_cls,  test_dataset_args),  err_msg("test",  test_dataset_cls,  test_dataset_args)
+        assert is_broadcastable(train_dataset_cls, train_dataset_args), err_msg("train", train_dataset_cls, train_dataset_args)
+        assert is_broadcastable(val_dataset_cls,   val_dataset_args),   err_msg("val",   val_dataset_cls,   val_dataset_args)
+        assert is_broadcastable(test_dataset_cls,  test_dataset_args),  err_msg("test",  test_dataset_cls,  test_dataset_args)
 
         self.train_datasets = broadcast_init(train_dataset_cls, train_dataset_args)
         self.val_datasets   = broadcast_init(val_dataset_cls,   val_dataset_args)

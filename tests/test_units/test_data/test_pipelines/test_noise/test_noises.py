@@ -29,7 +29,7 @@ def test_asymmetric_noise():
     noise = AsymmetricNoise(tr_mtx)
 
     # run sample n_trials times
-    n_trials = 20000
+    n_trials = 100000
     for i in range(n_trials):
         sample = (None, i%tr_mtx.shape[0], i)
         noisy_target = noise(*sample)
@@ -50,7 +50,7 @@ def test_symmetric_noise():
     count_mtx = torch.ones_like(tr_mtx)
 
     # run sample n_trials times
-    n_trials = 20000
+    n_trials = 100000
     for i in range(n_trials):
         sample = (None, i%tr_mtx.shape[0], i)
         noisy_target = noise(*sample)
@@ -71,7 +71,7 @@ def test_lambda_noise():
     count_mtx = torch.ones_like(tr_mtx)
 
     # run sample n_trials times
-    n_trials = 20000
+    n_trials = 100000
     for i in range(n_trials):
         sample = (None, i%tr_mtx.shape[0], i)
         noisy_target = noise(*sample)

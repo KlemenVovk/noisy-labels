@@ -5,7 +5,7 @@ from pathlib import Path
 from .common import eurosat_save_path
 
 def test_getitem():
-    dataset = EuroSAT(eurosat_save_path, True, True)
+    dataset = EuroSAT(eurosat_save_path, True, None, None, True)
     sample = dataset[0]
 
     assert isinstance(sample[0], Image.Image)
