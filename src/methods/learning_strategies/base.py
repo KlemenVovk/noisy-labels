@@ -19,3 +19,17 @@ class LearningStrategyModule(L.LightningModule):
         self.classifier_cls, self.classifier_args = classifier_cls, classifier_args
         self.optimizer_cls, self.optimizer_args = optimizer_cls, optimizer_args
         self.scheduler_cls, self.scheduler_args = scheduler_cls, scheduler_args
+
+
+class LearningStrategyWithWarmupModule(LearningStrategyModule):
+
+    def __init__(self, 
+                 datamodule: L.LightningDataModule, 
+                 classifier_cls: type, classifier_args: dict, 
+                 optimizer_cls: type[Optimizer], optimizer_args: dict, 
+                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 warmup_epochs: int,
+                 *args: Any, **kwargs: Any) -> None:
+        super().__init__(datamodule, classifier_cls, classifier_args, optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)  
+        self.warmup_epochs = warmup_epochs
+
