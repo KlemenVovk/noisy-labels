@@ -12,12 +12,12 @@ def test_getitem():
     assert isinstance(sample[1], int)
 
 def test_num_classes():
-    dataset = EuroSAT(eurosat_save_path, True, True)
+    dataset = EuroSAT(eurosat_save_path, True, None, None, True)
     
     assert dataset.num_classes == 10
 
 def test_train_split():
-    dataset = EuroSAT(eurosat_save_path, True, True)
+    dataset = EuroSAT(eurosat_save_path, True, None, None, True)
     test_path = eurosat_save_path / dataset._split_name
     with open(test_path, "r") as f:
         test_fnames = f.read().splitlines()
