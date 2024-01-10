@@ -25,6 +25,8 @@ class EuroSAT(EuroSATPT, DatasetFW): # this is perhaps not very nice
         # download test split
         if download:
             import requests
+            import ssl # TODO remove this hack
+            ssl._create_default_https_context = ssl._create_unverified_context
             response = requests.get(self._split_url)
             with open(root_path / self._split_name, "wb") as f:
                 f.write(response.content)
