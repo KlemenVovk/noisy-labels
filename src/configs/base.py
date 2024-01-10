@@ -183,8 +183,8 @@ class MethodConfig(Config):
 
         # lightning module
         model = cls.learning_strategy_cls(
-            classifier_cls=cls.classifier, classifier_args=cls.classifier_args,
             datamodule=datamodule,
+            classifier_cls=cls.classifier, classifier_args=cls.classifier_args,
             optimizer_cls=cls.optimizer_cls, optimizer_args=cls.optimizer_args,
             scheduler_cls=cls.scheduler_cls, scheduler_args=cls.scheduler_args,
             **cls.learning_strategy_args

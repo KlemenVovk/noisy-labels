@@ -6,7 +6,8 @@ class cifar10_base_config(DataConfig):
 
     dataset_cls = CIFAR10
     dataset_args = dict(
-        root="../data/cifar"
+        root="../data/cifar",
+        download=True
     )
     dataset_train_args = dict(
         transform=cifar10_train_transform
