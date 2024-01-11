@@ -194,3 +194,4 @@ pyrightconfig.json
 !src/data
 lightning_logs
 .aim
+logs
