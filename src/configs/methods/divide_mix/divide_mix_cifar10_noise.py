@@ -18,6 +18,8 @@ class divide_mix_cifar10_noise_config(divide_mix_cifar10_base_config):
     
 class divide_mix_cifar10_noise(divide_mix_cifar10_clean):
 
+    data_config = divide_mix_cifar10_noise_config
+    
     learning_strategy_args = dict(warmup_epochs=10, 
                                   noise_type = "symmetric", 
                                   noise_rate = noise_rate,

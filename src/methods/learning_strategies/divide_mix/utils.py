@@ -32,8 +32,8 @@ def set_predictions(datamodule, pred1, pred2):
     datamodule.train_datasets[BATCH_MAP["labeled2"]].prediction = pred2
     labeled_indices1 = torch.arange(len(pred1))[pred1]
     unlabeled_indices1 = torch.arange(len(pred1))[~pred1]
-    labeled_indices2 = torch.arange(len(pred1))[pred2]
-    unlabeled_indices2 = torch.arange(len(pred1))[~pred2]
+    labeled_indices2 = torch.arange(len(pred2))[pred2]
+    unlabeled_indices2 = torch.arange(len(pred2))[~pred2]
     datamodule.train_datasets[BATCH_MAP["labeled1"]].labeled_indices = labeled_indices1
     datamodule.train_datasets[BATCH_MAP["labeled1"]].unlabeled_indices = unlabeled_indices1
     datamodule.train_datasets[BATCH_MAP["labeled2"]].labeled_indices = labeled_indices2
