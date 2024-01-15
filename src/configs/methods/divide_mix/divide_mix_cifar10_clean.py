@@ -34,7 +34,7 @@ class divide_mix_cifar10_clean(MethodConfig):
     )
 
     learning_strategy_cls = DivideMix
-    learning_strategy_args = dict(warmup_epochs=1, 
+    learning_strategy_args = dict(warmup_epochs=10, 
                                   noise_type = "clean", 
                                   noise_rate = 0,
                                   p_thresh = 0.5, 
