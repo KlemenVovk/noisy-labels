@@ -34,11 +34,13 @@ class NegativeLS(LearningStrategyModule):
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.noisy_class_frequency = torch.zeros(self.num_classes)
     
-    def on_train_epoch_start(self):
-        if self.current_epoch > self.hparams["warmup_epochs"]:
+    def on_train_epoch_end(self):
+        if self.current_epoch == self.hparams["warmup_epochs"]:
             self.criterion = nls_loss
+            # reset optimizer and scheduler
+            # TODO: NegativeLS doesn't work yet, I have to find a way to set up 2 different schedulers with 2 different lr plans...nicely.
+            self.configure_optimizers()
 
-        
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         [[x, y]] = batch
         logits = self.model(x)        

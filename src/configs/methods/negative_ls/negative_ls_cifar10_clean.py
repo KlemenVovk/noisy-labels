@@ -32,7 +32,7 @@ class negative_ls_cifar10_clean(MethodConfig):
 
     learning_strategy_cls = NegativeLS
     learning_strategy_args = {
-        "smooth_rate": -0.6, # has to be negative
+        "smooth_rate": -2.0, # has to be negative
         "warmup_epochs": 120,
     }
 
@@ -42,7 +42,7 @@ class negative_ls_cifar10_clean(MethodConfig):
     scheduler_args = dict(lr_lambda=lambda epoch: lr_plan[epoch])
 
     trainer_args = dict(
-        max_epochs=200,
+        max_epochs=120+200,
         deterministic=True,
         logger=AimLogger(experiment="pls")
     )
