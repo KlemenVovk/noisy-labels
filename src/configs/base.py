@@ -6,6 +6,7 @@ from torch.optim.lr_scheduler import LRScheduler
 
 from lightning import LightningModule, LightningDataModule, Trainer, seed_everything
 from lightning.pytorch.loggers import Logger, CSVLogger # typing
+from lightning.pytorch.callbacks import LearningRateMonitor
 
 from data.datasets.base import DatasetFW
 from data.datamodule import MultiSampleDataModule, ensure_list
@@ -191,6 +192,7 @@ class MethodConfig(Config):
         )
 
         # trainer - needs to be initialised here because seed active needs to be run beforehand
-        trainer = Trainer(**cls.trainer_args)
+        lrmonitor = LearningRateMonitor(logging_interval='step')
+        trainer = Trainer(callbacks=[lrmonitor], **cls.trainer_args)
 
         return model, datamodule, trainer
