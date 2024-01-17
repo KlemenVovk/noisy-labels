@@ -1,6 +1,5 @@
 from typing import Any
 
-import numpy as np
 from tqdm import tqdm
 import lightning as L
 from lightning.pytorch.utilities.types import STEP_OUTPUT
@@ -9,15 +8,13 @@ import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 from torch.utils.data import DataLoader
-
 from sklearn.mixture import GaussianMixture
 
-from methods.learning_strategies.divide_mix.utils import NegEntropy, SemiLoss, BATCH_MAP, end_warmup, set_probabilities, set_predictions
 from methods.learning_strategies.base import LearningStrategyModule
+from methods.learning_strategies.divide_mix.utils import NegEntropy, SemiLoss, BATCH_MAP, end_warmup, set_probabilities, set_predictions
 
 
 class DivideMix(LearningStrategyModule):
-    #initial_lr, momentum, weight_decay, warmup_epochs, noise_type, p_thresh, temperature, alpha, 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
@@ -28,6 +25,7 @@ class DivideMix(LearningStrategyModule):
             optimizer_cls, optimizer_args, 
             scheduler_cls, scheduler_args, *args)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
+        # initial_lr, momentum, weight_decay, warmup_epochs, noise_type, p_thresh, temperature, alpha
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args"])
@@ -172,7 +170,7 @@ class DivideMix(LearningStrategyModule):
             targets_x = targets_x.detach()     
         
         # mixmatch
-        l = np.random.beta(self.hparams.alpha, self.hparams.alpha)        
+        l = torch.distributions.beta.Beta(self.hparams.alpha, self.hparams.alpha).sample().item()
         l = max(l, 1-l)
                 
         all_inputs = torch.cat([inputs_x, inputs_x2, inputs_u, inputs_u2], dim=0)

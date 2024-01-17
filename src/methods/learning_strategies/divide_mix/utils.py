@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -44,7 +43,7 @@ def set_predictions(datamodule, pred1, pred2):
 
 
 def linear_rampup(current, warm_up, rampup_length=16, lambda_u=25):
-    current = np.clip((current-warm_up) / rampup_length, 0.0, 1.0)
+    current = torch.clip((current-warm_up) / rampup_length, min=0.0, max=1.0)
     return lambda_u*float(current)
 
 
