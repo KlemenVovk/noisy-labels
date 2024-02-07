@@ -1,5 +1,6 @@
 from typing import Callable, Any
 from pathlib import Path
+import requests
 
 from torchvision.datasets import EuroSAT as EuroSATPT
 from torchvision import transforms
@@ -7,7 +8,9 @@ from torchvision import transforms
 from .base import DatasetFW
 
 
-class EuroSAT(EuroSATPT, DatasetFW): # this is perhaps not very nice
+# TODO: download fails because some ssl certificate or sth
+
+class EuroSAT(EuroSATPT, DatasetFW):
 
     _split_url = "https://storage.googleapis.com/remote_sensing_representations/eurosat-test.txt"
     _split_name = "eurosat-test.txt"
@@ -24,9 +27,6 @@ class EuroSAT(EuroSATPT, DatasetFW): # this is perhaps not very nice
 
         # download test split
         if download:
-            import requests
-            import ssl # TODO remove this hack
-            ssl._create_default_https_context = ssl._create_unverified_context
             response = requests.get(self._split_url)
             with open(root_path / self._split_name, "wb") as f:
                 f.write(response.content)
