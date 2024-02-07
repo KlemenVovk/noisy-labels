@@ -43,9 +43,6 @@ class EuroSAT(EuroSATPT, DatasetFW): # this is perhaps not very nice
             return fname in test_fnames
         self.samples = [s for s in self.samples if in_split(s[0])]
     
-    def setup(self) -> None:
-        pass
-
     @property
     def num_classes(self) -> int:
         return 10
