@@ -1,32 +1,16 @@
-import pytest
 from typing import Type
+from configs.base import MethodConfig
+from configs.methods.cores2.cores_cifar10_clean import cores_cifar10_clean
 
-from src.configs.base import Config
-from src.configs.methods.cores2.cores_cifar10_clean import cores_cifar10_clean
+from .utils import Target, RangeTarget, ExactTarget
 
-class Target:
-
-    def __init__(
-        self, 
-        min: float,
-        max: float,
-        exact: float | None = None,
-        tol: float = 1e-3) -> None:
-        self.min, self.max, self.exact, self.tol = min, max, exact, tol
-        
-    def check_hit(self, value: float) -> bool:
-        return self.min <= value <= self.max
-    
-    def check_hit_exact(self, value: float) -> bool:
-        return value == self.exact
-
-
-# {config class: {epoch: target}}
-performance_targets: dict[Type[Config], dict[int, Target]] = {
-    cores_cifar10_clean: {
-        10: Target(68, 76, 73.7420),
-        20: Target(75, 80)
-    }
+# currently hard coded to train_acc
+# TODO: handle other metrics somehow
+performance_targets: dict[Type[MethodConfig], tuple[Target]] = {
+    cores_cifar10_clean: (
+        RangeTarget(epoch=10, min=0.68, max=0.76),
+        ExactTarget(epoch=10, value=0.737420, tol=1e-4),
+    )
 }
 
 
