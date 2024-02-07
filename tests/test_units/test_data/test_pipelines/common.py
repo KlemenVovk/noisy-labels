@@ -1,5 +1,5 @@
 from typing import Any, Tuple
-from src.data.datasets.cifar10 import CIFAR10
+from data.datasets.cifar10 import CIFAR10
 
 class CIFAR10WithExtras(CIFAR10):
     """Adds 2 extra outputs in getitem.

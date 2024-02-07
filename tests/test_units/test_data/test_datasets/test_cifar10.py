@@ -1,4 +1,4 @@
-from src.data.datasets.cifar10 import CIFAR10
+from data.datasets.cifar10 import CIFAR10
 from PIL import Image
 
 

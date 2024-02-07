@@ -1,7 +1,6 @@
-from src.data.datasets.cifar100n import CIFAR100N
+from data.datasets.cifar100n import CIFAR100N
 from PIL import Image
 
-from .common import cifar_save_path, noisylabels_save_path
 
 def test_getitem(shared_tmp_path):
     dataset = CIFAR100N("clean_label", shared_tmp_path / "noisylabels", shared_tmp_path / "cifar", download=True)

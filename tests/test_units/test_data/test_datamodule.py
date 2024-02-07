@@ -1,6 +1,6 @@
 import pytest
-from src.data.datamodule import ensure_list, is_broadcastable, broadcast_init, MultiSampleDataModule 
-from src.data.datasets.cifar10 import CIFAR10
+from data.datamodule import ensure_list, is_broadcastable, broadcast_init, MultiSampleDataModule 
+from data.datasets.cifar10 import CIFAR10
 
 def test_ensure_list():
     obj1 = "h"
