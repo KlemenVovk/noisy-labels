@@ -49,15 +49,16 @@ class ExactTarget(Target):
 
 class PerfTargetCheckCallback(L.Callback):
 
-    def __init__(self, targets: list[Target] | tuple[Target]) -> None:
+    def __init__(self, target_dict: dict[str, list[Target]]) -> None:
         super().__init__()
-        self.targets = targets
-        self.max_epoch = max(t.epoch for t in targets)
+        self.target_dict = target_dict
+        self.max_epoch = max(t.epoch for ts in self.target_dict.values() for t in ts)
 
     def on_train_epoch_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
         logs = trainer.callback_metrics
         epoch = trainer.current_epoch
-        for target in self.targets:
-            target.shoot(epoch, logs["train_acc"]) # TODO handle different metric targets
+        for metric, targets in self.target_dict.items():
+            for target in targets:
+                target.shoot(epoch, logs[metric]) # TODO: custom metrics work, but maybe need to be checked on_validation_end or sth.
         if epoch == self.max_epoch:
             trainer.should_stop = True
