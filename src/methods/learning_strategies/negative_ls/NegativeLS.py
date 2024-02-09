@@ -8,12 +8,15 @@ import torchmetrics
 from methods.learning_strategies.negative_ls.loss import vanilla_loss, nls_loss
 from methods.learning_strategies.base import LearningStrategyModule
 
+# TODO: doesn't work yet, will finalize it later
+# TODO: warmup used, manual optimization, lsits of optimizers and schedulers and args...
+
 class NegativeLS(LearningStrategyModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: type[Optimizer], optimizers_args: dict,
+                 scheduler_cls: type[LRScheduler], schedulers_args: dict,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
