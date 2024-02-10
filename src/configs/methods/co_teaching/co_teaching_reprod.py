@@ -38,7 +38,7 @@ class cifar10_noise_index(cifar10_base_config):
     )
     datamodule_args = dict(
         batch_size=128,
-        num_workers=0
+        num_workers=2
     )
 
 class co_teaching_reprod(MethodConfig):
