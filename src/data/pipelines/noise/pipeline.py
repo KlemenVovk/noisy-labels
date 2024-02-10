@@ -25,6 +25,10 @@ class AddNoise(AugmentationPipeline):
                 super().__init__(*dataset_args, **dataset_kwargs)
                 self.noise = noise_
 
+                # precache noise so its consitent between workers
+                for i in range(len(self)):
+                    self[i]
+
             def __getitem__(self, index):
                 # add noise to targets
                 (x, y, *other) = super().__getitem__(index)
