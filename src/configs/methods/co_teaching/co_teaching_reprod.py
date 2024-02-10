@@ -36,6 +36,10 @@ class cifar10_noise_index(cifar10_base_config):
         train=False,
         transform=ToTensor()
     )
+    datamodule_args = dict(
+        batch_size=128,
+        num_workers=0
+    )
 
 class co_teaching_reprod(MethodConfig):
 
