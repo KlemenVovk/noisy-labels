@@ -8,7 +8,7 @@ from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
 from methods.learning_strategies.base import LearningStrategyModule
 
-from .utils import loss_coteaching
+from .utils import loss_coteaching, loss_coteaching_plus
 
 # NOTE: needs AddIndex dataset augmentation
 
@@ -30,7 +30,7 @@ class CoTeaching(LearningStrategyModule):
         
         self.model1 = classifier_cls(**classifier_args)
         self.model2 = classifier_cls(**classifier_args)
-        self.criterion = loss_coteaching # basic CE
+        self.criterion = loss_coteaching
         
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
@@ -90,3 +90,54 @@ class CoTeaching(LearningStrategyModule):
         scheduler1 = self.scheduler_cls(optim1, **self.scheduler_args)
         scheduler2 = self.scheduler_cls(optim2, **self.scheduler_args)        
         return [optim1, optim2], [scheduler1, scheduler2]
+
+class CoTeachingPlus(CoTeaching):
+
+    def __init__(self, datamodule: L.LightningDataModule, 
+                 classifier_cls: type, classifier_args: dict, 
+                 optimizer_cls: Optimizer, optimizer_args: dict, 
+                 scheduler_cls: LRScheduler, scheduler_args: dict, 
+                 forget_rate: float, exponent: float, num_gradual: int,
+                 init_epoch: int,
+                 num_epochs: int, *args: Any, **kwargs: Any) -> None:
+        super().__init__(
+            datamodule, classifier_cls, classifier_args, 
+            optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, 
+            forget_rate, exponent, num_gradual, num_epochs, *args, **kwargs)
+        
+        self.init_epoch = init_epoch
+        self.init_criterion = loss_coteaching
+        self.criterion = loss_coteaching_plus
+
+    def training_step(self, batch: Any, batch_idx: int) -> None:
+        optim1, optim2 = self.optimizers()
+        x, y_noise, idxs = batch[0]
+        
+        # forward
+        logits1 = self.model1(x)
+        logits2 = self.model2(x)
+
+        # calculate losses
+        if self.current_epoch < self.init_epoch:
+            loss1, loss2 = loss1, loss2 = self.init_criterion(
+                logits1, logits2, y_noise,
+                self.rate_schedule[self.current_epoch], idxs)
+        else:
+            loss1, loss2 = self.criterion(
+                logits1, logits2, y_noise, 
+                self.rate_schedule[self.current_epoch], idxs, self.current_epoch*batch_idx)
+        
+        # backward and step
+        optim1.zero_grad()
+        loss1.backward()
+        optim1.step()
+        
+        optim2.zero_grad()
+        loss2.backward()
+        optim2.step()
+        
+        # log allat
+        self.log("train_loss1", loss1, prog_bar=True)
+        self.log("train_loss2", loss2, prog_bar=True)
+        self.log("train_acc1", self.train_acc(logits1, y_noise), on_epoch=True, on_step=False)
+        self.log("train_acc2", self.train_acc(logits2, y_noise), on_epoch=True, on_step=False)
