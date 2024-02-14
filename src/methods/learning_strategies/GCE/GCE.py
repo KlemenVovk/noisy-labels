@@ -87,8 +87,9 @@ class GCE(LearningStrategyModule):
         self.log("val_acc", self.val_acc(y_pred, y_true))
 
     def on_validation_end(self) -> None:
+        # TODO: data leak if you have test set as validation set
         # save model if it has highest val_acc
-        val_acc = self.trainer.callback_metrics["val_acc"] # maybe there is a cleaner way
+        val_acc = self.trainer.callback_metrics["val_acc"]
         if val_acc > self.best_acc:
             torch.save(self.model, self.best_model_path)
             self.best_acc = val_acc
