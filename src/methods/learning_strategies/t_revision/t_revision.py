@@ -7,7 +7,7 @@ from lightning.pytorch.utilities.types import STEP_OUTPUT
 import torch
 from torch import nn
 from torch.nn import functional as F
-from torch.optim import Optimizer, Adam, SGD
+from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
 from torch.nn.functional import cross_entropy
@@ -16,14 +16,15 @@ from methods.learning_strategies.base import LearningStrategyModule
 from .utils import ReweightLoss, ReweightRevisionLoss
 from ..FBT.utils import estimate_noise_mtx
 
-# TODO: fix the optimizers so they are not hardcoded
+# TODO: in configs, try to figure out how
+# to show the correct amount of expected parameters
 
 class TRevision(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: list[type[Optimizer]], optimizer_args: list[dict],
+                 scheduler_cls: list[type[LRScheduler]], scheduler_args: list[dict],
                  stage_epochs: list[int],
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -101,17 +102,23 @@ class TRevision(LearningStrategyModule):
     
     def configure_optimizers(self):
         # optimizers
-        optim_stage0 = SGD(self.model.parameters(), lr=0.01, weight_decay=1e-4)
-        optim_stage1 = SGD(self.model.parameters(), lr=0.01, weight_decay=1e-4, momentum=0.9)
-        optim_stage2 = Adam(
+        optim_stage0 = self.optimizer_cls[0](
+            self.model.parameters(),
+            **self.optimizer_args[0]
+        )
+        optim_stage1 = self.optimizer_cls[1](
+            self.model.parameters(),
+            **self.optimizer_args[1]
+        )
+        optim_stage2 = self.optimizer_cls[2](
             list(self.model.parameters()) + [self.T_revision],
-            lr=5e-7, weight_decay=1e-4,
+            **self.optimizer_args[2]
         )
 
         # schedulers
-        sch_stage0 = self.scheduler_cls(optim_stage0, **self.scheduler_args)
-        sch_stage1 = self.scheduler_cls(optim_stage1, **self.scheduler_args)
-        sch_stage2 = self.scheduler_cls(optim_stage2, **self.scheduler_args)
+        sch_stage0 = self.scheduler_cls[0](optim_stage0, **self.scheduler_args[0])
+        sch_stage1 = self.scheduler_cls[1](optim_stage1, **self.scheduler_args[1])
+        sch_stage2 = self.scheduler_cls[2](optim_stage2, **self.scheduler_args[2])
         return [optim_stage0, optim_stage1, optim_stage2], [sch_stage0, sch_stage1, sch_stage2]
     
     ###################
