@@ -6,28 +6,39 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
 from methods.learning_strategies.negative_ls.loss import vanilla_loss, nls_loss
-from methods.learning_strategies.base import LearningStrategyModule
+from methods.learning_strategies.base import LearningStrategyWithWarmupModule
 
 # TODO: doesn't work yet, will finalize it later
 # TODO: warmup used, manual optimization, lsits of optimizers and schedulers and args...
 
-class NegativeLS(LearningStrategyModule):
+class NegativeLS(LearningStrategyWithWarmupModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizers_args: dict,
-                 scheduler_cls: type[LRScheduler], schedulers_args: dict,
+                 optimizer_cls: list[type[Optimizer]],
+                 optimizer_args: list[dict],
+                 scheduler_cls: list[type[LRScheduler]],
+                 scheduler_args: list[dict],
+                 warmup_epochs: int,
+                 smooth_rate: float,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
-            optimizer_cls, optimizer_args, 
-            scheduler_cls, scheduler_args)
+            optimizer_cls,
+            optimizer_args,
+            scheduler_cls,
+            scheduler_args,
+            warmup_epochs, *args, **kwargs)
+
+        self.automatic_optimization = False
+
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
         self.save_hyperparameters()
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
-        self.criterion = vanilla_loss
+        self.criterion = lambda logits, y: vanilla_loss(logits, y, self.hparams.smooth_rate)
+        self.stage = 0
         
         # init model
         self.model = classifier_cls(**classifier_args)
@@ -39,20 +50,27 @@ class NegativeLS(LearningStrategyModule):
     
     def on_train_epoch_end(self):
         if self.current_epoch == self.hparams["warmup_epochs"]:
-            self.criterion = nls_loss
+            self.criterion = lambda logits, y: nls_loss(logits, y, self.hparams.smooth_rate)
+            self.stage = 1
             # reset optimizer and scheduler
-            # TODO: NegativeLS doesn't work yet, I have to find a way to set up 2 different schedulers with 2 different lr plans...nicely.
             self.configure_optimizers()
+        scheduler = self.lr_schedulers()
+        scheduler.step()
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         [[x, y]] = batch
+        optimizer = self.optimizers()
+        optimizer.zero_grad()
         logits = self.model(x)        
         # clean_indicators is a list of 0s and 1s, where 1 means that the label is "predicted" to be clean, 0 means that the label is "predicted" to be noisy
         loss = self.criterion(logits, y)
         self.train_acc(logits, y)
         self.log('train_loss', loss, prog_bar=True)
         self.log('train_acc', self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
+        self.manual_backward(loss)
+        optimizer.step()
         return loss
+    
 
     
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
@@ -65,6 +83,6 @@ class NegativeLS(LearningStrategyModule):
         return loss
     
     def configure_optimizers(self):
-        optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
-        scheduler = self.scheduler_cls(optimizer, **self.scheduler_args)
+        optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[self.stage])
+        scheduler = self.scheduler_cls(optimizer, **self.scheduler_args[self.stage])
         return [optimizer], [scheduler]
