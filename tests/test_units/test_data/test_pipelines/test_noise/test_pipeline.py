@@ -1,8 +1,8 @@
 import torch
 from PIL import Image
 
-from src.data.pipelines.noise.pipeline import AddNoise
-from src.data.pipelines.noise.noises import InstanceNoise
+from data.pipelines.noise.pipeline import AddNoise
+from data.pipelines.noise.noises import InstanceNoise
 
 from ..common import CIFAR10, CIFAR10WithExtras, args
 

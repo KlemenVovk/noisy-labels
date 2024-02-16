@@ -1,5 +1,5 @@
 from PIL import Image
-from src.data.pipelines.index import AddIndex
+from data.pipelines.index import AddIndex
 
 from .common import CIFAR10, CIFAR10WithExtras, args
 

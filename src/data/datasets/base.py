@@ -4,7 +4,6 @@ from typing import Tuple, Any
 from torch.utils.data.dataset import Dataset as DatasetPT
 from torch import Tensor
 
-# TODO setup needs to be changed somehow as it is currently broken
 
 class DatasetFW(DatasetPT, ABC):
     """Abstract base class for datasets in this (F)rame(W)ork.
@@ -13,9 +12,6 @@ class DatasetFW(DatasetPT, ABC):
     pytorch dataset, the framework requires also implementation of:
     
     - num_classes property: Number of classification label classes.
-    - setup method: Downloads or prepares needed resources
-                    For example, check if images are 
-                    downloaded and if they are not, download them.
     """
 
     @abstractmethod
@@ -25,13 +21,7 @@ class DatasetFW(DatasetPT, ABC):
     @abstractmethod
     def __len__(self) -> int:
         raise NotImplementedError
-    
-    @classmethod
-    @abstractmethod
-    def setup(cls) -> None:
-        # download data and whatnot if needed
-        raise NotImplementedError
-    
+      
     @property
     @abstractmethod
     def num_classes(self) -> int:

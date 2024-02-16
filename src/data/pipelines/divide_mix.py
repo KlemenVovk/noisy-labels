@@ -1,15 +1,13 @@
 import torch
-from PIL import Image
+from torch import Tensor
 
+from .noise.noises import Noise
 from .base import AugmentationPipeline
 
 
 class DivideMixify(AugmentationPipeline):
     """
-
-    Args:
-        noise (Noise): Noise to transform the labels with.
-        keep_original (bool): Whether to return original label as well or not.
+        DivideMix implementation based on https://openreview.net/pdf?id=HJgExaVtwr
     """
 
     def __init__(self) -> None:
@@ -60,3 +58,23 @@ class DivideMixify(AugmentationPipeline):
                 self.train_dataset2.mode = 'labeled'
                 
         return DivideMixCIFAR10Dataset
+
+
+class DivideMixSymmetricNoise(Noise):
+    """
+        Symmetric noise implementation based on 
+        https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/dataloader_cifar.py#L58-L78
+        This is different from our implementation where the expected noise rate is noise_rate,
+        whereas here the expected noise rate is noise_rate - 1/num_classes * noise_rate.
+    """
+    def __init__(self, noise_rate, num_samples, num_classes) -> None:
+        super().__init__()
+        idx = torch.randperm(num_samples)
+        num_noise = int(noise_rate*num_samples)
+        self.noise_idx = idx[:num_noise]
+        self.num_classes = num_classes
+
+    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+        if index in self.noise_idx:
+            return torch.randint(0, self.num_classes, (1,1)).item()
+        return target

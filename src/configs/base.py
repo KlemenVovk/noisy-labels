@@ -162,10 +162,12 @@ class MethodConfig(Config):
     learning_strategy_cls: Type[LightningModule] = None
     learning_strategy_args: dict = dict()
 
-    optimizer_cls: Type[Optimizer] = None
-    optimizer_args: dict = dict()
-    scheduler_cls: Type[LRScheduler] = None
-    scheduler_args: dict = dict()
+    # this is handled entirely in method's lightning 
+    # module so anything really can be passed in here
+    optimizer_cls: Type[Optimizer] | list[Type[Optimizer]] = None
+    optimizer_args: dict | list[dict] = dict()
+    scheduler_cls: Type[LRScheduler] | list[Type[LRScheduler]] = None
+    scheduler_args: dict | list[dict] = dict()
 
     # lightning trainer and additional parameters that are not logger
     trainer_args: dict = dict()

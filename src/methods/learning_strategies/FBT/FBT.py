@@ -27,7 +27,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
             optimizer_cls, optimizer_args, scheduler_cls,
             scheduler_args, warmup_epochs, *args, **kwargs)
         
-        # so we can mess around with the schedulers and optimizers
+        # so we can mess around with schedulers and optimizers
         self.automatic_optimization = False
 
         # standard stuff
@@ -40,7 +40,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         
         # criterion changes after warmup
-        self.warmup_epochs = warmup_epochs
+        self.warmup_epochs = warmup_epochs - 1 if warmup_epochs > 1 else 0 # :)
         self.criterion = F.cross_entropy
         self.alt_criterion_cls = ForwardTLoss
         self.training_step_outputs = [] # for noise estimation
@@ -83,6 +83,8 @@ class ForwardT(LearningStrategyWithWarmupModule):
 
         # switch to noise-corrected loss
         if self.current_epoch == self.warmup_epochs:
+            print("switching to noise corrected training...")
+
             # estimate noise transition matrix
             all_preds = torch.cat(self.training_step_outputs, dim=0)
             X_prob = F.softmax(all_preds, dim=-1)
@@ -94,7 +96,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
             # reinit the model
             self.model = self.model_reinit
 
-            # clear training step outputs
+            # clear training step outputs and old model
             self.training_step_outputs = []
     
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
@@ -114,7 +116,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
         return [optim_warmup, optim], [scheduler_warmup, scheduler]    
 
 
-class BackwardT(ForwardTLoss):
+class BackwardT(ForwardT):
 
     def __init__(self, 
                  datamodule: L.LightningDataModule, 
@@ -127,4 +129,4 @@ class BackwardT(ForwardTLoss):
             datamodule, classifier_cls, classifier_args, 
             optimizer_cls, optimizer_args, scheduler_cls, 
             scheduler_args, warmup_epochs, *args, **kwargs)
-        self.criterion = BackwardTLoss
+        self.alt_criterion_cls = BackwardTLoss

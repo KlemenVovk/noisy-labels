@@ -112,13 +112,8 @@ class MultiSampleDataModule(LightningDataModule):
         return self.train_datasets[0].num_classes
 
     def setup(self, stage: str = None) -> None:
-        # setup/prepare/download datasets
-        for train_dataset in self.train_datasets:
-            train_dataset.setup()
-        for val_dataset in self.val_datasets:
-            val_dataset.setup()
-        for test_dataset in self.test_datasets:
-            test_dataset.setup()
+        # TODO: figure out how to handle setup
+        pass
     
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         return [DataLoader(td, self.batch_size, shuffle=True, num_workers=self.num_workers)
