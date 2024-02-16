@@ -8,9 +8,6 @@ import torchmetrics
 from methods.learning_strategies.negative_ls.loss import vanilla_loss, nls_loss
 from methods.learning_strategies.base import LearningStrategyWithWarmupModule
 
-# TODO: doesn't work yet, will finalize it later
-# TODO: warmup used, manual optimization, lsits of optimizers and schedulers and args...
-
 class NegativeLS(LearningStrategyWithWarmupModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
@@ -49,17 +46,19 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         self.noisy_class_frequency = torch.zeros(self.num_classes)
     
     def on_train_epoch_end(self):
-        if self.current_epoch == self.hparams["warmup_epochs"]:
+        if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
             self.criterion = lambda logits, y: nls_loss(logits, y, self.hparams.smooth_rate)
             self.stage = 1
-            # reset optimizer and scheduler
-            self.configure_optimizers()
-        scheduler = self.lr_schedulers()
-        scheduler.step()
+        else:
+            # step the scheduler
+            scheduler = self.lr_schedulers()[self.stage]
+            print(self.current_epoch, self.stage, scheduler)
+            scheduler.step()
+
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         [[x, y]] = batch
-        optimizer = self.optimizers()
+        optimizer = self.optimizers()[self.stage]
         optimizer.zero_grad()
         logits = self.model(x)        
         # clean_indicators is a list of 0s and 1s, where 1 means that the label is "predicted" to be clean, 0 means that the label is "predicted" to be noisy
@@ -83,6 +82,6 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         return loss
     
     def configure_optimizers(self):
-        optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[self.stage])
-        scheduler = self.scheduler_cls(optimizer, **self.scheduler_args[self.stage])
-        return [optimizer], [scheduler]
+        optimizers = [self.optimizer_cls(self.model.parameters(), **optimizer_args) for optimizer_args in self.optimizer_args]
+        schedulers = [self.scheduler_cls(optimizer, **scheduler_args) for scheduler_args, optimizer in zip(self.scheduler_args, optimizers)]
+        return optimizers, schedulers

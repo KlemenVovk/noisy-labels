@@ -2,7 +2,7 @@ from lightning import Trainer
 from aim.pytorch_lightning import AimLogger
 
 from torch.optim import SGD
-from torch.optim.lr_scheduler import LambdaLR
+from torch.optim.lr_scheduler import LambdaLR, MultiStepLR
 
 from methods.classifiers.resnet import resnet34
 from methods.classifiers.glsresnet import ResNet34 # They are using their own resnet
@@ -14,11 +14,18 @@ from configs.data.cifar10 import cifar10_base_config
 from data.pipelines.noise.noises import SymmetricNoise
 from data.pipelines.noise.pipeline import AddNoise
 
-lr_plan_main = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
 lr_plan_warmup = [0.1] * 40 + [0.01] * 40 + [0.001] * 40
+lr_plan_main = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
+
+
+lr_plan_warmup = [0.15, 0.1, 0.05]
+lr_plan_main = lr_plan_warmup[::-1]
+lr_plan_main = [0] * len(lr_plan_warmup) + lr_plan_main
+print(lr_plan_warmup)
+print(lr_plan_main)
 
 class cifar10_noise(cifar10_base_config):
-    dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.2))
+    dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
 
 class negative_ls_cifar10_noise(MethodConfig):
     data_config = cifar10_noise
@@ -36,8 +43,9 @@ class negative_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = NegativeLS
     learning_strategy_args = {
-        "smooth_rate": -2.0, # has to be negative
-        "warmup_epochs": 120,
+        "smooth_rate": -6.0, # has to be negative
+        # "warmup_epochs": 120,
+        "warmup_epochs": 3,
     }
 
     optimizer_cls = SGD
@@ -45,8 +53,10 @@ class negative_ls_cifar10_noise(MethodConfig):
     scheduler_cls = LambdaLR
     scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch])]
 
+
     trainer_args = dict(
-        max_epochs=120+200,
+        max_epochs=3+3,
+        # max_epochs=120+200,
         deterministic=True,
         logger=AimLogger(experiment="pls")
     )
