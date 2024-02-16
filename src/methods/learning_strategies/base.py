@@ -75,7 +75,7 @@ class MultiStageLearningStrategyModule(LearningStrategyModule):
         # training_step + optimize
         loss = training_step(batch, batch_idx)
         optim.zero_grad()
-        loss.backward()
+        self.manual_backward(loss)
         optim.step()
 
     def on_train_epoch_end(self) -> None:

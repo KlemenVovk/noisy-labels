@@ -58,11 +58,11 @@ class CoTeaching(LearningStrategyModule):
         
         # backward and step
         optim1.zero_grad()
-        loss1.backward()
+        self.manual_backward(loss1)
         optim1.step()
         
         optim2.zero_grad()
-        loss2.backward()
+        self.manual_backward(loss2)
         optim2.step()
         
         # log allat
@@ -129,11 +129,11 @@ class CoTeachingPlus(CoTeaching):
         
         # backward and step
         optim1.zero_grad()
-        loss1.backward()
+        self.manual_backward(loss1)
         optim1.step()
         
         optim2.zero_grad()
-        loss2.backward()
+        self.manual_backward(loss2)
         optim2.step()
         
         # log allat

@@ -60,7 +60,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
         loss = self.criterion(y_pred, y_noise)
 
         # backward pass
-        loss.backward()
+        self.manual_backward(loss)
         opt.step()
 
         # save predictions on last warmup epoch
