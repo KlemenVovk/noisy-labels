@@ -37,6 +37,10 @@ class LearningStrategyWithWarmupModule(LearningStrategyModule):
         )
         self.warmup_epochs = warmup_epochs
 
+
+# TODO: test - what happens if you go over the cumsum
+# TODO: stage skipping
+
 class MultiStageLearningStrategyModule(LearningStrategyModule):
     
     def __init__(self, 
@@ -51,6 +55,7 @@ class MultiStageLearningStrategyModule(LearningStrategyModule):
             optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs
         )
         self.stage_epoch_cumsum = list(accumulate(stage_epochs))
+        self.automatic_optimization = False
     
     @property
     def current_stage(self):

@@ -17,6 +17,7 @@ from ..FBT.utils import estimate_noise_mtx
 
 # TODO: in configs, try to figure out how
 # to show the correct amount of expected parameters
+# A: typing Annotated[list[int], 3]
 
 class TRevision(MultiStageLearningStrategyModule):
 
@@ -46,9 +47,6 @@ class TRevision(MultiStageLearningStrategyModule):
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
-
-        # auto opt OFF
-        self.automatic_optimization = False
 
         #TODO: maybe it's better to dump model to disk
         # misc
