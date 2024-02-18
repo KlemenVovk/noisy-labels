@@ -11,6 +11,7 @@ from methods.learning_strategies.base import LearningStrategyModule
 from .utils import loss_coteaching, loss_coteaching_plus
 
 # NOTE: needs AddIndex dataset augmentation
+# TODO: figure out how to make CoTeachingPlus cleaner, since only loss calc is different
 
 class CoTeaching(LearningStrategyModule):
 
@@ -37,8 +38,8 @@ class CoTeaching(LearningStrategyModule):
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
         # forget rate scheduling
-        self.rate_schedule = torch.ones(num_epochs) * forget_rate
-        self.rate_schedule[:num_gradual] = torch.linspace(0, forget_rate ** exponent, num_gradual)
+        self.forget_rate_schedule = torch.ones(num_epochs) * forget_rate
+        self.forget_rate_schedule[:num_gradual] = torch.linspace(0, forget_rate ** exponent, num_gradual)
 
         # turn off auto optim so we can cook
         self.automatic_optimization = False
@@ -54,7 +55,7 @@ class CoTeaching(LearningStrategyModule):
         # calculate losses
         loss1, loss2 = self.criterion(
             logits1, logits2, y_noise, 
-            self.rate_schedule[self.current_epoch], idxs)
+            self.forget_rate_schedule[self.current_epoch], idxs)
         
         # backward and step
         optim1.zero_grad()
@@ -119,13 +120,13 @@ class CoTeachingPlus(CoTeaching):
 
         # calculate losses
         if self.current_epoch < self.init_epoch:
-            loss1, loss2 = loss1, loss2 = self.init_criterion(
+            loss1, loss2 = self.init_criterion(
                 logits1, logits2, y_noise,
-                self.rate_schedule[self.current_epoch], idxs)
+                self.forget_rate_schedule[self.current_epoch], idxs)
         else:
             loss1, loss2 = self.criterion(
                 logits1, logits2, y_noise, 
-                self.rate_schedule[self.current_epoch], idxs, self.current_epoch*batch_idx)
+                self.forget_rate_schedule[self.current_epoch], idxs, self.current_epoch*batch_idx)
         
         # backward and step
         optim1.zero_grad()

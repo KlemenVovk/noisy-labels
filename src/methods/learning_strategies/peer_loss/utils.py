@@ -18,7 +18,7 @@ class CrossEntropyLossStable(nn.Module):
 
 # TODO: rewrite so it's not hardcoded to max of 340 epochs
 def f_alpha(epoch, r=0.1):
-    if r == 0.1 or r == 0.2:
+    if r <= 0.3:
     # Sparse setting
         alpha1 = torch.linspace(0.0, 0.0, 20)
         alpha2 = torch.linspace(0.0, 1, 20)
@@ -34,13 +34,13 @@ def f_alpha(epoch, r=0.1):
         alpha4 = torch.linspace(2, 2.5, 50)
         alpha5 = torch.linspace(2.5, 3.3, 100)
         alpha6 = torch.linspace(3.3, 5, 100)
-     
     alpha = torch.concatenate((alpha1, alpha2, alpha3, alpha4, alpha5, alpha6),axis=0)
+    epoch = max(0, min(epoch, 339)) # clamp so it's in range
     return alpha[epoch]
 
-lr_list = [0.1] * 40 + [0.01] * 40 + [0.001] * 40 + [1e-4] * 40 + [1e-5] * 40 + [1e-6] * 40 +  [1e-7] * 40 +  [1e-8] * 20
-
 def lr_plan(epoch):
+    epoch = max(0, min(epoch, 319))
+    lr_list = [0.1] * 40 + [0.01] * 40 + [0.001] * 40 + [1e-4] * 40 + [1e-5] * 40 + [1e-6] * 40 +  [1e-7] * 40 +  [1e-8] * 20
     return lr_list[epoch] / (1 + f_alpha(epoch))
 
 # TODO: remove everything below
