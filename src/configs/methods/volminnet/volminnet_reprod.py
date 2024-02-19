@@ -32,10 +32,10 @@ class volminnet_reprod(MethodConfig):
         lam=1e-4
     )
 
-    optimizer_cls = [SGD, Adam]
+    optimizer_cls = [SGD, SGD]
     optimizer_args = [
         dict(lr=0.01, momentum=0.9, weight_decay=1e-4),
-        dict(lr=0.01)
+        dict(lr=0.01, momentum=0.9)
     ]
     
     scheduler_cls = [MultiStepLR, MultiStepLR]

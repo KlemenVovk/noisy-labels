@@ -25,7 +25,7 @@ class VolMinNet(LearningStrategyModule):
                
         self.model = classifier_cls(**classifier_args)
         self.t_model = SigT(self.datamodule.num_classes)
-        self.criterion = lambda logits, true, T: F.cross_entropy(logits, true) +\
+        self.criterion = lambda logits, true, T: F.nll_loss(logits, true) +\
             lam * T.slogdet().logabsdet
         
         # metrics
