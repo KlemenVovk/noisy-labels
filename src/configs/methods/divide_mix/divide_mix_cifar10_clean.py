@@ -2,7 +2,6 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
 
-from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.divide_mix.utils import ResNet18
 from methods.learning_strategies.divide_mix.divide_mix import DivideMix
 

@@ -2,7 +2,8 @@ from pytorch_lightning.loggers import CSVLogger
 
 from data.pipelines.base import Compose
 from data.pipelines.noise.pipeline import AddNoise
-from data.pipelines.divide_mix import DivideMixify, DivideMixSymmetricNoise
+from data.pipelines.noise.noises import BiasedSymmetricNoise
+from data.pipelines.divide_mix import DivideMixify
 from configs.methods.divide_mix.divide_mix_cifar10_clean import divide_mix_cifar10_base_config, divide_mix_cifar10_clean
 
 
@@ -11,7 +12,7 @@ noise_rate = 0.5
 
 class divide_mix_cifar10_noise_config(divide_mix_cifar10_base_config):
     dataset_train_augmentation = Compose([
-        AddNoise(noise=DivideMixSymmetricNoise(noise_rate=noise_rate, num_samples=50000, num_classes=10)), 
+        AddNoise(noise=BiasedSymmetricNoise(noise_rate=noise_rate, num_samples=50000, num_classes=10)), 
         DivideMixify()])
 
     
