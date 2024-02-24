@@ -37,7 +37,7 @@ class negative_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = NegativeLS
     learning_strategy_args = {
-        "smooth_rate": -6.0,
+        "smooth_rate": -6.0, # has to be negative
         "warmup_epochs": 120,
     }
 

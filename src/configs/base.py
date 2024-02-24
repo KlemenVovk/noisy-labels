@@ -195,6 +195,6 @@ class MethodConfig(Config):
 
         # trainer - needs to be initialised here because seed active needs to be run beforehand
         lrmonitor = LearningRateMonitor(logging_interval='step')
-        trainer = Trainer(callbacks=[lrmonitor], **cls.trainer_args)
+        trainer = Trainer(callbacks=[lrmonitor], devices=[int(d_ix.strip()) for d_ix in cls.devices.split(",")], **cls.trainer_args)
 
         return model, datamodule, trainer

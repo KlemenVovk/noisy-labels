@@ -43,7 +43,6 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
-        self.noisy_class_frequency = torch.zeros(self.num_classes)
     
     def on_train_epoch_end(self):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
@@ -52,7 +51,6 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         else:
             # step the scheduler
             scheduler = self.lr_schedulers()[self.stage]
-            print(self.current_epoch, self.stage, scheduler)
             scheduler.step()
 
 
