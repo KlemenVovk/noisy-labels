@@ -39,6 +39,7 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         
         # init model
         self.model = classifier_cls(**classifier_args)
+        self.model_reinit = classifier_cls(**classifier_args)
         
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -48,6 +49,7 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
             self.criterion = lambda logits, y: loss_gls(logits, y, self.hparams.smooth_rate)
             self.stage = 1
+            self.model = self.model_reinit
         else:
             # step the scheduler
             scheduler = self.lr_schedulers()[self.stage]
@@ -79,6 +81,8 @@ class NegativeLS(LearningStrategyWithWarmupModule):
         return loss
     
     def configure_optimizers(self):
-        optimizers = [self.optimizer_cls(self.model.parameters(), **optimizer_args) for optimizer_args in self.optimizer_args]
-        schedulers = [self.scheduler_cls(optimizer, **scheduler_args) for scheduler_args, optimizer in zip(self.scheduler_args, optimizers)]
-        return optimizers, schedulers
+        optimizer_warmup = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[0])
+        optimizer_main = self.optimizer_cls(self.model_reinit.parameters(), **self.optimizer_args[1])
+        scheduler_warmup = self.scheduler_cls(optimizer_warmup, **self.scheduler_args[0])
+        scheduler_main = self.scheduler_cls(optimizer_main, **self.scheduler_args[1])
+        return [optimizer_warmup, optimizer_main], [scheduler_warmup, scheduler_main]

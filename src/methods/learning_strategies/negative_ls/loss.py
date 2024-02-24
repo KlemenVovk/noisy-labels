@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 
 def vanilla_loss(logits, labels):
-    logprobs = F.log_softmax(y, dim=-1)
+    logprobs = F.log_softmax(logits, dim=-1)
     nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
     nll_loss = nll_loss.squeeze(1)
     loss = nll_loss
