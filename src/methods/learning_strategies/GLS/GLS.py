@@ -5,10 +5,10 @@ import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
-from methods.learning_strategies.negative_ls.loss import vanilla_loss, loss_gls
-from methods.learning_strategies.base import LearningStrategyWithWarmupModule
+from methods.learning_strategies.GLS.loss import vanilla_loss, loss_gls
+from methods.learning_strategies.base import LearningStrategyModule
 
-class NegativeLS(LearningStrategyWithWarmupModule):
+class GLS(LearningStrategyModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
@@ -25,7 +25,7 @@ class NegativeLS(LearningStrategyWithWarmupModule):
             optimizer_args,
             scheduler_cls,
             scheduler_args,
-            warmup_epochs, *args, **kwargs)
+            *args, **kwargs)
 
         self.automatic_optimization = False
 
@@ -47,7 +47,7 @@ class NegativeLS(LearningStrategyWithWarmupModule):
     
     def on_train_epoch_end(self):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
-            self.criterion = lambda logits, y: loss_gls(logits, y, self.hparams.smooth_rate)
+            self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate)
             self.stage = 1
             self.model = self.model_reinit
         else:
@@ -57,18 +57,19 @@ class NegativeLS(LearningStrategyWithWarmupModule):
 
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        print(batch)
-        print(batch.shape)
         [[x, y]] = batch
-        optimizer = self.optimizers()[self.stage]
+        if self.stage == 0:
+            optimizer, _ = self.optimizers()
+        else:
+            _, optimizer = self.optimizers()
         optimizer.zero_grad()
         logits = self.model(x)        
         loss = self.criterion(logits, y)
         self.train_acc(logits, y)
-        self.log('train_loss', loss, prog_bar=True)
-        self.log('train_acc', self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
         self.manual_backward(loss)
         optimizer.step()
+        self.log('train_loss', loss, prog_bar=True)
+        self.log('train_acc', self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
     
 
