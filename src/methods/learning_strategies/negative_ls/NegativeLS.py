@@ -57,11 +57,12 @@ class NegativeLS(LearningStrategyWithWarmupModule):
 
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
+        print(batch)
+        print(batch.shape)
         [[x, y]] = batch
         optimizer = self.optimizers()[self.stage]
         optimizer.zero_grad()
         logits = self.model(x)        
-        # clean_indicators is a list of 0s and 1s, where 1 means that the label is "predicted" to be clean, 0 means that the label is "predicted" to be noisy
         loss = self.criterion(logits, y)
         self.train_acc(logits, y)
         self.log('train_loss', loss, prog_bar=True)
