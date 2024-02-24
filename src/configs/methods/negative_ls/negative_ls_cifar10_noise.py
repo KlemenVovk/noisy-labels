@@ -5,8 +5,9 @@ from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR, MultiStepLR
 
 from methods.classifiers.resnet import resnet34
-from methods.classifiers.glsresnet import ResNet34 # They are using their own resnet
+
 from methods.learning_strategies.negative_ls.NegativeLS import NegativeLS
+from methods.learning_strategies.negative_ls.utils import ResNet34 # They are using their own resnet
 
 from configs.base import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
@@ -16,13 +17,6 @@ from data.pipelines.noise.pipeline import AddNoise
 
 lr_plan_warmup = [0.1] * 40 + [0.01] * 40 + [0.001] * 40
 lr_plan_main = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
-
-
-lr_plan_warmup = [0.15, 0.1, 0.05]
-lr_plan_main = lr_plan_warmup[::-1]
-lr_plan_main = [0] * len(lr_plan_warmup) + lr_plan_main
-print(lr_plan_warmup)
-print(lr_plan_main)
 
 class cifar10_noise(cifar10_base_config):
     dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
@@ -43,20 +37,18 @@ class negative_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = NegativeLS
     learning_strategy_args = {
-        "smooth_rate": -6.0, # has to be negative
-        # "warmup_epochs": 120,
-        "warmup_epochs": 3,
+        "smooth_rate": -6.0,
+        "warmup_epochs": 120,
     }
 
     optimizer_cls = SGD
     optimizer_args = [dict(lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True), dict(lr=0.1, momentum=0.9, weight_decay=1e-4, nesterov=True)]
     scheduler_cls = LambdaLR
-    scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch])]
+    scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch - len(lr_plan_warmup)])]
 
 
     trainer_args = dict(
-        max_epochs=3+3,
-        # max_epochs=120+200,
+        max_epochs=120+200,
         deterministic=True,
         logger=AimLogger(experiment="pls")
     )

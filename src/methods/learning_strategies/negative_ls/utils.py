@@ -7,7 +7,6 @@ Reference:
     Deep Residual Learning for Image Recognition. arXiv:1512.03385
 '''
 
-#! TODO: DELETE this. This is just for testing if we reproduced correctly (they used a modified resnet...)
 
 import torch
 import torch.nn as nn
