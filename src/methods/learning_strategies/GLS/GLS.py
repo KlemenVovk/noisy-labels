@@ -54,6 +54,9 @@ class GLS(LearningStrategyModule):
             # step the scheduler
             scheduler = self.lr_schedulers()[self.stage]
             scheduler.step()
+        with open("test.txt", "a+") as f:
+            f.writelines(f"{vars(self.optimizers()[self.stage])}\n")
+
 
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
