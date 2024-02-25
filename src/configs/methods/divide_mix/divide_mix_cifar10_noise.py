@@ -29,6 +29,7 @@ class divide_mix_cifar10_noise(divide_mix_cifar10_clean):
 
     trainer_args = dict(
         max_epochs=300,
+        reload_dataloaders_every_n_epochs=1,
         deterministic=True,
         # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="divide_mix_symmetric")

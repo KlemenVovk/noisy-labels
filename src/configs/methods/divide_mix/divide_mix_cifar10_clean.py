@@ -2,7 +2,7 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
 
-from methods.learning_strategies.divide_mix.utils import ResNet18
+from methods.learning_strategies.divide_mix.models import ResNet18
 from methods.learning_strategies.divide_mix.divide_mix import DivideMix
 
 from data.pipelines.divide_mix import DivideMixify
@@ -48,6 +48,7 @@ class divide_mix_cifar10_clean(MethodConfig):
 
     trainer_args = dict(
         max_epochs=100,
+        reload_dataloaders_every_n_epochs=1,
         deterministic=True,
         # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="divide_mix_clean")

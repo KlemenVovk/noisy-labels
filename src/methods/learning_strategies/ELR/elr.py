@@ -16,13 +16,14 @@ class ELR(LearningStrategyModule):
                  classifier_cls: type, classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 beta: float, lmbd: float,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, 
-            scheduler_cls, scheduler_args, *args)
+            scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        # initial_lr, momentum, weight_decay, beta, lmbd
+        # beta, lmbd
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args"])
@@ -31,7 +32,7 @@ class ELR(LearningStrategyModule):
 
         # init model
         self.model = classifier_cls(**classifier_args)
-        self.criterion = elr_loss(self.num_training_samples, num_classes=self.num_classes, lmbd=self.hparams.lmbd, beta=self.hparams.beta)
+        self.criterion = elr_loss(self.num_training_samples, num_classes=self.num_classes, lmbd=lmbd, beta=beta)
         self.val_criterion = cross_entropy
 
         # init metrics
@@ -53,11 +54,12 @@ class ELR(LearningStrategyModule):
         x, y_true = batch
         y_pred = self.model(x)
         loss = self.val_criterion(y_pred, y_true)
+        self.val_acc(y_pred, y_true)
         self.log("val_loss", loss)
-        self.log("val_acc", self.val_acc(y_pred, y_true))
+        self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
         scheduler = self.scheduler_cls(optimizer, **self.scheduler_args)
         return [optimizer], [scheduler]

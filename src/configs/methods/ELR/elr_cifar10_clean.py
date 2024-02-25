@@ -2,7 +2,7 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 
-from methods.learning_strategies.ELR.utils import resnet34
+from methods.learning_strategies.ELR.models import resnet34
 from methods.learning_strategies.ELR.elr import ELR
 
 from data.pipelines.index import AddIndex

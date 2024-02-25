@@ -26,7 +26,7 @@ class SOP(LearningStrategyModule):
             optimizer_cls, optimizer_args, 
             scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        # ratio_consistency, ratio_balance, lr_u, lr_v, overparam_weight_decay, overparam_momentum
+        # ratio_consistency, ratio_balance, lr_u, lr_v, overparam_weight_decay, overparam_momentum, overparam_mean, overparam_std
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args", "overparam_optimizer_cls"])
@@ -86,16 +86,15 @@ class SOP(LearningStrategyModule):
 
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        self.model.eval()
         x, y_true = batch
-        with torch.no_grad():
-            y_pred = self.model(x)
-            loss = self.val_criterion(y_pred, y_true)
+        y_pred = self.model(x)
+        loss = self.val_criterion(y_pred, y_true)
+        self.val_acc(y_pred, y_true)
         self.log("val_loss", loss)
-        self.log("val_acc", self.val_acc(y_pred, y_true))
+        self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
         scheduler = self.scheduler_cls(optimizer, **self.scheduler_args)
         overparametrization_params = [

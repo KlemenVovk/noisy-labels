@@ -2,7 +2,7 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
-from methods.learning_strategies.SOP.utils import resnet34
+from methods.learning_strategies.SOP.models import resnet34
 from methods.learning_strategies.SOP.sop import SOP
 
 from data.pipelines.base import Compose

@@ -1,7 +1,7 @@
 from pytorch_lightning.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
-from methods.learning_strategies.ELRplus.utils import PreActResNet18
+from methods.learning_strategies.ELRplus.models import PreActResNet18
 from methods.learning_strategies.ELRplus.elr_plus import ELR_plus
 
 from configs.base import MethodConfig

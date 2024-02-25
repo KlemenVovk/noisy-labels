@@ -5,6 +5,8 @@ import lightning as L
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import torchmetrics
 import torch
+from torch.nn import Module
+from torch.nn.functional import one_hot, softmax
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 from torch.utils.data import DataLoader
@@ -16,21 +18,29 @@ from methods.learning_strategies.divide_mix.utils import NegEntropy, SemiLoss, B
 
 class DivideMix(LearningStrategyModule):
     def __init__(self, datamodule: L.LightningDataModule,
-                 classifier_cls: type, classifier_args: dict,
+                 classifier_cls: type[Module], classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 warmup_epochs: int, noise_type: str, noise_rate: float, 
+                 p_thresh: float, temperature: float, alpha: float,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, 
-            scheduler_cls, scheduler_args, *args)
+            scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        # initial_lr, momentum, weight_decay, warmup_epochs, noise_type, p_thresh, temperature, alpha
+        # warmup_epochs, noise_type, noise_rate, p_thresh, temperature, alpha
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args"])
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
+        self.warmup_epochs = warmup_epochs
+        self.noise_type = noise_type
+        self.noise_rate = noise_rate
+        self.p_thresh = p_thresh
+        self.temperature = temperature
+        self.alpha = alpha
 
         # init model
         self.model1 = classifier_cls(**classifier_args)
@@ -51,14 +61,14 @@ class DivideMix(LearningStrategyModule):
         self.automatic_optimization = False
     
 
-    def on_train_epoch_start(self):
-        if self.current_epoch >= self.hparams.warmup_epochs:
+    def on_train_epoch_start(self) -> None:
+        if self.current_epoch >= self.warmup_epochs:
             data_loader = self.trainer.datamodule.train_dataloader()
             prob1, self.loss_hist1 = self.eval_train(self.model1, self.loss_hist1, data_loader, 1)
             prob2, self.loss_hist2 = self.eval_train(self.model2, self.loss_hist2, data_loader, 2)
 
-            pred1 = (prob1 > self.hparams.p_thresh)
-            pred2 = (prob2 > self.hparams.p_thresh)
+            pred1 = (prob1 > self.p_thresh)
+            pred2 = (prob2 > self.p_thresh)
 
             # set the second model's predictions for the first model's data and vice versa
             # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L267C1-L273C107
@@ -67,14 +77,14 @@ class DivideMix(LearningStrategyModule):
 
 
     def on_train_epoch_end(self) -> None:
-        if self.current_epoch + 1 == self.hparams.warmup_epochs:
+        if self.current_epoch + 1 == self.warmup_epochs:
             end_warmup(self.trainer.datamodule)
         sch1, sch2 = self.lr_schedulers()
         sch1.step()
         sch2.step()
 
 
-    def warmup_step(self, batch: Any, model: torch.nn.Module, opt: torch.optim.Optimizer, batch_idx: int) -> torch.Tensor:
+    def warmup_step(self, batch: Any, model: Module, opt: Optimizer, batch_idx: int) -> torch.Tensor:
         # based on https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L124
         model.train()
         x, y_noisy, _ = batch
@@ -83,8 +93,7 @@ class DivideMix(LearningStrategyModule):
         loss = self.CEloss(outputs, y_noisy.cuda())
         # penalize confident prediction for asymmetric noise
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L132
-        # TODO: This seems like data leakage
-        if self.hparams.noise_type == 'asymmetric':
+        if self.noise_type == 'asymmetric':     # TODO: This seems like data leakage
             penalty = self.conf_penalty(outputs)
             loss += penalty
         
@@ -95,13 +104,13 @@ class DivideMix(LearningStrategyModule):
         return loss
     
 
-    def eval_train(self, model: torch.nn.Module, loss_hist: list, data_loader: DataLoader, i: int) -> torch.Tensor:
+    def eval_train(self, model: Module, loss_hist: list, data_loader: DataLoader, i: int) -> torch.Tensor:
         # based on https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L165
         model.eval()
         losses = torch.zeros(self.num_training_samples).cuda()
         with torch.no_grad():
             for batch in tqdm(data_loader[BATCH_MAP["eval_train"]], desc=f'Label Guessing {i}', leave=False):
-                x, y_noisy, index = batch # TODO: set to index of instance in dataset
+                x, y_noisy, index = batch
                 outputs = model(x.cuda())
                 loss = self.sampleCE(outputs, y_noisy.cuda())
                 for b in range(x.size(0)):
@@ -113,8 +122,7 @@ class DivideMix(LearningStrategyModule):
 
         # average loss over last 5 epochs to improve convergence stability
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L178
-        # TODO: This seems like data leakage
-        if self.hparams.noise_rate == 0.9:
+        if self.noise_rate == 0.9:              # TODO: This seems like data leakage
             history = torch.stack(loss_hist)
             input_loss = history[-5].mean(0)
             input_loss = input_loss.reshape(-1, 1)
@@ -129,9 +137,8 @@ class DivideMix(LearningStrategyModule):
         return prob, loss_hist
     
 
-    def train_step(self, batch_labeled: Any, batch_unlabeled: Any, model: torch.nn.Module, 
-                   fixed_model: torch.nn.Module, opt: torch.optim.Optimizer, batch_idx: int,
-                   num_iter: int) -> torch.Tensor:
+    def train_step(self, batch_labeled: Any, batch_unlabeled: Any, model: Module, 
+                   fixed_model: Module, opt: Optimizer, batch_idx: int, num_iter: int) -> torch.Tensor:
         # based on https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L41
         model.train()
         fixed_model.eval()
@@ -140,11 +147,9 @@ class DivideMix(LearningStrategyModule):
         batch_size = inputs_x.size(0)
 
         # Transform label to one-hot
-        labels_x = torch.zeros(batch_size, self.num_classes).cuda().scatter_(1, labels_x.view(-1,1), 1)        
+        labels_x = one_hot(labels_x)        
         w_x = w_x.view(-1,1).type(torch.FloatTensor) 
 
-        inputs_x, inputs_x2, labels_x, w_x = inputs_x.cuda(), inputs_x2.cuda(), labels_x.cuda(), w_x.cuda()
-        inputs_u, inputs_u2 = inputs_u.cuda(), inputs_u2.cuda()
         with torch.no_grad():
             # label co-guessing of unlabeled samples
             outputs_u11 = model(inputs_u)
@@ -152,8 +157,8 @@ class DivideMix(LearningStrategyModule):
             outputs_u21 = fixed_model(inputs_u)
             outputs_u22 = fixed_model(inputs_u2)            
             
-            pu = (torch.softmax(outputs_u11, dim=1) + torch.softmax(outputs_u12, dim=1) + torch.softmax(outputs_u21, dim=1) + torch.softmax(outputs_u22, dim=1)) / 4       
-            ptu = pu**(1/self.hparams.temperature) # temparature sharpening
+            pu = (softmax(outputs_u11, dim=1) + softmax(outputs_u12, dim=1) + torch.softmax(outputs_u21, dim=1) + torch.softmax(outputs_u22, dim=1)) / 4       
+            ptu = pu**(1/self.temperature) # temparature sharpening
             
             targets_u = ptu / ptu.sum(dim=1, keepdim=True) # normalize
             targets_u = targets_u.detach()       
@@ -162,15 +167,15 @@ class DivideMix(LearningStrategyModule):
             outputs_x = model(inputs_x)
             outputs_x2 = model(inputs_x2)            
             
-            px = (torch.softmax(outputs_x, dim=1) + torch.softmax(outputs_x2, dim=1)) / 2
+            px = (softmax(outputs_x, dim=1) + softmax(outputs_x2, dim=1)) / 2
             px = w_x*labels_x + (1-w_x)*px              
-            ptx = px**(1/self.hparams.temperature) # temparature sharpening 
+            ptx = px**(1/self.temperature) # temparature sharpening 
                        
             targets_x = ptx / ptx.sum(dim=1, keepdim=True) # normalize           
             targets_x = targets_x.detach()     
         
         # mixmatch
-        l = torch.distributions.beta.Beta(self.hparams.alpha, self.hparams.alpha).sample().item()
+        l = torch.distributions.beta.Beta(self.alpha, self.alpha).sample().item()
         l = max(l, 1-l)
                 
         all_inputs = torch.cat([inputs_x, inputs_x2, inputs_u, inputs_u2], dim=0)
@@ -188,12 +193,12 @@ class DivideMix(LearningStrategyModule):
         logits_x = logits[:batch_size*2]
         logits_u = logits[batch_size*2:] 
 
-        Lx, Lu, lamb = self.SemiLoss(logits_x, mixed_target[:batch_size*2], logits_u, mixed_target[batch_size*2:], self.current_epoch+batch_idx/num_iter, self.hparams.warmup_epochs)
+        Lx, Lu, lamb = self.SemiLoss(logits_x, mixed_target[:batch_size*2], logits_u, mixed_target[batch_size*2:], self.current_epoch+batch_idx/num_iter, self.warmup_epochs)
 
         # regularization
         prior = torch.ones(self.num_classes)/self.num_classes
         prior = prior.cuda()        
-        pred_mean = torch.softmax(logits, dim=1).mean(0)
+        pred_mean = softmax(logits, dim=1).mean(0)
         penalty = torch.sum(prior*torch.log(prior/pred_mean))
 
         loss = Lx + lamb * Lu  + penalty
@@ -207,7 +212,7 @@ class DivideMix(LearningStrategyModule):
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         opt1, opt2 = self.optimizers()
-        if self.current_epoch < self.hparams.warmup_epochs:
+        if self.current_epoch < self.warmup_epochs:
             batch1 = batch[BATCH_MAP["warmup1"]]
             batch2 = batch[BATCH_MAP["warmup2"]]
             loss1 = self.warmup_step(batch1, self.model1, opt1, batch_idx)
@@ -232,10 +237,9 @@ class DivideMix(LearningStrategyModule):
         self.model1.eval()
         self.model2.eval()
         x, y = batch
-        with torch.no_grad():
-            outputs1 = self.model1(x.cuda())
-            outputs2 = self.model2(x.cuda())
-            outputs = (outputs1 + outputs2) / 2
+        outputs1 = self.model1(x.cuda())
+        outputs2 = self.model2(x.cuda())
+        outputs = (outputs1 + outputs2) / 2
         self.val_acc(outputs, y)
         loss = self.CEloss(outputs, y.cuda())
         self.log('val_loss', loss, prog_bar=True)
@@ -243,7 +247,7 @@ class DivideMix(LearningStrategyModule):
         return loss
     
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer1 = self.optimizer_cls(self.model1.parameters(), **self.optimizer_args)
         optimizer2 = self.optimizer_cls(self.model2.parameters(), **self.optimizer_args) 
         scheduler1 = self.scheduler_cls(optimizer1, **self.scheduler_args)
