@@ -6,7 +6,7 @@ from methods.learning_strategies.divide_mix.models import ResNet18
 from methods.learning_strategies.divide_mix.divide_mix import DivideMix
 
 from data.pipelines.divide_mix import DivideMixify
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config, cifar10_train_transform
 
 

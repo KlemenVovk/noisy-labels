@@ -5,7 +5,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from methods.learning_strategies.PES.models import ResNet34
 from methods.learning_strategies.PESsemi.pes_semi import PES_semi
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10n import cifar10n_clean_config
 
 

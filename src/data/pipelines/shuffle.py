@@ -27,7 +27,11 @@ class ShuffleSamples(AugmentationPipeline):
 
             def __getitem__(self, index):
                 (_, y, *other) = super().__getitem__(index)
-                (x_shuffled, *_) = super().__getitem__(self.shuffled_idxs[index]) # breaks if super calls __getitem__
+                # hacky fix because this breaks if super calls __getitem__ during init
+                if hasattr(self, "shuffled_idxs"):
+                    (x_shuffled, *_) = super().__getitem__(self.shuffled_idxs[index])
+                else:
+                    x_shuffled = _
                 return x_shuffled, y, *other
 
         return ShuffledDataset

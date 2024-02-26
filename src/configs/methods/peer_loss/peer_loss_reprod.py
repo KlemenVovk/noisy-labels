@@ -12,7 +12,7 @@ from data.pipelines.noise.noises import SymmetricNoise, InstanceNoise
 from data.pipelines.noise.pipeline import AddNoise
 from data.pipelines.shuffle import ShuffleSamples
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 #noise = SymmetricNoise(10, 0.2)

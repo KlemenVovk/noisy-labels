@@ -8,7 +8,7 @@ from methods.learning_strategies.GCE.GCE import GCE
 
 from data.pipelines.index import AddIndex
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 

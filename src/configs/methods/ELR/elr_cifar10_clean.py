@@ -6,7 +6,7 @@ from methods.learning_strategies.ELR.models import resnet34
 from methods.learning_strategies.ELR.elr import ELR
 
 from data.pipelines.index import AddIndex
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 class cifar10_index_config(cifar10_base_config):

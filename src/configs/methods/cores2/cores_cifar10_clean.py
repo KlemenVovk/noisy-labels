@@ -8,7 +8,7 @@ from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.cores2.cores2 import SampleSieve
 from methods.learning_strategies.cores2.utils import f_beta
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 lr_plan = [0.1] * 50 + [0.01] * (50 + 1)

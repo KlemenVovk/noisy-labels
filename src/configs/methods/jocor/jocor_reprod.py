@@ -8,7 +8,7 @@ from methods.learning_strategies.jocor.jocor import JoCoR
 from methods.learning_strategies.jocor.utils import CNN
 from methods.learning_strategies.co_teaching.utils import alpha_schedule
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 from data.pipelines.noise.noises import SymmetricNoise
 from data.pipelines.noise.pipeline import AddNoise

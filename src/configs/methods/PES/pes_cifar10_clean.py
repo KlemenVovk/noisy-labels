@@ -5,7 +5,7 @@ from torch.optim.lr_scheduler import MultiStepLR
 from methods.learning_strategies.PES.models import ResNet18
 from methods.learning_strategies.PES.pes import PES
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 

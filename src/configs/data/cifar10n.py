@@ -1,7 +1,7 @@
 from data.datasets.cifar10 import cifar10_test_transform, cifar10_train_transform
 from data.datasets.cifar10n import CIFAR10N
 
-from configs.base import DataConfig
+from configs.base.data import DataConfig
 
 
 # TODO this is getting out of hand

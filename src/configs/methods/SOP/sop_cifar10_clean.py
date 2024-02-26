@@ -8,7 +8,7 @@ from methods.learning_strategies.SOP.sop import SOP
 from data.pipelines.base import Compose
 from data.pipelines.index import AddIndex
 from data.pipelines.two_images import TwoImages
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 class cifar10_two_images_index_config(cifar10_base_config):

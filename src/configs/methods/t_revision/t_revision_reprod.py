@@ -10,7 +10,7 @@ from methods.learning_strategies.t_revision.t_revision import TRevision
 from data.pipelines.noise.noises import SymmetricNoise
 from data.pipelines.noise.pipeline import AddNoise
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 

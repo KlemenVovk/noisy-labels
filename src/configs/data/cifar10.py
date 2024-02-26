@@ -1,6 +1,6 @@
 from data.datasets.cifar10 import CIFAR10, cifar10_test_transform, cifar10_train_transform
 
-from configs.base import DataConfig
+from configs.base.data import DataConfig
 
 class cifar10_base_config(DataConfig):
 

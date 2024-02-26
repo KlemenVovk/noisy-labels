@@ -1,4 +1,3 @@
-from lightning import Trainer
 from aim.pytorch_lightning import AimLogger
 
 from torch.optim import SGD
@@ -6,14 +5,20 @@ from torch.optim.lr_scheduler import MultiStepLR
 
 from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.CE.CE import CE
-
 from configs.base.method import MethodConfig
-from configs.data.cifar10 import cifar10_base_config
+from configs.data.cifar10 import cifar10_base_config, CIFAR10
+from data.pipelines.split import Split
 
 
-class CE_cifar10_clean(MethodConfig):
+class cifar10_split(cifar10_base_config):
 
-    data_config = cifar10_base_config
+    dataset_cls = [*Split(0.8)(CIFAR10), CIFAR10]
+    dataset_val_args = {**cifar10_base_config.dataset_val_args, "train":True}
+
+
+class CE_cifar10_split(MethodConfig):
+
+    data_config = cifar10_split
 
     classifier = resnet34
     classifier_args = dict(

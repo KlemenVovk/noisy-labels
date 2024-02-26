@@ -6,7 +6,7 @@ from torch.optim.lr_scheduler import MultiStepLR
 from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.FBT.FBT import ForwardT
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 class forwardT_cifar10_clean(MethodConfig):

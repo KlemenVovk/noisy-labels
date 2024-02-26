@@ -4,7 +4,7 @@ from torch.optim.lr_scheduler import MultiStepLR
 from methods.learning_strategies.ELRplus.models import PreActResNet18
 from methods.learning_strategies.ELRplus.elr_plus import ELR_plus
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.methods.ELR.elr_cifar10_clean import cifar10_index_config
 
 
