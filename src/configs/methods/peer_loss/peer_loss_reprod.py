@@ -15,8 +15,10 @@ from data.pipelines.shuffle import ShuffleSamples
 from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
+from pathlib import Path
 #noise = SymmetricNoise(10, 0.2)
-noise = InstanceNoise(torch.load("methods/learning_strategies/peer_loss/reproducibility/original_noise.pt"))
+noise = InstanceNoise(torch.load(Path(__file__).parent.parent.parent.parent / "methods/learning_strategies/peer_loss/reproducibility/original_noise.pt"))
+#noise = InstanceNoise(torch.load("methods/learning_strategies/peer_loss/reproducibility/original_noise.pt"))
 
 class cifar10_noise(cifar10_base_config):
 

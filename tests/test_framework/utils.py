@@ -1,3 +1,4 @@
+from typing import Literal
 import lightning as L
 
 
@@ -54,11 +55,19 @@ class PerfTargetCheckCallback(L.Callback):
         self.target_dict = target_dict
         self.max_epoch = max(t.epoch for ts in self.target_dict.values() for t in ts)
 
-    def on_train_epoch_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+    def _check_metrics(self, split: Literal["train", "val"], trainer: L.Trainer, pl_module: L.LightningModule) -> None:
         logs = trainer.callback_metrics
         epoch = trainer.current_epoch
-        for metric, targets in self.target_dict.items():
+        for metric_name, targets in self.target_dict.items():
+            if split not in metric_name:
+                continue
             for target in targets:
-                target.shoot(epoch, logs[metric]) # TODO: custom metrics work, but maybe need to be checked on_validation_end or sth.
-        if epoch == self.max_epoch:
+                target.shoot(epoch, logs[metric_name])
+        if split == "train" and epoch == self.max_epoch:
             trainer.should_stop = True
+
+    def on_train_epoch_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+        self._check_metrics("train", trainer, pl_module)
+
+    def on_validation_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+        self._check_metrics("val", trainer, pl_module)
