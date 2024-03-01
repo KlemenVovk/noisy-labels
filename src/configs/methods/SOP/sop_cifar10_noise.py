@@ -13,7 +13,7 @@ from configs.methods.SOP.sop_cifar10_clean import sop_cifar10_clean
 class cifar10_two_images_index_noise_config(cifar10_base_config):
 
     dataset_train_augmentation = Compose([
-        AddNoise(noise=BiasedSymmetricNoise(num_classes=10, num_samples=50000, noise_rate=0.5)), 
+        AddNoise(noise=BiasedSymmetricNoise(num_classes=10, noise_rate=0.5)), 
         AddIndex(),
         TwoImages()])
 

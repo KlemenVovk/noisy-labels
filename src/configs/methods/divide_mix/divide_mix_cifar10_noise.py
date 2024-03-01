@@ -12,7 +12,7 @@ noise_rate = 0.5
 
 class divide_mix_cifar10_noise_config(divide_mix_cifar10_base_config):
     dataset_train_augmentation = Compose([
-        AddNoise(noise=BiasedSymmetricNoise(noise_rate=noise_rate, num_samples=50000, num_classes=10)), 
+        AddNoise(noise=BiasedSymmetricNoise(noise_rate=noise_rate, num_classes=10)), 
         DivideMixify()])
 
     
