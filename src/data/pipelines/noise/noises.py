@@ -120,14 +120,13 @@ class BiasedSymmetricNoise(Noise):
         This is different from our implementation where the expected noise rate is noise_rate,
         whereas here the expected noise rate is noise_rate - 1/num_classes * noise_rate.
     """
-    def __init__(self, noise_rate, num_samples, num_classes) -> None:
+    def __init__(self, noise_rate, num_classes) -> None:
         super().__init__()
-        idx = torch.randperm(num_samples)
-        num_noise = int(noise_rate*num_samples)
-        self.noise_idx = idx[:num_noise]
+        self.noise_rate = noise_rate
         self.num_classes = num_classes
 
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
-        if index in self.noise_idx:
+        if torch.rand(1).item() < self.noise_rate:
             return torch.randint(0, self.num_classes, (1,)).item()
         return target
+    
