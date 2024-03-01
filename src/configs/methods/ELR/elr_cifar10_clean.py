@@ -15,6 +15,8 @@ class cifar10_index_config(cifar10_base_config):
 
 class elr_cifar10_clean(MethodConfig):
 
+    data_config = cifar10_index_config
+
     classifier = resnet34
     classifier_args = dict(
         num_classes=10
