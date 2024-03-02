@@ -4,7 +4,7 @@ from configs.base.data import DataConfig
 
 class cifar10_base_config(DataConfig):
 
-    dataset_cls = CIFAR10
+    dataset_train_cls = dataset_val_cls = dataset_test_cls = CIFAR10
     dataset_args = dict(
         root="../data/cifar",
         download=True

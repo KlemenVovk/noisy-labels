@@ -29,11 +29,11 @@ class MultiSampleDataModule(LightningDataModule):
     
     @property
     def num_val_samples(self) -> int:
-        return len(self.val_datasets[0]) # --||--
+        return len(self.val_datasets[0]) if self.val_datasets else 0
     
     @property
     def num_test_samples(self) -> int:
-        return len(self.test_datasets[0]) # --||--
+        return len(self.test_datasets[0]) if self.test_datasets else 0
     
     @property
     def num_classes(self) -> int:

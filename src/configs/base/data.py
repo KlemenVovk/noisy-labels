@@ -1,4 +1,4 @@
-from typing import Any, Callable, Annotated
+from typing import Any, Callable
 
 from lightning import LightningDataModule
 
@@ -32,7 +32,12 @@ class DataConfig(Config):
         datamodule_args (dict): Dict of remaining keyword arguments to initialise datamodule_cls, that are not train {train/val/test}_dataset_{cls/args}.
     """
 
-    dataset_cls: type[DatasetFW] | Annotated[list[type[DatasetFW]], 3] = None
+    # classes
+    dataset_train_cls: type[DatasetFW] = None
+    dataset_val_cls:   type[DatasetFW] | None = None
+    dataset_test_cls:  type[DatasetFW] | None = None
+    
+    # common arguments
     dataset_args: dict = dict()
 
     # augmentation pipelines for subsets
@@ -49,26 +54,17 @@ class DataConfig(Config):
     datamodule_args: dict = dict()
 
     @classmethod
-    def build_modules(cls) -> LightningDataModule:
-        
-        # dataset clss
-        # convert dataset_cls to list of length 3 for train, val, test
-        dataset_cls = ensure_list(cls.dataset_cls)
-        assert len(dataset_cls) == 1 or len(dataset_cls) == 3,\
-            f"{cls}.dataset_cls must include eiter 1 or 3 classes."
-        if len(dataset_cls) == 1:
-            dataset_cls = 3 * dataset_cls
-        
+    def build_modules(cls) -> LightningDataModule:       
         # apply augmentations
         train_dataset_cls = apply_augmentations(
-            dataset_cls[0], cls.dataset_train_augmentation
+            cls.dataset_train_cls, cls.dataset_train_augmentation
         )
-        val_dataset_cls =   apply_augmentations(
-            dataset_cls[1], cls.dataset_val_augmentation
-        )
+        val_dataset_cls = apply_augmentations(
+            cls.dataset_val_cls, cls.dataset_val_augmentation
+        ) if cls.dataset_val_cls else []
         test_dataset_cls =  apply_augmentations(
-            dataset_cls[2], cls.dataset_test_augmentation
-        )
+            cls.dataset_test_cls, cls.dataset_test_augmentation
+        ) if cls.dataset_test_cls else []
 
         # update kwargs for each subset
         train_args = merge_args(cls.dataset_args, cls.dataset_train_args)
@@ -77,8 +73,8 @@ class DataConfig(Config):
 
         # init subset datasets
         train_datasets = broadcast_init(train_dataset_cls, train_args)
-        val_datasets = broadcast_init(val_dataset_cls, val_args)
-        test_datasets = broadcast_init(test_dataset_cls, test_args)
+        val_datasets = broadcast_init(val_dataset_cls, val_args) if val_dataset_cls else []
+        test_datasets = broadcast_init(test_dataset_cls, test_args) if test_dataset_cls else []
 
         # init datamodule
         datamodule = MultiSampleDataModule(
@@ -106,10 +102,8 @@ def broadcast_init(classes: Callable[[Any], object] | list[Callable[[Any], objec
         if len(kwss) == 1: 
             return [classes[0](**kwss[0])] # 1, 1
         return [classes[0](**kws) for kws in kwss] # 1, n
-    
-    elif len(classes) == len(kwss):
+    if len(classes) == len(kwss):
         return [class_(**kws) for class_, kws in zip(classes, kwss)] # n, n
-
     return [class_(**kwss[0]) for class_ in classes] # 1, n 
 
 def apply_augmentations(
