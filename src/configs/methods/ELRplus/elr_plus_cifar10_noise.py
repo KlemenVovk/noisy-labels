@@ -10,7 +10,7 @@ from configs.methods.ELR.elr_cifar10_noise import cifar10_index_noise_config
 from configs.methods.ELRplus.elr_plus_cifar10_clean import elr_plus_cifar10_clean
 
 class cifar10_index_noise_config(cifar10_base_config):
-    num_train_samples = 2
+
     dataset_train_augmentation = Compose([
         AddNoise(noise=BiasedSymmetricNoise(num_classes=10, noise_rate=0.8)), 
         AddIndex()])
