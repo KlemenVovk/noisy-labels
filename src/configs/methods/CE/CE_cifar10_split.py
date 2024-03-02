@@ -12,7 +12,7 @@ from data.pipelines.split import Split
 
 class cifar10_split(cifar10_base_config):
 
-    dataset_cls = [*Split(0.8)(CIFAR10), CIFAR10]
+    dataset_train_cls, dataset_val_cls, dataset_test_cls = (*Split(0.8)(CIFAR10), CIFAR10)
     dataset_val_args = {**cifar10_base_config.dataset_val_args, "train":True}
 
 
