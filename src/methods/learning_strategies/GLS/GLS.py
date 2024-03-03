@@ -39,7 +39,6 @@ class GLS(LearningStrategyModule):
         
         # init model
         self.model = classifier_cls(**classifier_args)
-        self.model_reinit = classifier_cls(**classifier_args)
         
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -49,28 +48,21 @@ class GLS(LearningStrategyModule):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
             self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate)
             self.stage = 1
-            self.model = self.model_reinit
         else:
             # step the scheduler
             scheduler = self.lr_schedulers()[self.stage]
             scheduler.step()
-        with open("test.txt", "a+") as f:
-            f.writelines(f"{vars(self.optimizers()[self.stage])}\n")
-
 
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         [[x, y]] = batch
-        if self.stage == 0:
-            optimizer, _ = self.optimizers()
-        else:
-            _, optimizer = self.optimizers()
-        optimizer.zero_grad()
         logits = self.model(x)        
         loss = self.criterion(logits, y)
-        self.train_acc(logits, y)
+        optimizer = self.optimizers()[self.stage]
+        optimizer.zero_grad()
         self.manual_backward(loss)
         optimizer.step()
+        self.train_acc(logits, y)
         self.log('train_loss', loss, prog_bar=True)
         self.log('train_acc', self.train_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
@@ -87,7 +79,7 @@ class GLS(LearningStrategyModule):
     
     def configure_optimizers(self):
         optimizer_warmup = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[0])
-        optimizer_main = self.optimizer_cls(self.model_reinit.parameters(), **self.optimizer_args[1])
+        optimizer_main = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[1])
         scheduler_warmup = self.scheduler_cls(optimizer_warmup, **self.scheduler_args[0])
         scheduler_main = self.scheduler_cls(optimizer_main, **self.scheduler_args[1])
         return [optimizer_warmup, optimizer_main], [scheduler_warmup, scheduler_main]
