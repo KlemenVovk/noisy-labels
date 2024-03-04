@@ -7,6 +7,7 @@ from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
 from methods.learning_strategies.GLS.loss import vanilla_loss, loss_gls
 from methods.learning_strategies.base import LearningStrategyModule
+import torch.nn.functional as F
 
 class GLS(LearningStrategyModule):
     
@@ -28,14 +29,14 @@ class GLS(LearningStrategyModule):
             *args, **kwargs)
 
         self.automatic_optimization = False
+        self.stage = 0
 
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
         self.save_hyperparameters()
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
-        self.criterion = lambda logits, y: vanilla_loss(logits, y)
-        self.stage = 0
+        self.criterion = F.cross_entropy
         
         # init model
         self.model = classifier_cls(**classifier_args)
@@ -46,10 +47,11 @@ class GLS(LearningStrategyModule):
     
     def on_train_epoch_end(self):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
-            self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate)
+            print("Switching to GLS loss.")
             self.stage = 1
-        else:
-            # step the scheduler
+            self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate)
+        
+        if self.current_epoch != self.trainer.max_epochs - 1 and self.current_epoch != self.hparams["warmup_epochs"] - 1: 
             scheduler = self.lr_schedulers()[self.stage]
             scheduler.step()
 

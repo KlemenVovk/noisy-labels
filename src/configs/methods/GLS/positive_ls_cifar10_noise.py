@@ -15,14 +15,17 @@ from configs.data.cifar10 import cifar10_base_config
 from data.pipelines.noise.noises import SymmetricNoise
 from data.pipelines.noise.pipeline import AddNoise
 
+# LR plan when warmup is used
 lr_plan_warmup = [0.1] * 40 + [0.01] * 40 + [0.001] * 40
-lr_plan_main = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
+lr_plan_main = [1e-6] * 100
 
-# lr_plan_warmup = lr_plan_warmup[:3]
-# lr_plan_main = lr_plan_main[:3]
+# LR plan when warmup is NOT used
+# lr_plan = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
 
+# TODO: rename all this to negative_ls_cifar10_noise
 class cifar10_noise(cifar10_base_config):
     dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
+
 
 class positive_ls_cifar10_noise(MethodConfig):
     data_config = cifar10_noise
@@ -40,20 +43,17 @@ class positive_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = GLS
     learning_strategy_args = {
-        "smooth_rate": 0.4, # has to be negative
-        "warmup_epochs": 120,
-        # "warmup_epochs": 3,
+        "smooth_rate": -4.0,
+        "warmup_epochs": len(lr_plan_warmup),
     }
 
     optimizer_cls = SGD
     optimizer_args = [dict(lr=1, momentum=0.9, weight_decay=1e-4, nesterov=True), dict(lr=1, momentum=0.9, weight_decay=1e-4, nesterov=True)]
     scheduler_cls = LambdaLR
-    scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch - len(lr_plan_warmup)])]
-
+    scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch])]
 
     trainer_args = dict(
-        max_epochs=120+200,
-        # max_epochs=3+3,
+        max_epochs=len(lr_plan_warmup) + len(lr_plan_main),
         deterministic=True,
         logger=AimLogger(experiment="pls")
     )

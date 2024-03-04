@@ -1,6 +1,7 @@
 import torch 
 import torch.nn.functional as F
 
+# This is just CE, but currently I don't believe anything anymore...
 def vanilla_loss(logits, labels):
     logprobs = F.log_softmax(logits, dim=-1)
     nll_loss = -logprobs.gather(dim=-1, index=labels.unsqueeze(1))
