@@ -8,11 +8,12 @@ from methods.classifiers.resnet import resnet34
 
 from methods.learning_strategies.GLS.GLS import GLS
 from methods.learning_strategies.GLS.utils import ResNet34 # They are using their own resnet
+from methods.learning_strategies.GLS.noise import lambda_gls_noise # They have their own take on SymmetricNoise
 
 from configs.base import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
-from data.pipelines.noise.noises import SymmetricNoise
+from data.pipelines.noise.noises import SymmetricNoise, LambdaNoise
 from data.pipelines.noise.pipeline import AddNoise
 
 # LR plan when warmup is used
@@ -22,9 +23,10 @@ lr_plan_main = [1e-6] * 100
 # LR plan when warmup is NOT used
 # lr_plan = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
 
-# TODO: rename all this to negative_ls_cifar10_noise
 class cifar10_noise(cifar10_base_config):
-    dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
+    # dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
+    # TODO: choose the right noise_rate by choosing the right noise file in LambdaNoise
+    dataset_train_augmentation = AddNoise(LambdaNoise(lambda_gls_noise))
 
 
 class positive_ls_cifar10_noise(MethodConfig):
@@ -43,7 +45,7 @@ class positive_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = GLS
     learning_strategy_args = {
-        "smooth_rate": -4.0,
+        "smooth_rate": 0.4,
         "warmup_epochs": len(lr_plan_warmup),
     }
 

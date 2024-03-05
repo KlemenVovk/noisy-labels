@@ -5,7 +5,7 @@ import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
-from methods.learning_strategies.GLS.loss import vanilla_loss, loss_gls
+from methods.learning_strategies.GLS.loss import loss_gls
 from methods.learning_strategies.base import LearningStrategyModule
 import torch.nn.functional as F
 
