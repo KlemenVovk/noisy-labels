@@ -18,6 +18,7 @@ from ..FBT.utils import estimate_noise_mtx
 # TODO: in configs, try to figure out how
 # to show the correct amount of expected parameters
 # A: typing Annotated[list[int], 3]
+# NOTE: skip warmup: set stage epochs to 0
 
 class TRevision(MultiStageLearningStrategyModule):
 

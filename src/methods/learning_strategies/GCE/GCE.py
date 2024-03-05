@@ -1,5 +1,6 @@
 from typing import Any
 import os
+from copy import deepcopy
 from pathlib import Path
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
@@ -22,7 +23,6 @@ class GCE(LearningStrategyModule):
                  classifier_cls: type, classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
-                 checkpoint_dir: str,
                  prune_start_epoch: int, prune_freq: int,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -45,29 +45,26 @@ class GCE(LearningStrategyModule):
 
         # setup for saving best model
         self.best_acc = 0
-        self.checkpoint_dir = Path(checkpoint_dir)
-        self.best_model_path = self.checkpoint_dir / "best_model.pt"
-        os.makedirs(self.checkpoint_dir, exist_ok=True)
+        self._best_model = None
 
     def on_train_epoch_start(self) -> None:
         # prune loss
         epoch = self.current_epoch
         prune_start = self.hparams.prune_start_epoch
         freq = self.hparams.prune_freq
+        
         if epoch >= prune_start and (epoch-prune_start) % freq == 0:
             print("pruning...")
-
-            # load best model
-            best_model = torch.load(self.best_model_path)
-            best_model.to(self.device)
-            best_model.eval()
-
-            # run train loader on best model and update weights
-            for batch in self.datamodule.train_dataloader()[0]:
-                batch = [t.to(self.device) for t in batch]
-                x, y_noise, idxs = batch
-                y_pred = best_model(x)
-                self.criterion.update_weight(y_pred, y_noise, idxs)
+            self.prune_loss()
+                
+    @torch.no_grad
+    def prune_loss(self):
+        # run train loader on best model and update weights
+        for batch in self.datamodule.train_dataloader()[0]:
+            batch = [t.to(self.device) for t in batch]
+            x, y_noise, idxs = batch
+            y_pred = self._best_model(x)
+            self.criterion.update_weight(y_pred, y_noise, idxs)
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_noise, idxs = batch[0]
@@ -91,7 +88,7 @@ class GCE(LearningStrategyModule):
         # save model if it has highest val_acc
         val_acc = self.trainer.callback_metrics["val_acc"]
         if val_acc > self.best_acc:
-            torch.save(self.model, self.best_model_path)
+            self._best_model = deepcopy(self.model)
             self.best_acc = val_acc
     
     def configure_optimizers(self):

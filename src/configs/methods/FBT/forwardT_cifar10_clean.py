@@ -21,7 +21,8 @@ class forwardT_cifar10_clean(MethodConfig):
 
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(
-        warmup_epochs=0
+        warmup_epochs=0,
+        filter_outliers=False,
     )
 
     optimizer_cls = SGD

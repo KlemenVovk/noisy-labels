@@ -21,12 +21,13 @@ class ForwardT(LearningStrategyWithWarmupModule):
                  classifier_cls: type, classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
-                 warmup_epochs: int, 
+                 warmup_epochs: int, filter_outliers: bool,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, scheduler_cls,
             scheduler_args, warmup_epochs, *args, **kwargs)
+        self.save_hyperparameters("warmup_epochs", "filter_outliers")
         
         # so we can mess around with schedulers and optimizers
         self.automatic_optimization = False
@@ -35,24 +36,23 @@ class ForwardT(LearningStrategyWithWarmupModule):
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
         self.model = classifier_cls(**classifier_args)
-        self.model_reinit = classifier_cls(**classifier_args)
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         
         # criterion changes after warmup
         self.warmup_epochs = warmup_epochs - 1 if warmup_epochs > 1 else 0 # :)
+        self.filter_outliers = filter_outliers
         self.criterion = F.cross_entropy
         self.alt_criterion_cls = ForwardTLoss
         self.training_step_outputs = [] # for noise estimation
+    
+    @property
+    def stage(self):
+        return self.current_epoch <= self.warmup_epochs
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        # could be done with optim = self.optimizers()[self.current_epoch <= self.n_warmup_epochs]
-        # for less code, but it's less readable imo
-        if self.current_epoch <= self.warmup_epochs:
-            opt, _ = self.optimizers()
-        else:
-            _, opt = self.optimizers()
+        opt = self.optimizers()[self.stage]
         opt.zero_grad()
 
         # forward pass
@@ -76,10 +76,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
     def on_train_epoch_end(self):
         # step the scheduler
         # note that scheduler after warmup starts counting from 0
-        if self.current_epoch <= self.warmup_epochs:
-            sch, _ = self.lr_schedulers()
-        else:
-            _, sch = self.lr_schedulers()
+        sch = self.lr_schedulers()[self.stage]
         sch.step()
 
         # switch to noise-corrected loss
@@ -89,13 +86,13 @@ class ForwardT(LearningStrategyWithWarmupModule):
             # estimate noise transition matrix
             all_preds = torch.cat(self.training_step_outputs, dim=0)
             X_prob = F.softmax(all_preds, dim=-1)
-            T = estimate_noise_mtx(X_prob, filter_outlier=False)
+            T = estimate_noise_mtx(X_prob, filter_outlier=self.filter_outliers)
 
             # switch criterion to corrected version
             self.criterion = self.alt_criterion_cls(T).to(self.device)
 
             # reinit the model
-            self.model = self.model_reinit
+            self.model.load_state_dict(self.classifier_cls(**self.classifier_args).state_dict())
 
             # clear training step outputs and old model
             self.training_step_outputs = []
@@ -109,7 +106,7 @@ class ForwardT(LearningStrategyWithWarmupModule):
     
     def configure_optimizers(self):
         optim_warmup = self.optimizer_cls(params=self.model.parameters(), **self.optimizer_args)
-        optim = self.optimizer_cls(params=self.model_reinit.parameters(), **self.optimizer_args)
+        optim = self.optimizer_cls(params=self.model.parameters(), **self.optimizer_args)
 
         scheduler_warmup = self.scheduler_cls(optim_warmup, **self.scheduler_args)
         scheduler = self.scheduler_cls(optim, **self.scheduler_args)
@@ -124,10 +121,10 @@ class BackwardT(ForwardT):
                  classifier_cls: type, classifier_args: dict, 
                  optimizer_cls: type[Optimizer], optimizer_args: dict, 
                  scheduler_cls: type[LRScheduler], scheduler_args: dict, 
-                 warmup_epochs: int, 
+                 warmup_epochs: int, filter_outliers: bool, 
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
             optimizer_cls, optimizer_args, scheduler_cls, 
-            scheduler_args, warmup_epochs, *args, **kwargs)
+            scheduler_args, warmup_epochs, filter_outliers, *args, **kwargs)
         self.alt_criterion_cls = BackwardTLoss

@@ -22,6 +22,7 @@ class VolMinNet(LearningStrategyModule):
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
+        self.save_hyperparameters("lam")
                
         self.model = classifier_cls(**classifier_args)
         self.t_model = SigT(self.datamodule.num_classes)

@@ -29,8 +29,7 @@ class GCE_cifar10_clean(MethodConfig):
 
     learning_strategy_cls = GCE
     learning_strategy_args = dict(
-        checkpoint_dir="../models/gce",
-        prune_start_epoch=40,
+        prune_start_epoch=1,
         prune_freq=10
     )
 

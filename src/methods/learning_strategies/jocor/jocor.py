@@ -24,6 +24,7 @@ class JoCoR(LearningStrategyModule):
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
+        self.save_hyperparameters("forget_rate", "exponent", "num_gradual", "co_lambda")
                
         self.model1 = classifier_cls(**classifier_args)
         self.model2 = classifier_cls(**classifier_args)

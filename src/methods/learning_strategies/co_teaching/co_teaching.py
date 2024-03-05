@@ -25,6 +25,7 @@ class CoTeaching(LearningStrategyModule):
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
             optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
+        self.save_hyperparameters("forget_rate", "exponent", "num_gradual")
         
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes

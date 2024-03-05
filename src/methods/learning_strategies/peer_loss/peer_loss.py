@@ -11,6 +11,7 @@ import torchmetrics
 from methods.learning_strategies.base import MultiStageLearningStrategyModule
 from .utils import CrossEntropyLossStable, f_alpha
 
+# NOTE: skip warmup - set the first stage to 0
 
 class PeerLoss(MultiStageLearningStrategyModule):
 

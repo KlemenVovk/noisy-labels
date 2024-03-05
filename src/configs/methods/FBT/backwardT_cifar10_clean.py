@@ -21,7 +21,8 @@ class backwardT_cifar10_clean(MethodConfig):
 
     learning_strategy_cls = BackwardT
     learning_strategy_args = dict(
-        warmup_epochs=100
+        warmup_epochs=0,
+        filter_outliers=False,
     )
 
     optimizer_cls = SGD
