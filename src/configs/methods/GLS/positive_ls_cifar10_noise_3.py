@@ -61,4 +61,4 @@ class positive_ls_cifar10_noise(MethodConfig):
         logger=AimLogger(experiment="pls")
     )
 
-    seed = 0
+    seed = 2

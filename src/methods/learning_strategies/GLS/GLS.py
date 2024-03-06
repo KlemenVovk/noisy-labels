@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Any
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
@@ -41,6 +42,8 @@ class GLS(LearningStrategyModule):
         
         # init model
         self.model = classifier_cls(**classifier_args)
+        self._best_model = None
+        self._best_val_acc = 0
         
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
@@ -51,6 +54,8 @@ class GLS(LearningStrategyModule):
             print("Switching to GLS loss.")
             self.stage = 1
             self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate, wa=0, wb=1)
+            # load best model from warmup
+            self.model.load_state_dict(self._best_model.state_dict())
         
         if self.current_epoch != self.trainer.max_epochs - 1 and self.current_epoch != self.hparams["warmup_epochs"] - 1: 
             scheduler = self.lr_schedulers()[self.stage]
@@ -63,8 +68,8 @@ class GLS(LearningStrategyModule):
         loss = self.criterion(logits, y)
         optimizer = self.optimizers()[self.stage]
         optimizer.zero_grad()
-        # self.manual_backward(loss)
-        loss.backward()
+        self.manual_backward(loss)
+        # loss.backward()
         optimizer.step()
         self.train_acc(logits, y)
         self.log('train_loss', loss, prog_bar=True)
@@ -80,6 +85,12 @@ class GLS(LearningStrategyModule):
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
+    
+    def on_validation_epoch_end(self) -> None:
+        val_acc = self.trainer.callback_metrics["val_acc"]
+        if val_acc > self._best_val_acc:
+            self._best_model = deepcopy(self.model)
+            self._best_val_acc = val_acc
     
     def configure_optimizers(self):
         optimizer_warmup = self.optimizer_cls(self.model.parameters(), **self.optimizer_args[0])
