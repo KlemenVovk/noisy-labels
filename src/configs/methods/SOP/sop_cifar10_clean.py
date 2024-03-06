@@ -5,19 +5,17 @@ from torch.optim.lr_scheduler import MultiStepLR
 from methods.learning_strategies.SOP.models import resnet34
 from methods.learning_strategies.SOP.sop import SOP
 
-from data.pipelines.base import Compose
 from data.pipelines.index import AddIndex
-from data.pipelines.two_images import TwoImages
 from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
-class cifar10_two_images_index_config(cifar10_base_config):
+class cifar10_index_config(cifar10_base_config):
 
-    dataset_train_augmentation = Compose([AddIndex(), TwoImages()])
+    dataset_train_augmentation = AddIndex()
 
 class sop_cifar10_clean(MethodConfig):
 
-    data_config = cifar10_two_images_index_config
+    data_config = cifar10_index_config
 
     classifier = resnet34
     classifier_args = dict(

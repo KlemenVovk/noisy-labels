@@ -54,19 +54,15 @@ class SOP(LearningStrategyModule):
 
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
+        x, y_noise, index = batch[0]
         opt, opt_loss = self.optimizers()
         self.model.train()
-        x1, x2, y_noise, index = batch[0]
-        
+
         y = one_hot(y_noise, 10).float()
 
-        if self.ratio_consistency > 0:
-            x_all = torch.cat([x1, x2])
-        else:
-            x_all = x1
-
-        y_pred = self.model(x_all)
+        y_pred = self.model(x)
         loss = self.criterion(index, y_pred, y)
+        self.train_acc(y_pred, y_noise)
 
         # optimization step
         opt_loss.zero_grad()
@@ -76,7 +72,7 @@ class SOP(LearningStrategyModule):
         opt.step()
         # logging
         self.log("train_loss", loss, prog_bar=True)
-        self.log("train_acc", self.train_acc(y_pred, y_noise), on_epoch=True, on_step=False)
+        self.log("train_acc", self.train_acc, on_epoch=True, on_step=False)
         return loss
 
 
