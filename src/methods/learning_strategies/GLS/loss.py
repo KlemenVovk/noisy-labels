@@ -1,7 +1,6 @@
 import torch 
 import torch.nn.functional as F
 
-
 def loss_gls(epoch, y, t, smooth_rate=0.1, wa=0, wb=1):
     confidence = 1. - smooth_rate
     logprobs = F.log_softmax(y, dim=-1)

@@ -36,7 +36,8 @@ class GLS(LearningStrategyModule):
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
-        self.criterion = F.cross_entropy
+        # self.criterion = F.cross_entropy
+        self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate, wa=1, wb=0)
         
         # init model
         self.model = classifier_cls(**classifier_args)
@@ -49,7 +50,7 @@ class GLS(LearningStrategyModule):
         if self.current_epoch == self.hparams["warmup_epochs"] - 1: # switch to the next optimizer and scheduler
             print("Switching to GLS loss.")
             self.stage = 1
-            self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate)
+            self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate, wa=0, wb=1)
         
         if self.current_epoch != self.trainer.max_epochs - 1 and self.current_epoch != self.hparams["warmup_epochs"] - 1: 
             scheduler = self.lr_schedulers()[self.stage]
