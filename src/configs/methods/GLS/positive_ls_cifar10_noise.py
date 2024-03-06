@@ -50,7 +50,7 @@ class positive_ls_cifar10_noise(MethodConfig):
     }
 
     optimizer_cls = SGD
-    optimizer_args = [dict(lr=1, momentum=0.9, weight_decay=1e-4, nesterov=True), dict(lr=1, momentum=0.9, weight_decay=1e-4, nesterov=True)]
+    optimizer_args = [dict(lr=1), dict(lr=1, momentum=0.9, weight_decay=1e-4, nesterov=True)]
     scheduler_cls = LambdaLR
     scheduler_args = [dict(lr_lambda=lambda epoch: lr_plan_warmup[epoch]), dict(lr_lambda=lambda epoch: lr_plan_main[epoch])]
 

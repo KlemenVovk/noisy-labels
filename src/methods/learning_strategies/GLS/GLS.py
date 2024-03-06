@@ -63,7 +63,8 @@ class GLS(LearningStrategyModule):
         loss = self.criterion(logits, y)
         optimizer = self.optimizers()[self.stage]
         optimizer.zero_grad()
-        self.manual_backward(loss)
+        # self.manual_backward(loss)
+        loss.backward()
         optimizer.step()
         self.train_acc(logits, y)
         self.log('train_loss', loss, prog_bar=True)
