@@ -37,8 +37,8 @@ class GLS(LearningStrategyModule):
 
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
-        # self.criterion = F.cross_entropy
-        self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate, wa=1, wb=0)
+        self.criterion = F.cross_entropy
+        # self.criterion = lambda logits, y: loss_gls(0, logits, y, self.hparams.smooth_rate, wa=1, wb=0)
         
         # init model
         self.model = classifier_cls(**classifier_args)

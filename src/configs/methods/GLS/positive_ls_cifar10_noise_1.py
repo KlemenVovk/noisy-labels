@@ -60,7 +60,7 @@ class positive_ls_cifar10_noise(MethodConfig):
     trainer_args = dict(
         max_epochs=len(lr_plan_warmup) + len(lr_plan_main),
         deterministic=True,
-        logger=CSVLogger("logs", name="positive_ls_cifar10_noise_2")
+        logger=CSVLogger("logs", name="positive_ls_cifar10_noise_1")
     )
 
-    seed = 2
+    seed = 1

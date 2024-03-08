@@ -21,9 +21,9 @@ from data.pipelines.noise.pipeline import AddNoise
 lr_plan_warmup = [0.1] * 40 + [0.01] * 40 + [0.001] * 40
 lr_plan_main = [1e-6] * 100
 noise_rate = 0.6
-their_noise.load_noise_data(noise_rate)
 # LR plan when warmup is NOT used
 # lr_plan = [0.1] * 100 + [0.01] * 50 + [0.001] * 50
+their_noise.load_noise_data(noise_rate)
 
 class cifar10_noise(cifar10_base_config):
     # dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
@@ -32,7 +32,7 @@ class cifar10_noise(cifar10_base_config):
     dataset_train_augmentation = AddNoise(LambdaNoise(their_noise.lambda_gls_noise))
 
 
-class positive_ls_cifar10_noise(MethodConfig):
+class negative_ls_cifar10_noise(MethodConfig):
     data_config = cifar10_noise
 
     # classifier = resnet34
@@ -48,7 +48,7 @@ class positive_ls_cifar10_noise(MethodConfig):
 
     learning_strategy_cls = GLS
     learning_strategy_args = {
-        "smooth_rate": 0.4,
+        "smooth_rate": -6.0,
         "warmup_epochs": len(lr_plan_warmup),
     }
 
@@ -60,7 +60,7 @@ class positive_ls_cifar10_noise(MethodConfig):
     trainer_args = dict(
         max_epochs=len(lr_plan_warmup) + len(lr_plan_main),
         deterministic=True,
-        logger=CSVLogger("logs", name="positive_ls_cifar10_noise_2")
+        logger=CSVLogger("logs", name="negative_ls_cifar10_noise_2")
     )
 
     seed = 2

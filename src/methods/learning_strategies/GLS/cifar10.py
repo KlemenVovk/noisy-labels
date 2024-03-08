@@ -6,10 +6,16 @@ from PIL import Image
 from data.datasets.base import DatasetFW
 import torch
 
-train_data = "/home/klemen/projects/negative-label-smoothing/traindata_0.2.pt"
-test_data = "/home/klemen/projects/negative-label-smoothing/testdata.pt"
-train_data = torch.load(train_data)
-test_data = torch.load(test_data)
+train_data = None
+test_data = None
+
+def load_noise_data(noise_rate):
+    global train_data
+    global test_data
+    print(f"Loading noise data for noise rate from /home/klemen/projects/negative-label-smoothing/traindata_{noise_rate}.pt")
+    train_data = torch.load(f"/home/klemen/projects/negative-label-smoothing/traindata_{noise_rate}.pt")
+    test_data = torch.load(f"/home/klemen/projects/negative-label-smoothing/testdata_{noise_rate}.pt") # not really dependent on noise rate but wth
+
 
 def lambda_gls_noise(feature, target, index):
     return train_data["noisy_labels"][index]
