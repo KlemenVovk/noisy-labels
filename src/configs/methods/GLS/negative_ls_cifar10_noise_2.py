@@ -28,7 +28,6 @@ their_noise.load_noise_data(noise_rate)
 class cifar10_noise(cifar10_base_config):
     # dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.6))
     dataset_cls = their_noise.GLSCIFAR10
-    # TODO: choose the right noise_rate by choosing the right noise file in LambdaNoise
     dataset_train_augmentation = AddNoise(LambdaNoise(their_noise.lambda_gls_noise))
 
 
