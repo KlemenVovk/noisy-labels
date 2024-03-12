@@ -1,4 +1,5 @@
 from typing import Any
+from copy import deepcopy
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
@@ -45,7 +46,12 @@ class ForwardT(LearningStrategyWithWarmupModule):
         self.filter_outliers = filter_outliers
         self.criterion = F.cross_entropy
         self.alt_criterion_cls = ForwardTLoss
-        self.training_step_outputs = [] # for noise estimation
+        
+        # estimating T
+        self._best_model = None
+        self._best_val_acc = 0
+        self._probs = []
+        self.T = None
     
     @property
     def stage(self):
@@ -64,9 +70,8 @@ class ForwardT(LearningStrategyWithWarmupModule):
         self.manual_backward(loss)
         opt.step()
 
-        # save predictions on last warmup epoch
-        if self.current_epoch == self.warmup_epochs:
-            self.training_step_outputs.append(y_pred)
+        # save predictions
+        self._probs.append(F.softmax(y_pred.detach(), dim=-1))
 
         # logging
         self.log("train_loss", loss, prog_bar=True)
@@ -78,24 +83,6 @@ class ForwardT(LearningStrategyWithWarmupModule):
         # note that scheduler after warmup starts counting from 0
         sch = self.lr_schedulers()[self.stage]
         sch.step()
-
-        # switch to noise-corrected loss
-        if self.current_epoch == self.warmup_epochs:
-            print("switching to noise corrected training...")
-
-            # estimate noise transition matrix
-            all_preds = torch.cat(self.training_step_outputs, dim=0)
-            X_prob = F.softmax(all_preds, dim=-1)
-            T = estimate_noise_mtx(X_prob, filter_outlier=self.filter_outliers)
-
-            # switch criterion to corrected version
-            self.criterion = self.alt_criterion_cls(T).to(self.device)
-
-            # reinit the model
-            self.model.load_state_dict(self.classifier_cls(**self.classifier_args).state_dict())
-
-            # clear training step outputs and old model
-            self.training_step_outputs = []
     
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_true = batch
@@ -103,6 +90,29 @@ class ForwardT(LearningStrategyWithWarmupModule):
         loss = self.criterion(y_pred, y_true)
         self.log("val_loss", loss)
         self.log("val_acc", self.val_acc(y_pred, y_true))
+    
+    def on_validation_end(self) -> None:
+        # save model if it has highest val_acc
+        val_acc = self.trainer.callback_metrics["val_acc"]
+        if val_acc > self._best_val_acc:
+            self._best_model = deepcopy(self.model)
+            self._best_val_acc = val_acc
+            self.T = self._estimate_T()
+        
+        if self.current_epoch == self.warmup_epochs:
+            print("Switching to noise corrected training.")
+            # reinit the model and clear buffers
+            self.model.load_state_dict(self.classifier_cls(**self.classifier_args).state_dict())
+            self._best_model = None
+            # switch criterion to corrected version
+            self.criterion = self.alt_criterion_cls(self.T).to(self.device)
+        self._probs = []
+    
+    def _estimate_T(self):
+        if self._probs:
+            probs = torch.cat(self._probs, dim=0)
+            return estimate_noise_mtx(probs).to(self.device)
+        return torch.eye(self.num_classes).to(self.device)
     
     def configure_optimizers(self):
         optim_warmup = self.optimizer_cls(params=self.model.parameters(), **self.optimizer_args)

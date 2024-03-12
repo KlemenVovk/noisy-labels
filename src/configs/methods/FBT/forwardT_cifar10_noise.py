@@ -7,9 +7,19 @@ from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.FBT.FBT import ForwardT
 
 from configs.base.method import MethodConfig
-from configs.data.cifar10 import cifar10_base_config
+from configs.data.cifar10 import cifar10_base_config, CIFAR10
+from data.pipelines.split import Split
+from data.pipelines.noise.pipeline import AddNoise
+from data.pipelines.noise.noises import SymmetricNoise
 
-class forwardT_cifar10_clean(MethodConfig):
+class cifar10_noise(cifar10_base_config):
+
+    dataset_train_cls, dataset_val_cls, dataset_test_cls = (*Split(0.8)(CIFAR10), CIFAR10)
+    dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.2))
+    dataset_val_augmentation = AddNoise(SymmetricNoise(10, 0.2))
+    dataset_val_args = {**cifar10_base_config.dataset_val_args, "train":True}
+
+class forwardT_cifar10_noise(MethodConfig):
 
     data_config = cifar10_base_config
 

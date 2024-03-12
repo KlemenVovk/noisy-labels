@@ -31,8 +31,9 @@ class backwardT_cifar10_clean(MethodConfig):
     scheduler_args = dict(milestones=[60], gamma=0.1)
 
     trainer_args = dict(
-        max_epochs=200,
+        max_epochs=240,
         deterministic=True,
+        num_sanity_val_steps=0,
         logger=AimLogger(experiment="backwardT")
     )
 

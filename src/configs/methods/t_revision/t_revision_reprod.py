@@ -52,6 +52,7 @@ class t_revision_reprod(MethodConfig):
     trainer_args = dict(
         max_epochs=sum(stages)+1,
         deterministic=True,
+        num_sanity_val_steps=0,
         logger=AimLogger(experiment="T-Revision")
     )
 
