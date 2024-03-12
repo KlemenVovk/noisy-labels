@@ -6,7 +6,7 @@ from ..datasets.base import DatasetFW
 # TODO: test if num_workers breaks this somehow
 # TODO: implement which thing in __getitem__ needs to be shuffled
 
-class ShuffleSamples(AugmentationPipeline):
+class ShuffleImages(AugmentationPipeline):
     # shuffles images within the dataset
 
     def __init__(self) -> None:

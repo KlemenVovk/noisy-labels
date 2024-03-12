@@ -8,7 +8,7 @@ from noisypy.methods.learning_strategies.peer_loss.peer_loss import PeerLoss
 from noisypy.data.pipelines.base import Compose
 from noisypy.data.pipelines.noise.noises import SymmetricNoise, InstanceNoise
 from noisypy.data.pipelines.noise.pipeline import AddNoise
-from noisypy.data.pipelines.shuffle import ShuffleSamples
+from noisypy.data.pipelines.shuffle import ShuffleImages
 from noisypy.configs.base.method import MethodConfig
 from noisypy.configs.data.cifar10 import cifar10_base_config
 
@@ -21,7 +21,7 @@ class cifar10_noise(cifar10_base_config):
 
     dataset_train_augmentation = [
         AddNoise(noise),
-        Compose([ShuffleSamples(), AddNoise(noise)])
+        Compose([ShuffleImages(), AddNoise(noise)])
     ]
 
 stages = [0, 50]
