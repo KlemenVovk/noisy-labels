@@ -1,6 +1,6 @@
 import torch
 
-from data.pipelines.noise.noises import InstanceNoise, AsymmetricNoise, SymmetricNoise, LambdaNoise
+from noisypy.data.pipelines.noise.noises import InstanceNoise, AsymmetricNoise, SymmetricNoise, LambdaNoise
 
 # TODO remember mat2 and calculate 
 # teoretical guarantees for n_samples to converge

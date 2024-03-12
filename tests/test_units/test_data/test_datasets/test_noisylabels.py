@@ -1,4 +1,4 @@
-from data.datasets.noisylabels import NoisyLabelsLoader
+from noisypy.data.datasets.noisylabels import NoisyLabelsLoader
 
 
 def test_cifar10_load_all(shared_tmp_path):

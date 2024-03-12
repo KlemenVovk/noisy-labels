@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "noisypy"
+version = "0.0.1"
+authors = [
+  { name="TO DO", email="TODO@gmail.com" },
+]
+description = "A framework for learning with noisy labels."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aim",
+    "lightning",
+    "torch",
+    "torchaudio",
+    "torchvision",
+]
+
+[project.urls]
+Homepage = "TODO"
+Issues = "TODO"
+
+[tool.setuptools.packages]
+find = { "where" = ["src"] }

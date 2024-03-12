@@ -1,5 +1,5 @@
 from PIL import Image
-from data.pipelines.index import AddIndex
+from noisypy.data.pipelines.index import AddIndex
 
 from .common import CIFAR10, CIFAR10WithExtras, args
 

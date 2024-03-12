@@ -1,5 +1,5 @@
 from typing import Any, Tuple
-from data.datasets.cifar10 import CIFAR10
+from noisypy.data.datasets.cifar10 import CIFAR10
 
 class CIFAR10WithExtras(CIFAR10):
     """Adds 2 extra outputs in getitem.

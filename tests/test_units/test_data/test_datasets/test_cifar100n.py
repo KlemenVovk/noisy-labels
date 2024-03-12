@@ -1,4 +1,4 @@
-from data.datasets.cifar100n import CIFAR100N
+from noisypy.data.datasets.cifar100n import CIFAR100N
 from PIL import Image
 
 

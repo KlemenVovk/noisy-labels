@@ -1,6 +1,6 @@
 import pytest
-from data.datamodule import MultiSampleDataModule 
-from data.datasets.cifar10 import CIFAR10
+from noisypy.data.datamodule import MultiSampleDataModule 
+from noisypy.data.datasets.cifar10 import CIFAR10
 
 # TODO: rewrite tests
 """

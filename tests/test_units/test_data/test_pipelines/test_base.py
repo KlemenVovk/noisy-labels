@@ -1,11 +1,11 @@
 import torch
 from PIL import Image
 
-from data.pipelines.base import Compose, Identity
+from noisypy.data.pipelines.base import Compose, Identity
 
-from data.pipelines.noise.pipeline import AddNoise
-from data.pipelines.noise.noises import InstanceNoise
-from data.pipelines.index import AddIndex
+from noisypy.data.pipelines.noise.pipeline import AddNoise
+from noisypy.data.pipelines.noise.noises import InstanceNoise
+from noisypy.data.pipelines.index import AddIndex
 
 from .common import CIFAR10, CIFAR10WithExtras, args
 

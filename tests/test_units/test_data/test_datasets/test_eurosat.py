@@ -1,4 +1,4 @@
-from data.datasets.eurosat import EuroSAT
+from noisypy.data.datasets.eurosat import EuroSAT
 from PIL import Image
 from pathlib import Path
 
