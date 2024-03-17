@@ -1,8 +1,9 @@
 import pytest
 from typing import Type
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from .perf_targets import performance_targets
 from .utils import Target, PerfTargetCheckCallback
+
 
 @pytest.mark.parametrize("config, target_dict", [(k, v) for k, v in performance_targets.items()])
 def test_performance(config: Type[MethodConfig], target_dict: dict[str, tuple[Target]], capsys):

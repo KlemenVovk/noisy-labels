@@ -12,7 +12,7 @@ from .common import CIFAR10, CIFAR10WithExtras, args
 def test_compose():
     pipe = Compose([
         AddIndex(),
-        AddNoise(InstanceNoise(torch.tensor([1, 2, 3])))
+        AddNoise(InstanceNoise(torch.arange(1, 50001)))
     ])
     dataset_cls = pipe(CIFAR10WithExtras)
     dataset = dataset_cls(**args)

@@ -6,7 +6,7 @@ from torch.optim.lr_scheduler import MultiStepLR
 from methods.classifiers.resnet import resnet34
 from methods.learning_strategies.FBT.FBT import ForwardT
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 
 class forwardT_cifar10_clean(MethodConfig):
@@ -21,17 +21,19 @@ class forwardT_cifar10_clean(MethodConfig):
 
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(
-        warmup_epochs=0
+        warmup_epochs=120,
+        filter_outliers=False,
     )
 
     optimizer_cls = SGD
-    optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=5e-4)
+    optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=1e-4)
     scheduler_cls = MultiStepLR
-    scheduler_args = dict(milestones=[60], gamma=0.1)
+    scheduler_args = dict(milestones=[40, 80], gamma=0.1)
 
     trainer_args = dict(
-        max_epochs=200,
+        max_epochs=240,
         deterministic=True,
+        num_sanity_val_steps=0,
         logger=AimLogger(experiment="forwardT")
     )
 

@@ -111,3 +111,22 @@ class LambdaNoise(Noise):
 
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
         return self.fcn(feature, target, index)
+
+
+class BiasedSymmetricNoise(Noise):
+    """
+        Symmetric noise implementation based on 
+        https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/dataloader_cifar.py#L58-L78
+        This is different from our implementation where the expected noise rate is noise_rate,
+        whereas here the expected noise rate is noise_rate - 1/num_classes * noise_rate.
+    """
+    def __init__(self, noise_rate, num_classes) -> None:
+        super().__init__()
+        self.noise_rate = noise_rate
+        self.num_classes = num_classes
+
+    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+        if torch.rand(1).item() < self.noise_rate:
+            return torch.randint(0, self.num_classes, (1,)).item()
+        return target
+    

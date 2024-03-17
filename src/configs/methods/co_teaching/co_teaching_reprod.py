@@ -8,7 +8,7 @@ from torchvision.transforms import ToTensor
 from methods.learning_strategies.co_teaching.co_teaching import CoTeaching
 from methods.learning_strategies.co_teaching.utils import CNN, alpha_schedule
 
-from configs.base import MethodConfig
+from configs.base.method import MethodConfig
 from configs.data.cifar10 import cifar10_base_config
 from data.pipelines.base import Compose
 from data.pipelines.index import AddIndex

@@ -1,7 +1,7 @@
 from data.datasets.cifar10 import cifar10_test_transform, cifar10_train_transform
 from data.datasets.cifar10n import CIFAR10N
 
-from configs.base import DataConfig
+from configs.base.data import DataConfig
 
 
 # TODO this is getting out of hand
@@ -15,7 +15,7 @@ from configs.base import DataConfig
 
 class cifar10n_clean_config(DataConfig):
 
-    dataset_cls = CIFAR10N
+    dataset_train_cls = dataset_val_cls = dataset_test_cls = CIFAR10N
     dataset_args = dict(
         noise_type="clean_label",
         noise_dir="../data/noisylabels",

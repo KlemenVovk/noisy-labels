@@ -1,5 +1,4 @@
 from typing import Any
-from itertools import accumulate
 from copy import deepcopy
 
 import lightning as L
@@ -12,14 +11,16 @@ from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
 from torch.nn.functional import cross_entropy
 
-from methods.learning_strategies.base import LearningStrategyModule
+from methods.learning_strategies.base import MultiStageLearningStrategyModule
 from .utils import ReweightLoss, ReweightRevisionLoss
 from ..FBT.utils import estimate_noise_mtx
 
 # TODO: in configs, try to figure out how
 # to show the correct amount of expected parameters
+# A: typing Annotated[list[int], 3]
+# NOTE: skip warmup: set stage epochs to 0
 
-class TRevision(LearningStrategyModule):
+class TRevision(MultiStageLearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
@@ -29,11 +30,12 @@ class TRevision(LearningStrategyModule):
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
-            optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
+            optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, 
+            stage_epochs,
+            *args, **kwargs)
         
         N = self.datamodule.num_classes
         self.num_classes = N
-        self.stage_epoch_cumsum = list(accumulate(stage_epochs))
 
         # model
         self.model = classifier_cls(**classifier_args)
@@ -47,9 +49,6 @@ class TRevision(LearningStrategyModule):
         self.train_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
 
-        # auto opt OFF
-        self.automatic_optimization = False
-
         #TODO: maybe it's better to dump model to disk
         # misc
         self._best_model = None # buffer for best model
@@ -57,49 +56,7 @@ class TRevision(LearningStrategyModule):
         self._probs = []
         self.T = None
         self.T_revision = nn.Parameter(torch.zeros((N, N)))
-    
-    @property
-    def current_stage(self):
-        valid = [i for i, e in enumerate(self.stage_epoch_cumsum) if self.current_epoch <= e]
-        return min(valid)
-    
-    def _get_current_stage_method(self, method_name):
-        # returns the method: method_name_stage{current_stage}
-        # or a sink for compatibility
-        entries = [e for e in dir(self) if method_name+"_stage" in e]
-        entries = sorted(entries, key=lambda e: int(e[-1]))
-        if len(entries) > self.current_stage:
-            method_name = entries[self.current_stage]
-            return getattr(self, method_name)
-        return lambda *_: None # just a dummy sink function
-
-    def training_step(self, batch: Any, batch_idx: int) -> None:
-        # get step and optim for current stage
-        self.log("stage", self.current_stage)
-        training_step = self._get_current_stage_method("training_step")
-        optim = self.optimizers()[self.current_stage] 
-        
-        # training_step + optimize
-        loss = training_step(batch, batch_idx)
-        optim.zero_grad()
-        loss.backward()
-        optim.step()
-
-    def on_train_epoch_end(self) -> None:
-        on_train_epoch_end = self._get_current_stage_method("on_train_epoch_end")
-        sch = self.lr_schedulers()[self.current_stage]
-        
-        on_train_epoch_end()
-        sch.step()
-    
-    def validation_step(self, batch: Any, batch_idx: int) -> None:
-        validation_step = self._get_current_stage_method("validation_step")
-        validation_step(batch, batch_idx)
-
-    def on_validation_end(self) -> None:
-        on_validation_end = self._get_current_stage_method("on_validation_end")
-        on_validation_end()
-    
+       
     def configure_optimizers(self):
         # optimizers
         optim_stage0 = self.optimizer_cls[0](
