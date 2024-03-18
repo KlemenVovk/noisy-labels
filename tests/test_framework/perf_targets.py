@@ -3,19 +3,19 @@ from noisypy.configs.base.method import MethodConfig
 from .utils import Target, RangeTarget, ExactTarget
 
 from noisypy.configs.methods.CE.CE_cifar10_clean import CE_cifar10_clean
-from noisypy.configs.methods.co_teaching.co_teaching_reprod import co_teaching_reprod
-from noisypy.configs.methods.co_teaching.co_teaching_plus_reprod import co_teaching_plus_reprod
-from noisypy.configs.methods.divide_mix.divide_mix_cifar10_clean import divide_mix_cifar10_clean
-from noisypy.configs.methods.ELR.elr_cifar10_clean import elr_cifar10_clean
-from noisypy.configs.methods.ELRplus.elr_plus_cifar10_clean import elr_plus_cifar10_clean
-from noisypy.configs.methods.cores2.cores_cifar10_clean import cores_cifar10_clean
-from noisypy.configs.methods.jocor.jocor_reprod import jocor_reprod
-from noisypy.configs.methods.peer_loss.peer_loss_reprod import peer_loss_reprod
-from noisypy.configs.methods.PES.pes_cifar10_noise import pes_cifar10_noise
-from noisypy.configs.methods.PESsemi.pes_semi_cifar10_clean import pes_semi_cifar10n_clean
-from noisypy.configs.methods.SOP.sop_cifar10_clean import sop_cifar10_clean
-from noisypy.configs.methods.t_revision.t_revision_reprod import t_revision_reprod
-from noisypy.configs.methods.volminnet.volminnet_reprod import volminnet_reprod
+from reproducibility.learning_strategies.co_teaching.co_teaching_reprod import co_teaching_reprod
+from reproducibility.learning_strategies.co_teaching.co_teaching_plus_reprod import co_teaching_plus_reprod
+from reproducibility.learning_strategies.divide_mix.divide_mix_cifar10_clean import divide_mix_cifar10_clean
+from reproducibility.learning_strategies.ELR.elr_cifar10_clean import elr_cifar10_clean
+from reproducibility.learning_strategies.ELRplus.elr_plus_cifar10_clean import elr_plus_cifar10_clean
+from reproducibility.learning_strategies.cores2.cores_cifar10_clean import cores_cifar10_clean
+from reproducibility.learning_strategies.jocor.jocor_reprod import jocor_reprod
+from reproducibility.learning_strategies.peer_loss.peer_loss_reprod import peer_loss_reprod
+from reproducibility.learning_strategies.PES.pes_cifar10_noise import pes_cifar10_noise
+from reproducibility.learning_strategies.PESsemi.pes_semi_cifar10_clean import pes_semi_cifar10n_clean
+from reproducibility.learning_strategies.SOP.sop_cifar10_clean import sop_cifar10_clean
+from reproducibility.learning_strategies.t_revision.t_revision_reprod import t_revision_reprod
+from reproducibility.learning_strategies.volminnet.volminnet_reprod import volminnet_reprod
 
 
 performance_targets: dict[Type[MethodConfig], dict[str, tuple[Target]]] = {
