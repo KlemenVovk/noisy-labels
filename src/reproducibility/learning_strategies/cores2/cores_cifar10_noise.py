@@ -2,7 +2,9 @@ from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.data.pipelines.noise.noises import SymmetricNoise
 
 from .cores_cifar10_clean import cores_cifar10_clean
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
+
 
 
 class cifar10_noise(cifar10_base_config):

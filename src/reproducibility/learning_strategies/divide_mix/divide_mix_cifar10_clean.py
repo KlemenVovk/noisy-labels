@@ -6,7 +6,8 @@ from .utils import ResNet18
 from noisypy.methods.learning_strategies.divide_mix.divide_mix import DivideMix
 from noisypy.data.pipelines.divide_mix import DivideMixify
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_transform
+
+from ..common import cifar10_base_config, cifar10_train_transform
 
 
 class divide_mix_cifar10_base_config(cifar10_base_config):

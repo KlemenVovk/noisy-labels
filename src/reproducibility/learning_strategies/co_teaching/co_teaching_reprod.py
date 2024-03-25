@@ -9,11 +9,13 @@ from noisypy.methods.learning_strategies.co_teaching.co_teaching import CoTeachi
 from noisypy.methods.learning_strategies.co_teaching.utils import alpha_schedule
 from .utils import CNN
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
 from noisypy.data.pipelines.base import Compose
 from noisypy.data.pipelines.index import AddIndex
 from noisypy.data.pipelines.noise.noises import SymmetricNoise, InstanceNoise
 from noisypy.data.pipelines.noise.pipeline import AddNoise
+
+from ..common import cifar10_base_config
+
 
 # reproduces the original implementation, with their noise and all
 

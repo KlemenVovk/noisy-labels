@@ -7,7 +7,7 @@ from noisypy.data.pipelines.index import AddIndex
 from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.data.pipelines.noise.noises import InstanceNoise
 from .cal_cifar10_clean import cal_cifar10_clean
-from noisypy.configs.data.cifar10 import cifar10_base_config
+from ..common import cifar10_base_config
 
 class cifar10_index_noise_config(cifar10_base_config):
     dataset_train_augmentation = Compose([

@@ -5,10 +5,11 @@ from torch.optim.lr_scheduler import MultiStepLR
 from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.FBT.FBT import ForwardT
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config, CIFAR10
 from noisypy.data.pipelines.split import Split
 from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.data.pipelines.noise.noises import SymmetricNoise
+
+from ..common import cifar10_base_config, CIFAR10
 
 
 class cifar10_noise(cifar10_base_config):

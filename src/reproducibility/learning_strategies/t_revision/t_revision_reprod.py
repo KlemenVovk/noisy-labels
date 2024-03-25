@@ -7,7 +7,8 @@ from noisypy.methods.learning_strategies.t_revision.t_revision import TRevision
 from noisypy.data.pipelines.noise.noises import SymmetricNoise
 from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
 
 
 class cifar10_noise(cifar10_base_config):

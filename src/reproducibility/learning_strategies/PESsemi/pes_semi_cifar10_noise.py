@@ -2,7 +2,7 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.optim import Adam
 
 from .pes_semi_cifar10_clean import pes_semi_cifar10n_clean
-from noisypy.configs.data.cifar10n import cifar10n_aggre_config
+from ..common import cifar10n_aggre_config
 
 
 class pes_semi_cifar10n_noise(pes_semi_cifar10n_clean):

@@ -6,7 +6,8 @@ from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.GCE.GCE import GCE
 from noisypy.data.pipelines.index import AddIndex
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
 
 
 class cifar10_index_config(cifar10_base_config):

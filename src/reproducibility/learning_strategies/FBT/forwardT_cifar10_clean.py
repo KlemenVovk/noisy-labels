@@ -5,7 +5,8 @@ from torch.optim.lr_scheduler import MultiStepLR
 from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.FBT.FBT import ForwardT
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
 
 
 class forwardT_cifar10_clean(MethodConfig):

@@ -7,9 +7,11 @@ from noisypy.methods.learning_strategies.jocor.jocor import JoCoR
 from .utils import CNN
 from noisypy.methods.learning_strategies.co_teaching.utils import alpha_schedule
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
 from noisypy.data.pipelines.noise.noises import SymmetricNoise
 from noisypy.data.pipelines.noise.pipeline import AddNoise
+
+from ..common import cifar10_base_config
+
 
 # reproduces the original implementation, with their noise and all
 

@@ -4,7 +4,8 @@ from torch.optim import Adam
 from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.data.pipelines.noise.noises import SymmetricNoise
 from .pes_cifar10_clean import pes_cifar10_clean
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
 
 
 class pes_cifar10_noisy_data_config(cifar10_base_config):

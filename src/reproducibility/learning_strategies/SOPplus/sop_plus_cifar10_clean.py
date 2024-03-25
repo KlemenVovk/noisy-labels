@@ -9,7 +9,8 @@ from noisypy.data.pipelines.base import Compose
 from noisypy.data.pipelines.index import AddIndex
 from noisypy.data.pipelines.double_augmentation import DoubleAugmentation
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_transform
+
+from ..common import cifar10_base_config, cifar10_train_transform
 
 
 transform1 = cifar10_train_transform

@@ -7,7 +7,9 @@ from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.cores2.cores2 import SampleSieve
 from noisypy.methods.learning_strategies.cores2.utils import f_beta
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
+
 
 lr_plan = [0.1] * 50 + [0.01] * (50 + 1)
 

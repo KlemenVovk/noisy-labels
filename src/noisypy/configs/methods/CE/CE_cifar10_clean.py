@@ -1,7 +1,6 @@
-from aim.pytorch_lightning import AimLogger
-
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
+from lightning.pytorch.loggers import CSVLogger
 
 from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.CE.CE import CE
@@ -9,7 +8,7 @@ from noisypy.configs.base.method import MethodConfig
 from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
-class CE_cifar10_clean(MethodConfig):
+class CE_cifar10_clean_config(MethodConfig):
 
     data_config = cifar10_base_config
 
@@ -29,7 +28,7 @@ class CE_cifar10_clean(MethodConfig):
     trainer_args = dict(
         max_epochs=100,
         deterministic=True,
-        logger=AimLogger(experiment="CE")
+        logger=CSVLogger("../logs", name="CE_cifar10_clean"),
     )
 
     seed = 1337

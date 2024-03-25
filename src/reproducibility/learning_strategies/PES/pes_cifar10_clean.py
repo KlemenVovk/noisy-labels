@@ -5,7 +5,8 @@ from torch.optim.lr_scheduler import MultiStepLR
 from .utils import ResNet18
 from noisypy.methods.learning_strategies.PES.pes import PES
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
 
 
 class pes_cifar10_clean(MethodConfig):

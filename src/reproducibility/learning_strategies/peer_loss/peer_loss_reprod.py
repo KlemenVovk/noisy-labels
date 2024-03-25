@@ -11,7 +11,9 @@ from noisypy.data.pipelines.noise.noises import SymmetricNoise, InstanceNoise
 from noisypy.data.pipelines.noise.pipeline import AddNoise
 from noisypy.data.pipelines.shuffle import ShuffleImages
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config
+
+from ..common import cifar10_base_config
+
 
 from pathlib import Path
 noise = SymmetricNoise(10, 0.2)
