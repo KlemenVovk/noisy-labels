@@ -2,7 +2,7 @@ from typing import Type
 from noisypy.configs.base.method import MethodConfig
 from .utils import Target, RangeTarget, ExactTarget
 
-from noisypy.configs.methods.CE.CE_cifar10_clean import CE_cifar10_clean_config
+from reproducibility.learning_strategies.CE.CE_cifar10n import CE_cifar10n_clean
 from reproducibility.learning_strategies.co_teaching.co_teaching_reprod import co_teaching_reprod
 from reproducibility.learning_strategies.co_teaching.co_teaching_plus_reprod import co_teaching_plus_reprod
 from reproducibility.learning_strategies.divide_mix.divide_mix_cifar10_clean import divide_mix_cifar10_clean
@@ -20,9 +20,9 @@ from reproducibility.learning_strategies.volminnet.volminnet_reprod import volmi
 
 performance_targets: dict[Type[MethodConfig], dict[str, tuple[Target]]] = {
 
-    CE_cifar10_clean_config: {
+    CE_cifar10n_clean: {
         "train_acc": (
-            ExactTarget(epoch=0, value=0.174500003, tol=1e-4),
+            ExactTarget(epoch=0, value=0.1972000002861023, tol=1e-4),
         ),
     },
 

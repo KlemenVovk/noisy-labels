@@ -34,7 +34,8 @@ class cifar10n_clean_config(DataConfig):
     dataset_args = dict(
         noise_type="clean_label",
         noise_dir="../data/noisylabels",
-        cifar_dir="../data/cifar"
+        cifar_dir="../data/cifar",
+        download=True,
     )
     dataset_train_args = dict(
         transform=cifar10_train_transform

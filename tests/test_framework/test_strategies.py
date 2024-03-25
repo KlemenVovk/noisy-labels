@@ -1,7 +1,7 @@
 import pytest
 from typing import Type
 from noisypy.configs.base.method import MethodConfig
-from .perf_targets import performance_targets
+from .perf_targets_reprod import performance_targets
 from .utils import Target, PerfTargetCheckCallback
 
 
