@@ -22,7 +22,7 @@ class cifar10n_clean_config(DataConfig):
     dataset_val_args = dict(
         transform=cifar10_test_transform
     )
-    dataset_test_args = dataset_val_args = dict(
+    dataset_test_args = dict(
         train=False,
         transform=cifar10_test_transform
     )
