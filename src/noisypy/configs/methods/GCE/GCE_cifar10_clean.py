@@ -26,7 +26,7 @@ class GCE_cifar10_clean_config(MethodConfig):
 
     learning_strategy_cls = GCE
     learning_strategy_args = dict(
-        prune_start_epoch=1,
+        prune_start_epoch=40,
         prune_freq=10
     )
 
