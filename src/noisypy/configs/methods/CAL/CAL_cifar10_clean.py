@@ -21,7 +21,8 @@ class CAL_cifar10_clean_config(MethodConfig):
 
     classifier = resnet34
     classifier_args = dict(
-        num_classes = 10
+        num_classes=10,
+        weights=None,
     )
 
     learning_strategy_cls = CAL
