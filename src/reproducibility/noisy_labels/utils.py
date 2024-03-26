@@ -1,4 +1,30 @@
 import lightning as L
+from lightning.pytorch.loggers import CSVLogger
+
+
+def update_config(base_config, new_data_config, new_seed):
+    class UpdatedConfig(base_config):
+        data_config = new_data_config if base_config._data_config_wrapper is None else base_config._data_config_wrapper(new_data_config)
+        seed = new_seed
+        trainer_args = {
+            **base_config.trainer_args,
+            "logger": CSVLogger("../logs", name=f"{base_config.__name__}_{new_data_config.__name__}_{new_seed}"),
+        }
+    return UpdatedConfig
+
+
+class ConfigIter:
+
+    def __init__(self, config, data_configs, seeds):
+        self.config = config
+        self.data_configs = data_configs
+        self.seeds = seeds
+    
+    def __iter__(self):
+        for data_config in self.data_configs:
+            for seed in self.seeds:
+                yield update_config(self.config, data_config, seed) 
+
 
 # NOTE: THE FOLLOWING CODE SHOULD NOT BE USED IN ANY PROJECT
 #       WE ARE USING IT ONLY TO ADHERE TO THE FLAWED METHODOLOGY
