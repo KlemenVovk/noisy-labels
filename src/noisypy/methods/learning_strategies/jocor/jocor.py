@@ -41,9 +41,10 @@ class JoCoR(LearningStrategyModule):
 
         # forget rate scheduling
         self.forget_rate_schedule = torch.ones(num_epochs) * forget_rate
-        self.forget_rate_schedule[:num_gradual] = torch.linspace(
-            0, forget_rate ** exponent, num_gradual
-        )
+        if num_epochs > num_gradual:
+            self.forget_rate_schedule[:num_gradual] = torch.linspace(
+                0, forget_rate ** exponent, num_gradual
+            )
 
     def training_step(self, batch: Any, batch_idx: int) -> None:
         x, y_noise = batch[0]

@@ -79,7 +79,7 @@ class VolMinNet(LearningStrategyModule):
     
     def configure_optimizers(self):
         optim = self.optimizer_cls[0](self.model.parameters(), **self.optimizer_args[0])
-        optim_T = self.optimizer_cls[1](self.model.parameters(), **self.optimizer_args[1])
+        optim_T = self.optimizer_cls[1](self.t_model.parameters(), **self.optimizer_args[1])
         
         sch = self.scheduler_cls[0](optim, **self.scheduler_args[0])
         sch_T = self.scheduler_cls[1](optim_T, **self.scheduler_args[1])
