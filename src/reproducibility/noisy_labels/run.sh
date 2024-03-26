@@ -9,28 +9,28 @@ DATA_CONFIGS=(
 #    random3
 )
 METHOD_CONFIGS=(
-#    CAL
-#    CE 
-#    co_teaching 
-#    co_teaching_plus 
-#    cores2 
-#    divide_mix 
-#    ELR 
-#    ELR_plus
-#    GCE
+    CAL
+    CE 
+    co_teaching 
+    co_teaching_plus 
+    cores2 
+    divide_mix 
+    ELR 
+    ELR_plus
+    GCE
     jocor
-#    PES
-#    PES_semi
-#    SOP
-#    SOP_plus
-#    volminnet
+    PES
+    PES_semi
+    SOP
+    SOP_plus
+    volminnet
 )
 SEEDS=(
     1337
-#    42
-#    1
-#    0
-#    10086
+    42
+    1
+    0
+    10086
 )
 
 for DATA_CONFIG in ${DATA_CONFIGS[@]}

@@ -29,7 +29,7 @@ class NoisyLabelsMethod(MethodConfig):
     )
 
     trainer_args = dict(
-        max_epochs=1,
+        max_epochs=100,
         deterministic=True,
         logger=CSVLogger("../logs", name="NONE"),
     )
