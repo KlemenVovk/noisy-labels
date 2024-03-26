@@ -36,6 +36,7 @@ class CoTeaching(LearningStrategyModule):
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
         # forget rate scheduling
         self.forget_rate_schedule = torch.ones(num_epochs) * forget_rate
@@ -83,6 +84,11 @@ class CoTeaching(LearningStrategyModule):
         logits2 = self.model2(x)
         self.log("val_acc1", self.val_acc(logits1, y_true))
         self.log("val_acc2", self.val_acc(logits2, y_true))
+    
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model1(x) #TODO maybe both? idk
+        self.log("test_acc", self.test_acc(y_pred, y))
     
     def configure_optimizers(self):
         optim1 = self.optimizer_cls(self.model1.parameters(), **self.optimizer_args)

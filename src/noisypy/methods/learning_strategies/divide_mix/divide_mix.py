@@ -49,6 +49,7 @@ class DivideMix(LearningStrategyModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
         # init loss
         self.CEloss = torch.nn.CrossEntropyLoss()
@@ -246,6 +247,12 @@ class DivideMix(LearningStrategyModule):
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred1 = self.model1(x)
+        y_pred2 = self.model2(x)
+        y_pred = (y_pred1 + y_pred2) / 2
+        self.log("test_acc", self.test_acc(y_pred, y))
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer1 = self.optimizer_cls(self.model1.parameters(), **self.optimizer_args)

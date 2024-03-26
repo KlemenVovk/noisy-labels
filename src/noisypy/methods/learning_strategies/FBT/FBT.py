@@ -40,7 +40,8 @@ class ForwardT(LearningStrategyWithWarmupModule):
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass')
-        
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+
         # criterion changes after warmup
         self.warmup_epochs = warmup_epochs - 1 if warmup_epochs > 1 else 0 # :)
         self.filter_outliers = filter_outliers

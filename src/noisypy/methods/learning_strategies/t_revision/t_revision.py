@@ -48,6 +48,7 @@ class TRevision(MultiStageLearningStrategyModule):
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
+        self.test_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
 
         #TODO: maybe it's better to dump model to disk
         # misc
@@ -179,3 +180,8 @@ class TRevision(MultiStageLearningStrategyModule):
         T = self.T + self.T_revision
         self.log("val_loss", loss)
         self.log("val_acc", self.val_acc(y_pred @ T, y_noise))
+    
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))

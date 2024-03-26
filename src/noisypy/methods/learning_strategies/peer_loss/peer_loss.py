@@ -37,6 +37,7 @@ class PeerLoss(MultiStageLearningStrategyModule):
         N = self.datamodule.num_classes
         self.train_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
+        self.test_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
 
         # misc
         self.peer_factor_plan = partial(f_alpha, r=0.1)
@@ -125,3 +126,8 @@ class PeerLoss(MultiStageLearningStrategyModule):
         if val_acc > self._best_val_acc:
             self._best_model = deepcopy(self.model)
             self._best_val_acc = val_acc
+
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))

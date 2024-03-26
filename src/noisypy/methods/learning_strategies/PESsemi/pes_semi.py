@@ -54,7 +54,7 @@ class PES_semi(LearningStrategyModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
-
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
     def on_train_epoch_start(self) -> None:
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
@@ -70,7 +70,6 @@ class PES_semi(LearningStrategyModule):
             
         if self.current_epoch == self.T1:
             self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T2)
-
 
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:
         if refine_times <= 0:
@@ -100,7 +99,6 @@ class PES_semi(LearningStrategyModule):
             param.requires_grad = True
 
         return model
-    
 
     def train_step(self, batch: Any) -> STEP_OUTPUT:
         x, y_noise = batch
@@ -109,8 +107,7 @@ class PES_semi(LearningStrategyModule):
 
         self.log("train_loss", loss, prog_bar=True)
         self.log("train_acc", self.train_acc(y_pred, y_noise), on_epoch=True, on_step=False)
-        return loss
-        
+        return loss   
 
     def on_train_epoch_end(self) -> None:
         # prepare data for the next epoch for every epoch after (including) T1
@@ -124,7 +121,6 @@ class PES_semi(LearningStrategyModule):
         
             update_dataloaders(self.datamodule, labeled_trainloader, unlabeled_trainloader)
             self.class_weights = class_weights
- 
 
     def mix_match_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         inputs_x, inputs_x2, targets_x = batch[0]
@@ -170,13 +166,11 @@ class PES_semi(LearningStrategyModule):
         self.log("mix_match_loss", loss, prog_bar=True)
         return loss
 
-
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         if self.current_epoch < self.T1:
             return self.train_step(batch[0])
         else:
             return self.mix_match_step(batch, batch_idx)
-        
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_true = batch
@@ -186,6 +180,10 @@ class PES_semi(LearningStrategyModule):
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)

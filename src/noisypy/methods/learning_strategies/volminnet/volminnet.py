@@ -36,6 +36,9 @@ class VolMinNet(LearningStrategyModule):
         self.val_acc = torchmetrics.Accuracy(
             num_classes=N, top_k=1, task='multiclass', average="micro"
         )
+        self.test_acc = torchmetrics.Accuracy(
+            num_classes=N, top_k=1, task='multiclass', average="micro"
+        )
 
         self.automatic_optimization = False
     
@@ -76,6 +79,11 @@ class VolMinNet(LearningStrategyModule):
 
         self.log("val_loss", loss)
         self.log("val_acc", self.val_acc(logits, y))
+    
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred, _ = self._predict(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
     
     def configure_optimizers(self):
         optim = self.optimizer_cls[0](self.model.parameters(), **self.optimizer_args[0])

@@ -67,6 +67,7 @@ class CAL(LearningStrategyModule):
         
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
         self.automatic_optimization = False
 
@@ -169,6 +170,10 @@ class CAL(LearningStrategyModule):
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
 
     def configure_optimizers(self):
         optimizer_warmup = self.optimizer_cls(self.model_warmup.parameters(), **self.optimizer_args)

@@ -50,9 +50,9 @@ class PES(LearningStrategyModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
-    
-        self.automatic_optimization = False
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
+        self.automatic_optimization = False
 
     def on_train_epoch_start(self) -> None:
         self.model.train()
@@ -70,7 +70,6 @@ class PES(LearningStrategyModule):
             self.model = self.noisy_refine(self.model, num_layer=1, refine_times=self.T2)
             self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T3)
 
-
     def on_train_epoch_end(self) -> None:
         if self.current_epoch >= self.T1:
             # update train dataset and criterion
@@ -84,7 +83,6 @@ class PES(LearningStrategyModule):
         
         scheduler = self.lr_schedulers()
         scheduler.step()
-
 
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:
         if refine_times <= 0:
@@ -110,7 +108,6 @@ class PES(LearningStrategyModule):
             param.requires_grad = True
 
         return model
-    
 
     def train_step(self, batch: Any, model: Module, optimizer: Optimizer) -> STEP_OUTPUT:
         x, y_noise = batch
@@ -123,7 +120,6 @@ class PES(LearningStrategyModule):
         self.log("train_loss", loss, prog_bar=True)
         self.log("train_acc", self.train_acc(y_pred, y_noise), on_epoch=True, on_step=False)
         return loss
-        
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         if self.current_epoch == self.T1:
@@ -131,7 +127,6 @@ class PES(LearningStrategyModule):
             # https://github.com/tmllab/2021_NeurIPS_PES/blob/ec5290d9fcc9efa8f302dbe8a78c448805d9e6e7/PES_cs.py#L173-L180
             return
         return self.train_step(batch[0], self.model, self.optimizers())
-        
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_true = batch
@@ -141,6 +136,10 @@ class PES(LearningStrategyModule):
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)

@@ -49,9 +49,9 @@ class SOP(LearningStrategyModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
-    
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        
         self.automatic_optimization = False
-
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_noise, index = batch[0]
@@ -75,11 +75,9 @@ class SOP(LearningStrategyModule):
         self.log("train_acc", self.train_acc, on_epoch=True, on_step=False)
         return loss
 
-
     def on_train_epoch_end(self) -> None:
         scheduler = self.lr_schedulers()
         scheduler.step()
-
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_true = batch
@@ -89,6 +87,10 @@ class SOP(LearningStrategyModule):
         self.log("val_loss", loss)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)

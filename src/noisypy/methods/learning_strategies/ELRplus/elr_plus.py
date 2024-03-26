@@ -52,7 +52,8 @@ class ELR_plus(LearningStrategyModule):
         # init metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
-    
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        
         self.automatic_optimization = False
 
 
@@ -148,6 +149,13 @@ class ELR_plus(LearningStrategyModule):
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
+    
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred1 = self.model1(x)
+        y_pred2 = self.model2(x)
+        y_pred = (y_pred1 + y_pred2) / 2
+        self.log("test_acc", self.test_acc(y_pred, y))
     
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:

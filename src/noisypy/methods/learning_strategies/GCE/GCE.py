@@ -42,6 +42,8 @@ class GCE(LearningStrategyModule):
             num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(
             num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        self.test_acc = torchmetrics.Accuracy(
+            num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
 
         # setup for saving best model
         self.best_acc = 0
@@ -91,6 +93,11 @@ class GCE(LearningStrategyModule):
             self._best_model = deepcopy(self.model)
             self.best_acc = val_acc
     
+    def test_step(self, batch: Any, batch_idx: int):
+        x, y = batch
+        y_pred = self.model(x)
+        self.log("test_acc", self.test_acc(y_pred, y))
+
     def configure_optimizers(self):
         optim = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
         scheduler = self.scheduler_cls(optim, **self.scheduler_args)
