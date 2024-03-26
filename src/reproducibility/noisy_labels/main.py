@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 
 from configs import *
-from utils import update_config
+from utils import update_config, TestCallback
 from noisypy.configs.data.cifar10n import (
     cifar10n_clean_config,
     cifar10n_aggre_config,
@@ -53,4 +53,8 @@ if __name__ == "__main__":
         args.seed
     )
     model, datamodule, trainer = config.build_modules()
+    print(f"Train samples: {datamodule.num_train_samples}")
+    print(f"Val   samples: {datamodule.num_val_samples}")
+    print(f"Test  samples: {datamodule.num_test_samples}")
+    trainer.callbacks.append(TestCallback(test_freq=1))
     trainer.fit(model, datamodule)
