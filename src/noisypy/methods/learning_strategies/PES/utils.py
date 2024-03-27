@@ -12,6 +12,42 @@ from lightning import LightningDataModule
 from lightning.pytorch.utilities.types import TRAIN_DATALOADERS
 
 
+def reset_resnet_layer_parameters(resnet_layer: nn.Module):
+    for block in resnet_layer.children():
+        for layer in block.children():
+            if hasattr(layer, 'reset_parameters'):
+                layer.reset_parameters()
+    
+    # set requires_grad to True
+    for param in resnet_layer.parameters():
+        param.requires_grad = True
+
+
+
+def renew_layers(model: nn.Module, num_classes: int, last_num_layers: int, model_class: str ='resnet'):
+    if model_class == 'resnet':
+        if last_num_layers >= 3:
+            print("re-initalize block 2")
+            reset_resnet_layer_parameters(model.layer2)
+
+        if last_num_layers >= 2:
+            print("re-initalize block 3")
+            reset_resnet_layer_parameters(model.layer3)
+
+        if last_num_layers >= 1:
+            print("re-initalize block 4")
+            reset_resnet_layer_parameters(model.layer4)
+        
+        print("re-initalize the final layer")
+        model.fc.reset_parameters()
+        for param in model.fc.parameters():
+            param.requires_grad = True
+    else:
+        raise NotImplementedError(f"model class {model_class} is not implemented yet.")
+    
+    return model
+
+
 def update_dataloader(datamodule: LightningDataModule, dataset: Dataset):
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         return [DataLoader(dataset, self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)]

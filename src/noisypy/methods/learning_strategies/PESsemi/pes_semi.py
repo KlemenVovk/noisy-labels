@@ -13,6 +13,7 @@ import torchmetrics
 from torch.nn.functional import cross_entropy, log_softmax, one_hot, softmax
 
 from ..base import LearningStrategyModule
+from ..PES.utils import renew_layers
 from .utils import update_train_data_and_criterion, update_dataloaders, linear_rampup
 
 
@@ -60,9 +61,10 @@ class PES_semi(LearningStrategyModule):
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
         if self.current_epoch == 0:
             train_dataset = self.trainer.datamodule.train_datasets[0]
-            self.train_data = train_dataset.data
+            index = train_dataset.valid_idxs
+            self.train_data = train_dataset.data[index]
             self.train_labels = []
-            for i in tqdm(range(len(train_dataset)), desc=f'Saving Training Data', leave=False):
+            for i in tqdm(index, desc=f'Saving Training Data', leave=False):
                 _, y, *_ = train_dataset[i]
                 self.train_labels.append(y)
             self.train_labels = torch.LongTensor(self.train_labels)
@@ -79,8 +81,8 @@ class PES_semi(LearningStrategyModule):
         for param in model.parameters():
             param.requires_grad = False
 
-        model.renew_layers(num_layer)
         device = next(self.model.parameters()).device
+        model = renew_layers(model, num_classes=self.num_classes, last_num_layers=num_layer)
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)

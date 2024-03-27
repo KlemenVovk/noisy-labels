@@ -12,7 +12,7 @@ from lightning import LightningDataModule
 from lightning.pytorch.utilities.types import TRAIN_DATALOADERS
 
 
-def linear_rampup(current: float, warm_up: int =20, rampup_length: int=16, lambda_u: float=5):
+def linear_rampup(current: float, warm_up: int=20, rampup_length: int=16, lambda_u: float=5):
     current = torch.clip(torch.tensor((current - warm_up) / rampup_length), 0.0, 1.0)
     return lambda_u * current.item()
 
