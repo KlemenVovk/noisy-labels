@@ -90,8 +90,8 @@ class DivideMix(LearningStrategyModule):
         model.train()
         x, y_noisy, _ = batch
         opt.zero_grad()
-        outputs = model(x.cuda())
-        loss = self.CEloss(outputs, y_noisy.cuda())
+        outputs = model(x.to(self.device))
+        loss = self.CEloss(outputs, y_noisy.to(self.device))
         # penalize confident prediction for asymmetric noise
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L132
         if self.noise_type == 'asymmetric':     # TODO: This seems like data leakage
@@ -108,12 +108,12 @@ class DivideMix(LearningStrategyModule):
     def eval_train(self, model: Module, loss_hist: list, data_loader: DataLoader, i: int) -> torch.Tensor:
         # based on https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L165
         model.eval()
-        losses = torch.zeros(self.num_training_samples).cuda()
+        losses = torch.zeros(self.num_training_samples).to(self.device)
         with torch.no_grad():
             for batch in tqdm(data_loader[BATCH_MAP["eval_train"]], desc=f'Label Guessing {i}', leave=False):
                 x, y_noisy, index = batch
-                outputs = model(x.cuda())
-                loss = self.sampleCE(outputs, y_noisy.cuda())
+                outputs = model(x.to(self.device))
+                loss = self.sampleCE(outputs, y_noisy.to(self.device))
                 for b in range(x.size(0)):
                     losses[index[b]]=loss[b]    
                 index += x.size(0)
@@ -149,7 +149,7 @@ class DivideMix(LearningStrategyModule):
 
         # Transform label to one-hot
         labels_x = one_hot(labels_x)        
-        w_x = w_x.view(-1,1).type(torch.FloatTensor) 
+        w_x = w_x.view(-1,1).type(torch.FloatTensor).to(self.device)
 
         with torch.no_grad():
             # label co-guessing of unlabeled samples
@@ -198,7 +198,7 @@ class DivideMix(LearningStrategyModule):
 
         # regularization
         prior = torch.ones(self.num_classes)/self.num_classes
-        prior = prior.cuda()        
+        prior = prior.to(self.device)        
         pred_mean = softmax(logits, dim=1).mean(0)
         penalty = torch.sum(prior*torch.log(prior/pred_mean))
 
@@ -238,11 +238,11 @@ class DivideMix(LearningStrategyModule):
         self.model1.eval()
         self.model2.eval()
         x, y = batch
-        outputs1 = self.model1(x.cuda())
-        outputs2 = self.model2(x.cuda())
+        outputs1 = self.model1(x.to(self.device))
+        outputs2 = self.model2(x.to(self.device))
         outputs = (outputs1 + outputs2) / 2
         self.val_acc(outputs, y)
-        loss = self.CEloss(outputs, y.cuda())
+        loss = self.CEloss(outputs, y.to(self.device))
         self.log('val_loss', loss, prog_bar=True)
         self.log('val_acc', self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
         return loss
