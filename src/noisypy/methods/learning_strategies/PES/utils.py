@@ -24,7 +24,7 @@ def reset_resnet_layer_parameters(resnet_layer: nn.Module):
 
 
 
-def renew_layers(model: nn.Module, num_classes: int, last_num_layers: int, model_class: str ='resnet'):
+def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='resnet'):
     if model_class == 'resnet':
         if last_num_layers >= 3:
             print("re-initalize block 2")

@@ -82,7 +82,7 @@ class PES_semi(LearningStrategyModule):
             param.requires_grad = False
 
         device = next(self.model.parameters()).device
-        model = renew_layers(model, num_classes=self.num_classes, last_num_layers=num_layer)
+        model = renew_layers(model, last_num_layers=num_layer)
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)
