@@ -44,7 +44,7 @@ class MultiSampleDataModule(LightningDataModule):
         pass
     
     def train_dataloader(self) -> TRAIN_DATALOADERS:
-        return [DataLoader(td, self.batch_size, shuffle=True, num_workers=self.num_workers)
+        return [DataLoader(td, self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)
                 for td in self.train_datasets]
     
     def val_dataloader(self) -> EVAL_DATALOADERS:
