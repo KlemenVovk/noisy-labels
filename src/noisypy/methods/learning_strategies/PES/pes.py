@@ -22,14 +22,14 @@ class PES(LearningStrategyModule):
                  classifier_cls: type[Module], classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
-                 PES_lr: float, T1: int, T2: int, T3: int,
+                 PES_lr: float, warmup_epochs: int, T2: int, T3: int,
                  optimizer_refine_cls: type[Optimizer],
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
             optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        # PES_lr, T1, T2, T3
+        # PES_lr, warmup_epochs, T2, T3
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args", "optimizer_refine_cls"])
@@ -37,7 +37,7 @@ class PES(LearningStrategyModule):
         self.num_training_samples = datamodule.num_train_samples
         self.num_classes = datamodule.num_classes
         self.PES_lr = PES_lr
-        self.T1 = T1
+        self.warmup_epochs = warmup_epochs
         self.T2 = T2
         self.T3 = T3
         self.optimizer_refine_cls = optimizer_refine_cls
@@ -67,12 +67,12 @@ class PES(LearningStrategyModule):
                 self.train_labels.append(y)
             self.train_labels = torch.LongTensor(self.train_labels)
             self.train_transform = train_dataset.transform
-        if self.current_epoch == self.T1:
+        if self.current_epoch == self.warmup_epochs:
             self.model = self.noisy_refine(self.model, num_layer=1, refine_times=self.T2)
             self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T3)
 
     def on_train_epoch_end(self) -> None:
-        if self.current_epoch >= self.T1:
+        if self.current_epoch >= self.warmup_epochs:
             # update train dataset and criterion
             # https://github.com/tmllab/2021_NeurIPS_PES/blob/ec5290d9fcc9efa8f302dbe8a78c448805d9e6e7/PES_cs.py#L179
             confident_dataset, train_criterion = update_train_data_and_criterion(self.model, train_data=self.train_data, 
@@ -123,7 +123,7 @@ class PES(LearningStrategyModule):
         return loss
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        if self.current_epoch == self.T1:
+        if self.current_epoch == self.warmup_epochs:
             # only noise refinement is done in this epoch, skip training step
             # https://github.com/tmllab/2021_NeurIPS_PES/blob/ec5290d9fcc9efa8f302dbe8a78c448805d9e6e7/PES_cs.py#L173-L180
             return

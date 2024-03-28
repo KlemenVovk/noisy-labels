@@ -21,7 +21,7 @@ class PESsemi_cifar10n_clean_config(MethodConfig):
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
         PES_lr=1e-4,
-        T1=20,
+        warmup_epochs=20,
         T2=5,
         lambda_u = 5,
         temperature = 0.5,

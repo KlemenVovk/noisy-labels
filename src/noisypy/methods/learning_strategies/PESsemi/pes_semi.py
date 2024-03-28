@@ -23,7 +23,7 @@ class PES_semi(LearningStrategyModule):
                  classifier_cls: type[Module], classifier_args: dict,
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
-                 PES_lr: float, T1: int, T2: int, lambda_u: float, 
+                 PES_lr: float, warmup_epochs: int, T2: int, lambda_u: float, 
                  temperature: float, alpha: float,
                  optimizer_refine_cls: type[Optimizer],
                  *args: Any, **kwargs: Any) -> None:
@@ -31,7 +31,7 @@ class PES_semi(LearningStrategyModule):
             datamodule, classifier_cls, classifier_args, 
             optimizer_cls, optimizer_args, scheduler_cls, scheduler_args, *args, **kwargs)
         # saves arguments (hyperparameters) passed to the constructor as self.hparams and logs them to hparams.yaml.
-        # PES_lr, T1, T2, lambda_u, alpha, temperature
+        # PES_lr, warmup_epochs, T2, lambda_u, alpha, temperature
         self.save_hyperparameters(ignore=["classifier_cls", "classifier_args", "datamodule", 
                                           "optimizer_cls", "optimizer_args", 
                                           "scheduler_cls", "scheduler_args", "optimizer_refine_cls"])
@@ -40,7 +40,7 @@ class PES_semi(LearningStrategyModule):
         self.num_classes = datamodule.num_classes
         self.num_iter = datamodule.num_train_samples // datamodule.batch_size
         self.PES_lr = PES_lr
-        self.T1 = T1
+        self.warmup_epochs = warmup_epochs
         self.T2 = T2
         self.lambda_u = lambda_u
         self.temperature = temperature
@@ -70,7 +70,7 @@ class PES_semi(LearningStrategyModule):
             self.train_labels = torch.LongTensor(self.train_labels)
             self.train_transform = train_dataset.transform
             
-        if self.current_epoch == self.T1:
+        if self.current_epoch == self.warmup_epochs:
             self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T2)
 
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:
@@ -113,9 +113,9 @@ class PES_semi(LearningStrategyModule):
 
     def on_train_epoch_end(self) -> None:
         # prepare data for the next epoch for every epoch after (including) T1
-        if self.current_epoch + 1 == self.T1:
+        if self.current_epoch + 1 == self.warmup_epochs:
             self.original_trainloader = self.datamodule.train_dataloader()[0]
-        if self.current_epoch + 1 >= self.T1:
+        if self.current_epoch + 1 >= self.warmup_epochs:
             # update train dataset and criterion
             labeled_trainloader, unlabeled_trainloader, class_weights = update_train_data_and_criterion(
                 self.model, train_data=self.train_data, noisy_targets=self.train_labels, 
@@ -163,13 +163,13 @@ class PES_semi(LearningStrategyModule):
 
         probs_u = torch.softmax(logits_u, dim=1)
         Lu = torch.mean((probs_u - mixed_target[batch_size * 2:])**2)
-        loss = Lx + linear_rampup(self.current_epoch + batch_idx / self.num_iter, self.T1, lambda_u=self.lambda_u) * Lu
+        loss = Lx + linear_rampup(self.current_epoch + batch_idx / self.num_iter, self.warmup_epochs, lambda_u=self.lambda_u) * Lu
 
         self.log("mix_match_loss", loss, prog_bar=True)
         return loss
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
-        if self.current_epoch < self.T1:
+        if self.current_epoch < self.warmup_epochs:
             return self.train_step(batch[0])
         else:
             return self.mix_match_step(batch, batch_idx)

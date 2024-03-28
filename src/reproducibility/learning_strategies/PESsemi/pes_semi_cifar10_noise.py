@@ -11,7 +11,7 @@ class pes_semi_cifar10n_noise(pes_semi_cifar10n_clean):
 
     learning_strategy_args = dict(
         PES_lr=1e-4,
-        T1=20,
+        warmup_epochs=20,
         T2=5,
         lambda_u = 5,
         temperature = 0.5,
