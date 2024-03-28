@@ -8,7 +8,7 @@ def update_config(base_config, new_data_config, new_seed):
         seed = new_seed
         trainer_args = {
             **base_config.trainer_args,
-            "logger": CSVLogger("../logs", name=f"{base_config.__name__}_{new_data_config.__name__}_{new_seed}"),
+            "logger": CSVLogger(f"../logs/{new_data_config.__name__}", name=f"{base_config.__name__}_{new_seed}"),
         }
     return UpdatedConfig
 
