@@ -58,7 +58,7 @@ class SOP(LearningStrategyModule):
         opt, opt_loss = self.optimizers()
         self.model.train()
 
-        y = one_hot(y_noise, 10).float()
+        y = one_hot(y_noise, self.num_classes).float()
 
         y_pred = self.model(x)
         loss = self.criterion(index, y_pred, y)

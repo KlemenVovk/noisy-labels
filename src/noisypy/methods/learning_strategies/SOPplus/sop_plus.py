@@ -13,7 +13,7 @@ class SOPplus(SOP):
         opt, opt_loss = self.optimizers()
         self.model.train()
         
-        y = one_hot(y_noise, 10).float() # TODO: if 10 is num of classes - change to self.datamodule.num_classes so it's not hard-coded
+        y = one_hot(y_noise, self.num_classes).float()
         x_all = torch.cat([x1, x2])
 
         y_pred = self.model(x_all)

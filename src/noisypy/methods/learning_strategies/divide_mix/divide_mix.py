@@ -148,7 +148,7 @@ class DivideMix(LearningStrategyModule):
         batch_size = inputs_x.size(0)
 
         # Transform label to one-hot
-        labels_x = one_hot(labels_x)        
+        labels_x = one_hot(labels_x, num_classes=self.num_classes)        
         w_x = w_x.view(-1,1).type(torch.FloatTensor).to(self.device)
 
         with torch.no_grad():
