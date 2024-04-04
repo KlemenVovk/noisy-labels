@@ -1,7 +1,8 @@
 from noisypy.methods.learning_strategies.SOPplus.sop_plus import SOPplus
+from torch.optim import SGD
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from .base.config import NoisyLabelsMethod
 from .base.wrappers import double_aug_wrapper
-from torch.optim import SGD
 
 
 class SOP_plus_config(NoisyLabelsMethod):
@@ -20,3 +21,8 @@ class SOP_plus_config(NoisyLabelsMethod):
         overparam_weight_decay = 0,
         overparam_optimizer_cls = SGD
     )
+
+    optimizer_cls = SGD
+    optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=5e-4)
+    scheduler_cls = CosineAnnealingLR
+    scheduler_args = dict(T_max=300, eta_min=0.0002)

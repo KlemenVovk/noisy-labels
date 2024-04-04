@@ -1,7 +1,8 @@
 from noisypy.methods.learning_strategies.SOP.sop import SOP
+from torch.optim import SGD
+from torch.optim.lr_scheduler import MultiStepLR
 from .base.config import NoisyLabelsMethod
 from .base.wrappers import add_index_wrapper
-from torch.optim import SGD
 
 
 class SOP_config(NoisyLabelsMethod):
@@ -20,3 +21,8 @@ class SOP_config(NoisyLabelsMethod):
         overparam_weight_decay = 0,
         overparam_optimizer_cls = SGD
     )
+
+    optimizer_cls = SGD
+    optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=5e-4)
+    scheduler_cls = MultiStepLR
+    scheduler_args = dict(milestones=[40, 80], gamma=0.1)

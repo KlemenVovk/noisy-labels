@@ -1,10 +1,10 @@
 #!/bin/bash
 
 DATA_CONFIGS=(
-    clean
+#    clean
 #    aggre
 #    worse
-#    random1
+    random1
 #    random2
 #    random3
 )
