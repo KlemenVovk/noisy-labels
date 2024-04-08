@@ -1,7 +1,7 @@
 from noisypy.methods.learning_strategies.PES.pes import PES
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import MultiStepLR
-from .base.config import NoisyLabelsMethod, CSVLogger
+from .base.config import NoisyLabelsMethod
 
 
 class PES_config(NoisyLabelsMethod):

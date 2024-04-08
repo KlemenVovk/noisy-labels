@@ -11,8 +11,8 @@ class ELR_plus_config(NoisyLabelsMethod):
 
     learning_strategy_cls = ELR_plus
     learning_strategy_args = dict(
-        beta = 0.99, # β ∈ {0.5, 0.7, 0.9, 0.99}
-        lmbd=1,      # λ ∈ {1, 3, 5, 7, 10}
+        beta = 0.7,  # β ∈ {0.5, 0.7, 0.9, 0.99}
+        lmbd=3,      # λ ∈ {1, 3, 5, 7, 10}
         gamma=0.997, # γ ∈ [0, 1] 
         alpha=1,     # α ∈ {0, 0.1, 1, 2, 5}
         ema_update=True, # True or False
