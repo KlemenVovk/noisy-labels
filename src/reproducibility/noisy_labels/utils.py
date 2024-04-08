@@ -1,3 +1,4 @@
+import torch
 import lightning as L
 from lightning.pytorch.loggers import CSVLogger
 
@@ -36,9 +37,12 @@ class TestCallback(L.Callback):
         super().__init__()
         self.freq = test_freq
 
+    @torch.no_grad()
     def on_train_epoch_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
         if (trainer.current_epoch+1) % self.freq != 0:
             return
+        trainer.model.eval()
         for batch in trainer.datamodule.test_dataloader()[0]:
             batch = [batch[0].to(trainer.model.device), batch[1].to(trainer.model.device)]
             trainer.model.test_step(batch, 0)
+        trainer.model.train()
