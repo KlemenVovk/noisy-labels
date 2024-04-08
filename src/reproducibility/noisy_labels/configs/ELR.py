@@ -19,3 +19,8 @@ class ELR_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.001)
     scheduler_cls = CosineAnnealingWarmRestarts
     scheduler_args = dict(T_0=10, eta_min=0.001)
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 120,
+    }

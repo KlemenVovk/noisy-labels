@@ -22,9 +22,8 @@ class PES_semi_config(NoisyLabelsMethod):
     scheduler_cls = CosineAnnealingLR
     scheduler_args = dict(T_max=300, eta_min = 0.1 / 100)
 
-    trainer_args = dict(
-        reload_dataloaders_every_n_epochs=1,
-        max_epochs=100,
-        deterministic=True,
-        logger=CSVLogger("../logs", name="NONE"),
-    )
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 300,
+        "reload_dataloaders_every_n_epochs": 1,
+    }

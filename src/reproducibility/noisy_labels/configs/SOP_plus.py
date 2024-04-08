@@ -26,3 +26,8 @@ class SOP_plus_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=5e-4)
     scheduler_cls = CosineAnnealingLR
     scheduler_args = dict(T_max=300, eta_min=0.0002)
+    
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 300,
+    }

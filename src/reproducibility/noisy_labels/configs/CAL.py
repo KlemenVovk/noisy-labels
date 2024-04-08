@@ -29,3 +29,8 @@ class CAL_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=0.0005)
     scheduler_cls = StepLR
     scheduler_args = dict(step_size = 60, gamma=0.1)
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 165,
+    }

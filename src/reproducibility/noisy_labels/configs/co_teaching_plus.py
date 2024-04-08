@@ -26,3 +26,8 @@ class co_teaching_plus_config(NoisyLabelsMethod):
     
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 200,
+    }

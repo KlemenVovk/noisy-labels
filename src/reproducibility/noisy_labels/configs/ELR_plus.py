@@ -24,3 +24,8 @@ class ELR_plus_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.0005)
     scheduler_cls = MultiStepLR
     scheduler_args = dict(milestones=[150], gamma=0.1)
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 200*2,
+    }

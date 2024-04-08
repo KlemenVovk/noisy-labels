@@ -15,3 +15,8 @@ class cores2_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=5e-4)
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=lambda epoch: lr_plan[epoch] / (1+f_beta(epoch)))
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 100,
+    }

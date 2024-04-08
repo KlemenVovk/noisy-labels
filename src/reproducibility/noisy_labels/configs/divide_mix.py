@@ -24,9 +24,8 @@ class divide_mix_config(NoisyLabelsMethod):
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda = lambda epoch: 0.1 if epoch >= 150 else 1)
 
-    trainer_args = dict(
-        reload_dataloaders_every_n_epochs=1,
-        max_epochs=100,
-        deterministic=True,
-        logger=CSVLogger("../logs", name="NONE"),
-    )
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 100,
+        "reload_dataloaders_every_n_epochs": 1,
+    }

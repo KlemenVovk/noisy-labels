@@ -19,10 +19,9 @@ class PES_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.1, momentum=0.9, weight_decay=1e-4)
     scheduler_cls = MultiStepLR
     scheduler_args = dict(milestones=[100, 150], gamma=0.1)
-
-    trainer_args = dict(
-        reload_dataloaders_every_n_epochs=1,
-        max_epochs=100,
-        deterministic=True,
-        logger=CSVLogger("../logs", name="NONE"),
-    )
+    
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 200,
+        "reload_dataloaders_every_n_epochs": 1,
+    }

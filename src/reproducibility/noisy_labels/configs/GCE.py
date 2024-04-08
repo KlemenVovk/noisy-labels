@@ -19,3 +19,8 @@ class GCE_config(NoisyLabelsMethod):
     optimizer_args = dict(lr=0.01, momentum=0.9, weight_decay=5e-4)
     scheduler_cls = MultiStepLR
     scheduler_args = dict(milestones=[60], gamma=0.1)
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 100,
+    }

@@ -21,3 +21,8 @@ class volminnet_config(NoisyLabelsMethod):
         dict(milestones=[30, 60], gamma=0.1),
         dict(milestones=[30, 60], gamma=0.1),
     ]
+
+    trainer_args = {
+        **NoisyLabelsMethod.trainer_args,
+        "max_epochs": 80,
+    }
