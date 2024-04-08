@@ -13,6 +13,7 @@ class PES_config(NoisyLabelsMethod):
         T2=7,
         T3=5,
         optimizer_refine_cls=Adam,
+        model_type='paper_resnet'
     )
 
     optimizer_cls = SGD

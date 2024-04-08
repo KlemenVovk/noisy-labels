@@ -9,12 +9,13 @@ class PES_semi_config(NoisyLabelsMethod):
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
         PES_lr=1e-4,
-        warmup_epochs=20,
+        warmup_epochs=1,
         T2=5,
         lambda_u = 5,
         temperature = 0.5,
         alpha = 4,
         optimizer_refine_cls=Adam,
+        model_type='paper_resnet',
     )
 
     optimizer_cls = SGD

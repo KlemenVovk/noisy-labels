@@ -24,6 +24,7 @@ class PES(LearningStrategyModule):
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
                  PES_lr: float, warmup_epochs: int, T2: int, T3: int,
                  optimizer_refine_cls: type[Optimizer],
+                 model_type: str = 'pytorch_resnet',
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
@@ -41,6 +42,7 @@ class PES(LearningStrategyModule):
         self.T2 = T2
         self.T3 = T3
         self.optimizer_refine_cls = optimizer_refine_cls
+        self.model_type = model_type
         
         # init model
         self.model = classifier_cls(**classifier_args)
@@ -93,7 +95,7 @@ class PES(LearningStrategyModule):
         for param in model.parameters():
             param.requires_grad = False
 
-        model = renew_layers(model, last_num_layers=num_layer)
+        model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type)
         device = next(self.model.parameters()).device
         model.to(device)
         
