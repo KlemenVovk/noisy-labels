@@ -50,7 +50,8 @@ class CE(LearningStrategyModule):
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
         y_pred = self.model(x)
-        self.log("test_acc", self.test_acc(y_pred, y))
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
     
     def configure_optimizers(self):
         #optim = SGD(self.model.parameters(), lr=self.hparams.initial_lr, momentum=self.hparams.momentum, weight_decay=self.hparams.weight_decay)

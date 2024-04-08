@@ -140,7 +140,8 @@ class PES(LearningStrategyModule):
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
         y_pred = self.model(x)
-        self.log("test_acc", self.test_acc(y_pred, y))
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)
