@@ -13,7 +13,7 @@ class jocor_config(NoisyLabelsMethod):
         exponent=1,
         num_gradual=10,
         co_lambda=0.9,
-        num_epochs=NoisyLabelsMethod.trainer_args["max_epochs"],
+        num_epochs=200,
     )
 
     optimizer_cls = Adam
