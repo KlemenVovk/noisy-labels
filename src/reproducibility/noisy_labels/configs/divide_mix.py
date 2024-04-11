@@ -12,7 +12,7 @@ class divide_mix_config(NoisyLabelsMethod):
     learning_strategy_cls = DivideMix
     learning_strategy_args = dict(
         warmup_epochs=10, 
-        noise_type = "asymmetric", 
+        noise_type = "symmetric", 
         noise_rate = 0,
         p_thresh = 0.5, 
         temperature = 0.5, 
