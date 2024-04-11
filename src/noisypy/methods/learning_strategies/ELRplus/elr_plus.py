@@ -155,7 +155,8 @@ class ELR_plus(LearningStrategyModule):
         y_pred1 = self.model1(x)
         y_pred2 = self.model2(x)
         y_pred = (y_pred1 + y_pred2) / 2
-        self.log("test_acc", self.test_acc(y_pred, y))
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
     
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:

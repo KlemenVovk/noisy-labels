@@ -26,6 +26,7 @@ class PES_semi(LearningStrategyModule):
                  PES_lr: float, warmup_epochs: int, T2: int, lambda_u: float, 
                  temperature: float, alpha: float,
                  optimizer_refine_cls: type[Optimizer],
+                 model_type: str = 'pytorch_resnet',
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
@@ -46,6 +47,7 @@ class PES_semi(LearningStrategyModule):
         self.temperature = temperature
         self.alpha = alpha
         self.optimizer_refine_cls = optimizer_refine_cls
+        self.model_type = model_type
         
         # init model
         self.model = classifier_cls(**classifier_args)
@@ -82,7 +84,7 @@ class PES_semi(LearningStrategyModule):
             param.requires_grad = False
 
         device = next(self.model.parameters()).device
-        model = renew_layers(model, last_num_layers=num_layer)
+        model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type)
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)
@@ -185,7 +187,8 @@ class PES_semi(LearningStrategyModule):
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
         y_pred = self.model(x)
-        self.log("test_acc", self.test_acc(y_pred, y))
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
 
     def configure_optimizers(self) -> list[list[Optimizer], list[LRScheduler]]:
         optimizer = self.optimizer_cls(self.model.parameters(), **self.optimizer_args)

@@ -1,7 +1,7 @@
 from noisypy.methods.learning_strategies.PES.pes import PES
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import MultiStepLR
-from .base.config import NoisyLabelsMethod, CSVLogger
+from .base.config import NoisyLabelsMethod
 
 
 class PES_config(NoisyLabelsMethod):
@@ -13,6 +13,7 @@ class PES_config(NoisyLabelsMethod):
         T2=7,
         T3=5,
         optimizer_refine_cls=Adam,
+        model_type='paper_resnet'
     )
 
     optimizer_cls = SGD

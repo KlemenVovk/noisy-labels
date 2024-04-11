@@ -82,7 +82,6 @@ class CAL(LearningStrategyModule):
             self.T_mat_indicator_sum = torch.max(torch.sum(torch.sum(torch.sum(self.T_mat>0.0,2),1).view(self.T_mat.shape[0],1,-1).repeat(1,self.T_mat.shape[0],1),2) * 1.0, torch.ones((self.T_mat.shape[0],self.T_mat.shape[1])).to(self.T_mat.device))
             
 
-
     def on_train_epoch_end(self) -> None:
         if self.current_epoch + 1 == self.warmup_epochs:
             # update noise_prior
@@ -172,8 +171,12 @@ class CAL(LearningStrategyModule):
     
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
-        y_pred = self.model(x)
-        self.log("test_acc", self.test_acc(y_pred, y))
+        if self.current_epoch >= self.warmup_epochs:
+            y_pred = self.model(x)
+        else:
+            y_pred = self.model_warmup(x)
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
 
     def configure_optimizers(self):
         optimizer_warmup = self.optimizer_cls(self.model_warmup.parameters(), **self.optimizer_args)

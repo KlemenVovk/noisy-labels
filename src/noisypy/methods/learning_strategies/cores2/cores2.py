@@ -90,7 +90,8 @@ class SampleSieve(LearningStrategyModule):
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
         y_pred = self.model(x)
-        self.log("test_acc", self.test_acc(y_pred, y))
+        self.test_acc(y_pred, y)
+        self.log("test_acc", self.test_acc, on_epoch=True)
     
     def configure_optimizers(self):
         # Here multiple optimizers and schedulers can be set. Currently we have hardcoded the lr scheduling to exactly like it is in the paper.

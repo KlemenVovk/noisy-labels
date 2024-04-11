@@ -11,8 +11,8 @@ class ELR_config(NoisyLabelsMethod):
 
     learning_strategy_cls = ELR
     learning_strategy_args = dict(
-        beta=0.99,
-        lmbd=1
+        beta=0.7,
+        lmbd=3
     )
 
     optimizer_cls = SGD
