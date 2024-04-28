@@ -1,0 +1,6 @@
+alpha: 4
+noise_rate: 0
+noise_type: clean
+p_thresh: 0.5
+temperature: 0.5
+warmup_epochs: 10

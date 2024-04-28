@@ -1,0 +1,5 @@
+PES_lr: 0.0001
+T2: 7
+T3: 5
+model_type: paper_resnet
+warmup_epochs: 25

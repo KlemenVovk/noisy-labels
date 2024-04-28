@@ -1,0 +1,6 @@
+PES_lr: 0.0001
+T1: 20
+T2: 5
+alpha: 4
+lambda_u: 5
+temperature: 0.5

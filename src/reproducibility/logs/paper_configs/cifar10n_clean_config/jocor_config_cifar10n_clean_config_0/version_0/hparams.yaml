@@ -1,0 +1,4 @@
+co_lambda: 0.9
+exponent: 1
+forget_rate: 0.2
+num_gradual: 10

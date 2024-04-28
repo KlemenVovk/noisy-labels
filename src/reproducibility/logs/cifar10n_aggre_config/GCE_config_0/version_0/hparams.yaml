@@ -1,0 +1,2 @@
+prune_freq: 10
+prune_start_epoch: 40

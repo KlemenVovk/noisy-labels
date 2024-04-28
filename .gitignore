@@ -195,3 +195,5 @@ data
 lightning_logs
 .aim
 logs
+!src/reproducibility/logs
+*.ckpt

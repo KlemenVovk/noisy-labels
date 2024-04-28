@@ -1,0 +1,7 @@
+alpha: 1
+beta: 0.99
+coef_step: 0
+ema_step: 40000
+ema_update: true
+gamma: 0.997
+lmbd: 1

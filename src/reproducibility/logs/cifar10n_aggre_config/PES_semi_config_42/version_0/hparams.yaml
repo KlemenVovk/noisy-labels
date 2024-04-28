@@ -1,0 +1,7 @@
+PES_lr: 0.0001
+T2: 5
+alpha: 4
+lambda_u: 5
+model_type: paper_resnet
+temperature: 0.5
+warmup_epochs: 1
