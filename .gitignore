@@ -197,3 +197,4 @@ lightning_logs
 logs
 !src/reproducibility/logs
 *.ckpt
+*.pt
