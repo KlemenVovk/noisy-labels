@@ -10,7 +10,7 @@ class SOP_config(BasePaperMethod):
 
     _data_config_wrapper = add_index_wrapper
 
-    # https://openreview.net/pdf?id=TBWA6PLJZQm says special the pre-act resnet is used and other configs are default
+    # https://openreview.net/pdf?id=TBWA6PLJZQm special treatment for SOP the pre-act resnet is used, but other parameters are default
     classifier=PreResNet18
     
     learning_strategy_cls = SOP
