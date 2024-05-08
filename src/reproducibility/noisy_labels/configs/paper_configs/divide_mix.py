@@ -1,14 +1,18 @@
 from noisypy.methods.learning_strategies.divide_mix.divide_mix import DivideMix
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
+
+from ..base.utils import PreResNet18
 from ..base.config import NoisyLabelsMethod
 from ..base.wrappers import dividemixify_wrapper
+
 
 #TODO warmup skipping
 # https://openreview.net/pdf?id=TBWA6PLJZQm says special treatment for this method using original config
 class divide_mix_config(NoisyLabelsMethod):
 
     _data_config_wrapper = dividemixify_wrapper
+    classifier=PreResNet18
 
     learning_strategy_cls = DivideMix
     learning_strategy_args = dict(
