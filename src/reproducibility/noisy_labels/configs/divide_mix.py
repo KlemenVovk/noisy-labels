@@ -15,11 +15,12 @@ class divide_mix_config(NoisyLabelsMethod):
     learning_strategy_cls = DivideMix
     learning_strategy_args = dict(
         warmup_epochs=10, 
-        noise_type = "symmetric", 
+        noise_type = "asymmetric", 
         noise_rate = 0,
         p_thresh = 0.5, 
         temperature = 0.5, 
-        alpha = 4
+        alpha = 4,
+        # TODO: lambda_u = 25
     )
 
     optimizer_cls = SGD

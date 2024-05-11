@@ -6,9 +6,8 @@ from ..base.utils import PreResNet18
 from ..base.config import NoisyLabelsMethod
 from ..base.wrappers import dividemixify_wrapper
 
-
-#TODO warmup skipping
-# https://openreview.net/pdf?id=TBWA6PLJZQm says special treatment for this method using original config
+# Special treatment for DivideMix based on https://openreview.net/pdf?id=TBWA6PLJZQm.
+# The original configuration is used.
 class divide_mix_config(NoisyLabelsMethod):
 
     _data_config_wrapper = dividemixify_wrapper
@@ -17,11 +16,12 @@ class divide_mix_config(NoisyLabelsMethod):
     learning_strategy_cls = DivideMix
     learning_strategy_args = dict(
         warmup_epochs=10, 
-        noise_type = "symmetric", 
+        noise_type = "asymmetric", 
         noise_rate = 0,
         p_thresh = 0.5, 
         temperature = 0.5, 
-        alpha = 4
+        alpha = 4,
+        # TODO: lambda_u = 25
     )
 
     optimizer_cls = SGD
