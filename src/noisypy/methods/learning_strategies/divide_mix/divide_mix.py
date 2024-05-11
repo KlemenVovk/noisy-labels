@@ -22,8 +22,8 @@ class DivideMix(LearningStrategyModule):
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
                  warmup_epochs: int, noise_type: str, noise_rate: float, 
-                 p_thresh: float, temperature: float, alpha: float,
-                 *args: Any, **kwargs: Any) -> None:
+                 p_thresh: float, temperature: float, alpha: float, 
+                 lambda_u: float, *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,
             optimizer_cls, optimizer_args, 
@@ -41,6 +41,7 @@ class DivideMix(LearningStrategyModule):
         self.p_thresh = p_thresh
         self.temperature = temperature
         self.alpha = alpha
+        self.lambda_u = lambda_u
 
         # init model
         self.model1 = classifier_cls(**classifier_args)
@@ -194,7 +195,7 @@ class DivideMix(LearningStrategyModule):
         logits_x = logits[:batch_size*2]
         logits_u = logits[batch_size*2:] 
 
-        Lx, Lu, lamb = self.SemiLoss(logits_x, mixed_target[:batch_size*2], logits_u, mixed_target[batch_size*2:], self.current_epoch+batch_idx/num_iter, self.warmup_epochs)
+        Lx, Lu, lamb = self.SemiLoss(logits_x, mixed_target[:batch_size*2], logits_u, mixed_target[batch_size*2:], self.current_epoch+batch_idx/num_iter, self.warmup_epochs, self.lambda_u)
 
         # regularization
         prior = torch.ones(self.num_classes)/self.num_classes

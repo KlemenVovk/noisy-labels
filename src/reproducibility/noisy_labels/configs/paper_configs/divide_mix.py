@@ -21,7 +21,7 @@ class divide_mix_config(NoisyLabelsMethod):
         p_thresh = 0.5, 
         temperature = 0.5, 
         alpha = 4,
-        # TODO: lambda_u = 25
+        lambda_u = 0
     )
 
     optimizer_cls = SGD
