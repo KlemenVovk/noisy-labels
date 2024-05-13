@@ -17,3 +17,8 @@ class PES_semi_config(BasePaperMethod):
         optimizer_refine_cls=Adam,
         model_type='paper_resnet',
     )
+
+    trainer_args = {
+        **BasePaperMethod.trainer_args,
+        "reload_dataloaders_every_n_epochs": 1,
+    }
