@@ -67,7 +67,7 @@ def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
     wrong_memos = []
     for epoch in range(num_epochs):
         probs = []
-        for x, y in (pbar := tqdm(loader, ncols=80, desc=f"{epoch=:3}")):
+        for x, y in (pbar := tqdm(loader, ncols=80, desc=f"{epoch=:3}", leave=False)):
             x, y = x.to(device), y.to(device)
             y_pred = model(x)
             loss = criterion(y_pred, y)
