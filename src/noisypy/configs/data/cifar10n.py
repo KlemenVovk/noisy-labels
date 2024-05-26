@@ -7,7 +7,7 @@ from ..base.data import DataConfig
 
 class cifar10n_clean_config(DataConfig):
 
-    dataset_train_cls, dataset_val_cls = Split(0.8)(CIFAR10N)
+    dataset_train_cls, dataset_val_cls = Split(1)(CIFAR10N)
     dataset_test_cls = CIFAR10N
 
     dataset_args = dict(

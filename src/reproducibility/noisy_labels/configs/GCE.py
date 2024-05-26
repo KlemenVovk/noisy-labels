@@ -22,5 +22,6 @@ class GCE_config(NoisyLabelsMethod):
 
     trainer_args = {
         **NoisyLabelsMethod.trainer_args,
+        "enable_checkpointing": True,
         "max_epochs": 100,
     }

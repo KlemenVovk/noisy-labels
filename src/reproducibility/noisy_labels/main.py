@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from configs.paper_configs import *
+from configs import *
 from utils import update_config, TestCallback
 from noisypy.configs.data.cifar10n import (
     cifar10n_clean_config,

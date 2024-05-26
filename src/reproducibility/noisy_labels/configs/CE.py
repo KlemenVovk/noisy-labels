@@ -22,5 +22,5 @@ class CE_config(NoisyLabelsMethod):
 
     trainer_args = {
         **NoisyLabelsMethod.trainer_args,
-        "max_epochs": 200,
+        "max_epochs": 100,
     }

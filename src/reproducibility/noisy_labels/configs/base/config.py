@@ -16,6 +16,7 @@ class NoisyLabelsMethod(MethodConfig):
     trainer_args = dict(
         max_epochs=1,
         deterministic=True,
+        enable_checkpointing=False,
         logger=CSVLogger("../logs", name="NONE"),
     )
 

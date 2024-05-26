@@ -28,6 +28,7 @@ class BasePaperMethod(MethodConfig):
     trainer_args = dict(
         max_epochs=100,
         deterministic=True,
+        enable_checkpointing=False,
         logger=CSVLogger("../../logs/paper_configs", name="NONE"),
     )
 
