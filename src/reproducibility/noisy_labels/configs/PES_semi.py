@@ -5,6 +5,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from .base.config import NoisyLabelsMethod
 
 class PES_semi_config(NoisyLabelsMethod):
+    # TODO: PreAct18 or ResNet34 ?
 
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
