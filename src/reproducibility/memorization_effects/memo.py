@@ -59,7 +59,18 @@ def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
 
     model = resnet34(num_classes=10).to(device)
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
+    # use the same optimizer as in the CE config
+    optimizer = torch.optim.SGD(
+        model.parameters(), 
+        lr=0.1,
+        momentum=0.9,
+        weight_decay=5e-4)
+    # use the same scheduler as in the CE config
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(
+        optimizer, 
+        milestones=[60], 
+        gamma=0.1)
+    
     loader = torch.utils.data.DataLoader(
         clean_dataset, batch_size=128, shuffle=False)
     
@@ -85,6 +96,7 @@ def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
         wrong_frac = (probs[~clean_idxs].max(axis=-1)[0] > confidence_threshold).float().mean()
         clean_memos.append(clean_frac.item())
         wrong_memos.append(wrong_frac.item())
+        scheduler.step()
     
     return clean_memos, wrong_memos
 
