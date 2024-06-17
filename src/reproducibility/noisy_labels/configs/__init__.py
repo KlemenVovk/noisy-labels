@@ -4,6 +4,7 @@ from .co_teaching import co_teaching_config
 from .co_teaching_plus import co_teaching_plus_config
 from .cores2 import cores2_config
 from .divide_mix import divide_mix_config
+from .divide_mix_clean import divide_mix_clean_config
 from .ELR import ELR_config
 from .ELR_plus import ELR_plus_config
 #from .forward_T import ...

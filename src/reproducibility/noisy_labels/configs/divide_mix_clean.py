@@ -7,7 +7,7 @@ from .base.config import NoisyLabelsMethod
 from .base.wrappers import dividemixify_wrapper
 
 
-class divide_mix_config(NoisyLabelsMethod):
+class divide_mix_clean_config(NoisyLabelsMethod):
 
     _data_config_wrapper = dividemixify_wrapper
     classifier=PreResNet18

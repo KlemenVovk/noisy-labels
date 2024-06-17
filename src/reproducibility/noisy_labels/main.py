@@ -18,6 +18,7 @@ method_configs = {
     "co_teaching_plus": co_teaching_plus_config,
     "cores2": cores2_config,
     "divide_mix": divide_mix_config,
+    "divide_mix_clean": divide_mix_clean_config,
     "ELR": ELR_config,
     "ELR_plus": ELR_plus_config,
     "GCE": GCE_config,
