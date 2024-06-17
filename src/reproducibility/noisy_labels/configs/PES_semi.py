@@ -2,10 +2,11 @@ from noisypy.methods.learning_strategies.PESsemi.pes_semi import PES_semi
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
+from .base.utils import PreResNet18
 from .base.config import NoisyLabelsMethod
 
 class PES_semi_config(NoisyLabelsMethod):
-    # TODO: PreAct18 or ResNet34 ?
+    classifier=PreResNet18
 
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
