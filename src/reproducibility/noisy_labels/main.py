@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import torch
 
 from configs import *
 from utils import update_config, TestCallback
@@ -45,6 +46,7 @@ if __name__ == "__main__":
     parser.add_argument("method_config", choices=method_configs.keys())
     parser.add_argument("data_config", choices=data_configs.keys())
     parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--synthetic", action="store_true")
     args = parser.parse_args()
     print(f"Running {args.method_config} on {args.data_config} with seed {args.seed}...")
 
@@ -54,6 +56,29 @@ if __name__ == "__main__":
         args.seed
     )
     model, datamodule, trainer = config.build_modules()
+
+    if args.synthetic:
+        clean_labels = torch.tensor(datamodule.train_datasets[0].targets)
+        noisy_labels = torch.tensor(datamodule.train_datasets[0].noisy_targets)
+        print(noisy_labels)
+
+        num_classes = 10
+        T = torch.zeros(num_classes, num_classes)
+
+        for i in range(num_classes):
+            clean_mask = clean_labels == i
+            for j in range(num_classes):
+                p = (noisy_labels[clean_mask] == j).float().mean()
+                T[i, j] = p
+        print(T)
+        synthetic_labels = torch.multinomial(T[clean_labels], 1).squeeze()
+        
+        for train_dataset in datamodule.train_datasets:
+            train_dataset.noisy_targets = synthetic_labels
+        
+        print(datamodule.train_datasets[0].noisy_targets)
+        print(f"noise rate: {(clean_labels != datamodule.train_datasets[0].noisy_targets).float().mean()}")
+
     print(f"Train samples: {datamodule.num_train_samples}")
     print(f"Val   samples: {datamodule.num_val_samples}")
     print(f"Test  samples: {datamodule.num_test_samples}")
