@@ -9,14 +9,13 @@ from torchvision import transforms
 
 import numpy as np
 from tqdm import tqdm
-from matplotlib import pyplot as plt
 
 from utils import ResNet34 as resnet34
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # %%
-noisy_path = "../../../data/noisylabels/CIFAR-10_human.pt"
+noisy_path = "/d/hpc/projects/FRI/vh0153/noisy-labels/src/reproducibility/noisy_labels/data/noisylabels/CIFAR-10_human.pt"
 noisy_labels = {k: torch.tensor(v) for k, v in torch.load(noisy_path).items()}
 keys_to_test = ["aggre_label", "random_label1", "worse_label"]
 noisy_labels
@@ -29,7 +28,7 @@ cifar10_train_transform = transforms.Compose([
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
 ])
 
-clean_dataset = CIFAR10("../../../data/cifar", train=True, transform=cifar10_train_transform)
+clean_dataset = CIFAR10("/d/hpc/projects/FRI/vh0153/noisy-labels/src/reproducibility/noisy_labels/data/cifar", train=True, transform=cifar10_train_transform)
 clean_labels = torch.tensor(clean_dataset.targets)
 clean_labels
 
@@ -48,8 +47,6 @@ def generate_synthetic_labels(clean_labels, noisy_labels, seed=1337):
     gen = torch.Generator("cpu").manual_seed(seed)
     synthetic_labels = torch.multinomial(T[clean_labels], 1, generator=gen).squeeze()
     return synthetic_labels
-
-generate_synthetic_labels(clean_labels, noisy_labels["aggre_label"])
 
 # %%
 def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
@@ -101,14 +98,15 @@ def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
     return clean_memos, wrong_memos
 
 # %%
+seed = 1
 num_epochs = 150
 memo_results = {}
 for key in keys_to_test:
-    print(f"\ntraining with {key}\n")
+    print(f"\ntraining with {key} (seed {seed})\n")
     memo_results[key] = {}
     
     human_labels = noisy_labels["aggre_label"]
-    synth_labels = generate_synthetic_labels(clean_labels, human_labels)
+    synth_labels = generate_synthetic_labels(clean_labels, human_labels, seed=seed)
     
     print(f"training human")
     human = train_and_record_memorization(clean_labels, human_labels, num_epochs)
@@ -117,25 +115,7 @@ for key in keys_to_test:
 
     memo_results[key]["human"] = {"clean": human[0], "wrong": human[1]}
     memo_results[key]["synthetic"] = {"clean": synth[0], "wrong": synth[1]}
-torch.save(memo_results, "memo_results.pt")
+torch.save(memo_results, f"memo_results_{seed}.pt")
 
-# %%
-memo_results = torch.load("memo_results.pt")
-
-# %%
-fig, ax = plt.subplots(2, 3, figsize=(10, 4))
-
-for i, key in enumerate(keys_to_test):
-    ax[0, i].set_title(f"clean labels ({key})")
-    ax[0, i].plot(memo_results[key]["human"]["clean"], "b")
-    ax[0, i].plot(memo_results[key]["synthetic"]["clean"], "b--")
-
-    ax[1, i].set_title(f"wrong labels ({key})")
-    ax[1, i].plot(memo_results[key]["human"]["wrong"], "r")
-    ax[1, i].plot(memo_results[key]["synthetic"]["wrong"], "r--")
-
-fig.supxlabel("epoch")
-fig.supylabel("fraction of memorised samples")
-plt.tight_layout()
 
 
