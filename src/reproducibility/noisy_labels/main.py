@@ -48,12 +48,12 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--synthetic", action="store_true")
     args = parser.parse_args()
-    print(f"Running {args.method_config} on {args.data_config} with seed {args.seed}...")
+    print(
+        f"Running {args.method_config} on {args.data_config} with seed {args.seed}..."
+    )
 
     config = update_config(
-        method_configs[args.method_config],
-        data_configs[args.data_config],
-        args.seed
+        method_configs[args.method_config], data_configs[args.data_config], args.seed
     )
     model, datamodule, trainer = config.build_modules()
 
@@ -72,12 +72,21 @@ if __name__ == "__main__":
                 T[i, j] = p
         print(T)
         synthetic_labels = torch.multinomial(T[clean_labels], 1).squeeze()
-        
+
         for train_dataset in datamodule.train_datasets:
             train_dataset.noisy_targets = synthetic_labels
-        
+
         print(datamodule.train_datasets[0].noisy_targets)
-        print(f"noise rate: {(clean_labels != datamodule.train_datasets[0].noisy_targets).float().mean()}")
+        print(
+            f"noise rate: {(clean_labels != datamodule.train_datasets[0].noisy_targets).float().mean()}"
+        )
+
+        trainer.loggers[0]._root_dir = trainer.loggers[0]._root_dir.replace(
+            "logs", "logs/synthetic"
+        )
+        trainer.loggers[0]._save_dir = trainer.loggers[0]._save_dir.replace(
+            "logs", "logs/synthetic"
+        )
 
     print(f"Train samples: {datamodule.num_train_samples}")
     print(f"Val   samples: {datamodule.num_val_samples}")
