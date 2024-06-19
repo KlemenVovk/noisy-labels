@@ -7,14 +7,12 @@ from .base.config import NoisyLabelsMethod
 class volminnet_config(NoisyLabelsMethod):
 
     learning_strategy_cls = VolMinNet
-    learning_strategy_args = dict(
-        lam=1e-4
-    )
+    learning_strategy_args = dict(lam=1e-4, init_t=2)
 
     optimizer_cls = [SGD, SGD]
     optimizer_args = [
         dict(lr=0.01, momentum=0.9, weight_decay=1e-4),
-        dict(lr=0.01, momentum=0.9)
+        dict(lr=0.01, momentum=0.9),
     ]
     scheduler_cls = [MultiStepLR, MultiStepLR]
     scheduler_args = [
