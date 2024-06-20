@@ -71,6 +71,8 @@ if __name__ == "__main__":
                 p = (noisy_labels[clean_mask] == j).float().mean()
                 T[i, j] = p
         print(T)
+        seed = args.seed if args.seed is not None else 42
+        torch.manual_seed(seed)
         synthetic_labels = torch.multinomial(T[clean_labels], 1).squeeze()
 
         for train_dataset in datamodule.train_datasets:
