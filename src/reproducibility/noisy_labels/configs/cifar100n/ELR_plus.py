@@ -20,7 +20,7 @@ class ELR_plus_config(CIFAR100NoisyLabelsMethod):
         alpha=1,  # α ∈ {0, 0.1, 1, 2, 5}
         ema_update=True,  # True or False
         ema_step=40000,  # EMA step (in iterations)
-        coef_step=0,
+        coef_step=40000,
     )
 
     optimizer_cls = SGD
