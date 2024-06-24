@@ -1,4 +1,3 @@
-from functools import partial
 from noisypy.methods.learning_strategies.co_teaching.co_teaching import CoTeachingPlus
 from noisypy.methods.learning_strategies.co_teaching.utils import alpha_schedule
 from torch.optim import Adam
@@ -18,7 +17,7 @@ class co_teaching_plus_config(CIFAR100NoisyLabelsMethod):
         exponent=1,
         num_gradual=10,
         num_epochs=200,
-        init_epoch=20,
+        init_epoch=5,
     )
 
     optimizer_cls = Adam
@@ -26,7 +25,6 @@ class co_teaching_plus_config(CIFAR100NoisyLabelsMethod):
         lr=0.001,
     )
 
-    alpha_schedule = partial(alpha_schedule, decay_start_epoch=100)
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
 

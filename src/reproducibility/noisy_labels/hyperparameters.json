@@ -9,7 +9,6 @@
             "scheduler": "MultiStepLR ([60], 0.1)",
             "epochs": 165,
 
-            "is_peer": true,
             "alpha": 0.0,
             "alpha_scheduler" : "seg",
             "warmup_epochs" : 65,
@@ -108,7 +107,7 @@
             "scheduler": "CosineAnnealing",
             "epochs": 300,
             
-            "PES_lr": 0.0001,
+            "PES_lr": 1e-4,
             "warmup_epochs": 20,
             "T2": 5,
             "lambda_u": 5,
@@ -157,7 +156,8 @@
             "epochs": 80,
 
             "lam": 1e-4,
-            "init_t": 2
+            "init_t": 2,
+            "optimizer_transition_mtx": "SGD"
         }
     },
 
@@ -171,7 +171,6 @@
             "scheduler": "MultiStepLR ([60], 0.1)",
             "epochs": 165,
 
-            "is_peer": true,
             "alpha": 0.0,
             "alpha_scheduler" : "seg",
             "warmup_epochs" : 65,
@@ -193,7 +192,8 @@
             "classifier": "ResNet34",
             "optimizer": "Adam",
             "lr": 0.001,
-            "momentum": 0.9,
+            "weight_decay": 0,
+            "scheduler": "alpha_schedule",
             "epochs": 200,
             
             "forget_rate": 0.2,
@@ -208,8 +208,8 @@
             "weight_decay": 0,
             "scheduler": "alpha_schedule",
             "epochs": 200,
-            "init_epoch": 5,
 
+            "init_epoch": 5,
             "forget_rate": 0.2,
             "exponent": 1,
             "num_gradual": 10,
@@ -240,8 +240,8 @@
             "scheduler": "MultiStepLR ([80, 120], 0.01)",
             "epochs": 150,
 
-            "beta": 0.7,
-            "lmbd": 3
+            "beta": 0.9,
+            "lmbd": 7
         },
         "ELR_plus": {
             "classifier": "PreResNet18",
@@ -257,7 +257,7 @@
             "alpha": 1,
             "gamma": 0.997,
             "ema_step": 40000,
-            "coef_step": 0
+            "coef_step": 40000
         },
         "PES_semi": {
             "classifier": "PreResNet18",
@@ -268,10 +268,10 @@
             "scheduler": "CosineAnnealing",
             "epochs": 300,
             
-            "PES_lr": 0.0001,
+            "PES_lr": 1e-4,
             "warmup_epochs": 35,
             "T2": 5,
-            "lambda_u": 5,
+            "lambda_u": 75,
             "temperature": 0.5,
             "alpha": 4
         },
@@ -315,10 +315,10 @@
             "momentum": 0.9,
             "scheduler": "MultiStepLR ([30, 60], 0.1)",
             "epochs": 80,
-            "optimizer_transition_mtx": "Adam",
 
             "lam": 1e-4,
-            "init_t": 2
+            "init_t": 2,
+            "optimizer_transition_mtx": "Adam"
         }
     }
 }

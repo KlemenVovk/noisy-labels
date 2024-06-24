@@ -14,7 +14,7 @@ class SOP_config(CIFAR100NoisyLabelsMethod):
     learning_strategy_args = dict(
         ratio_consistency=0,
         ratio_balance=0,
-        lr_u=10,
+        lr_u=1,
         lr_v=10,
         overparam_mean=0.0,
         overparam_std=1e-8,
