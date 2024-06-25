@@ -1,6 +1,6 @@
 alpha: 1
 beta: 0.9
-coef_step: 0
+coef_step: 40000
 ema_step: 40000
 ema_update: true
 gamma: 0.997

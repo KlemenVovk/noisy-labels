@@ -1,4 +1,4 @@
-lr_u: 10
+lr_u: 1
 lr_v: 10
 overparam_mean: 0.0
 overparam_momentum: 0
