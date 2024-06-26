@@ -72,9 +72,6 @@ class PES_semi(LearningStrategyModule):
             self.train_labels = torch.LongTensor(self.train_labels)
             self.train_transform = train_dataset.transform
             
-        if self.current_epoch == self.warmup_epochs:
-            self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T2)
-
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:
         if refine_times <= 0:
             return model
@@ -88,15 +85,14 @@ class PES_semi(LearningStrategyModule):
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)
-        train_loader = self.original_trainloader
+        train_loader = self.datamodule.train_dataloader()[0]
+        model.train()
         for epoch in range(refine_times):
             for batch in tqdm(train_loader, desc=f'Noisy Refine {epoch+1}/{refine_times}', leave=False):
-                loss = self.train_step(move_data_to_device(batch, device))
+                loss = self.train_step(model, move_data_to_device(batch, device))
                 optimizer_refine.zero_grad()
                 loss.backward()
                 optimizer_refine.step()
-
-        del self.original_trainloader
 
         # unfreeze all layers
         for param in model.parameters():
@@ -104,9 +100,9 @@ class PES_semi(LearningStrategyModule):
 
         return model
 
-    def train_step(self, batch: Any) -> STEP_OUTPUT:
+    def train_step(self, model, batch: Any) -> STEP_OUTPUT:
         x, y_noise = batch
-        y_pred = self.model(x)
+        y_pred = model(x)
         loss = self.criterion(y_pred, y_noise) 
 
         self.log("train_loss", loss, prog_bar=True)
@@ -116,7 +112,8 @@ class PES_semi(LearningStrategyModule):
     def on_train_epoch_end(self) -> None:
         # prepare data for the next epoch for every epoch after (including) T1
         if self.current_epoch + 1 == self.warmup_epochs:
-            self.original_trainloader = self.datamodule.train_dataloader()[0]
+            self.model = self.noisy_refine(self.model, num_layer=0, refine_times=self.T2)
+            
         if self.current_epoch + 1 >= self.warmup_epochs:
             # update train dataset and criterion
             labeled_trainloader, unlabeled_trainloader, class_weights = update_train_data_and_criterion(
@@ -172,8 +169,10 @@ class PES_semi(LearningStrategyModule):
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         if self.current_epoch < self.warmup_epochs:
-            return self.train_step(batch[0])
+            return self.train_step(self.model, batch[0])
         else:
+            if self.current_epoch >= self.trainer.max_epochs / 2:
+                self.alpha = 0.75
             return self.mix_match_step(batch, batch_idx)
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
