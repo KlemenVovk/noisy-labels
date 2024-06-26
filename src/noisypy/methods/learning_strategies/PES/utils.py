@@ -24,7 +24,7 @@ def reset_resnet_layer_parameters(resnet_layer: nn.Module):
 
 
 
-def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pytorch_resnet'):
+def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pytorch_resnet', num_classes=10):
     if model_class == 'pytorch_resnet':
         if last_num_layers >= 3:
             print("re-initalize block 2")
@@ -56,9 +56,7 @@ def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pyto
             reset_resnet_layer_parameters(model.layer4)
         
         print("re-initalize the final layer")
-        model.linear.reset_parameters()
-        for param in model.linear.parameters():
-            param.requires_grad = True
+        model.linear = nn.Linear(512, num_classes)
     else:
         raise NotImplementedError(f"model class {model_class} is not implemented yet.")
     
