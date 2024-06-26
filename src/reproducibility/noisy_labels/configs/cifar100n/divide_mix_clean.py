@@ -16,7 +16,7 @@ class divide_mix_clean_config(CIFAR100NoisyLabelsMethod):
     learning_strategy_args = dict(
         warmup_epochs=30,
         noise_type="asymmetric",
-        noise_rate=0,
+        noise_rate=0.5,
         p_thresh=0.5,
         temperature=0.5,
         alpha=4,
