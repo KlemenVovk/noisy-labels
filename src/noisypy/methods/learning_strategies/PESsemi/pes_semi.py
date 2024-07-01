@@ -82,7 +82,7 @@ class PES_semi(LearningStrategyModule):
             param.requires_grad = False
 
         device = next(self.model.parameters()).device
-        model.renew_layers(num_layer)
+        model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
         # model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
         model.to(device)
         
@@ -124,7 +124,7 @@ class PES_semi(LearningStrategyModule):
         
             update_dataloaders(self.datamodule, labeled_trainloader, unlabeled_trainloader)
             self.class_weights = class_weights
-            
+
         scheduler = self.lr_schedulers()
         scheduler.step()
 
