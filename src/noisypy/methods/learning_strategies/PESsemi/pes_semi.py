@@ -58,15 +58,16 @@ class PES_semi(LearningStrategyModule):
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.val_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
         self.test_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
+        self.automatic_optimization = False
 
     def on_train_epoch_start(self) -> None:
+        self.model.train() # TODO: I don't think this is necessary
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
         if self.current_epoch == 0:
             train_dataset = self.trainer.datamodule.train_datasets[0]
-            index = train_dataset.valid_idxs
-            self.train_data = train_dataset.data[index]
+            self.train_data = train_dataset.data
             self.train_labels = []
-            for i in tqdm(index, desc=f'Saving Training Data', leave=False):
+            for i in tqdm(range(len(train_dataset)), desc=f'Saving Training Data', leave=False):
                 _, y, *_ = train_dataset[i]
                 self.train_labels.append(y)
             self.train_labels = torch.LongTensor(self.train_labels)
@@ -81,7 +82,8 @@ class PES_semi(LearningStrategyModule):
             param.requires_grad = False
 
         device = next(self.model.parameters()).device
-        model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
+        model.renew_layers(num_layer)
+        # model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)
@@ -164,16 +166,22 @@ class PES_semi(LearningStrategyModule):
         Lu = torch.mean((probs_u - mixed_target[batch_size * 2:])**2)
         loss = Lx + linear_rampup(self.current_epoch + batch_idx / self.num_iter, self.warmup_epochs, lambda_u=self.lambda_u) * Lu
 
-        self.log("mix_match_loss", loss, prog_bar=True)
+        self.log("mix_match_loss", loss, prog_bar=True, on_epoch=True)
         return loss
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
+        optimizer = self.optimizers()
         if self.current_epoch < self.warmup_epochs:
-            return self.train_step(self.model, batch[0])
+            loss = self.train_step(self.model, batch[0])
         else:
             if self.current_epoch >= self.trainer.max_epochs / 2:
                 self.alpha = 0.75
-            return self.mix_match_step(batch, batch_idx)
+            loss = self.mix_match_step(batch, batch_idx)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        return loss
 
     def validation_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_true = batch
