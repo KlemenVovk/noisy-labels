@@ -83,7 +83,6 @@ class PES_semi(LearningStrategyModule):
 
         device = next(self.model.parameters()).device
         model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
-        # model = renew_layers(model, last_num_layers=num_layer, model_class=self.model_type, num_classes=self.num_classes)
         model.to(device)
         
         optimizer_refine = self.optimizer_refine_cls(model.parameters(), lr=self.PES_lr)
@@ -99,6 +98,8 @@ class PES_semi(LearningStrategyModule):
         # unfreeze all layers
         for param in model.parameters():
             param.requires_grad = True
+        # Despite the renewed layers being unfreezed they are not referenced by our optimizer.
+        # For this reason they are effectively frozen.
 
         return model
 
