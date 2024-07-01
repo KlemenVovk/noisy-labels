@@ -124,6 +124,9 @@ class PES_semi(LearningStrategyModule):
         
             update_dataloaders(self.datamodule, labeled_trainloader, unlabeled_trainloader)
             self.class_weights = class_weights
+            
+        scheduler = self.lr_schedulers()
+        scheduler.step()
 
     def mix_match_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         inputs_x, inputs_x2, targets_x = batch[0]
