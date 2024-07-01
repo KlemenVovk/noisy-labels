@@ -99,7 +99,7 @@
             "coef_step": 0
         },
         "PES_semi": {
-            "classifier": "PreResNet18",
+            "classifier": "ResNet34",
             "optimizer": "SGD",
             "lr": 0.02,
             "weight_decay": 5e-4,
@@ -260,7 +260,7 @@
             "coef_step": 40000
         },
         "PES_semi": {
-            "classifier": "PreResNet18",
+            "classifier": "ResNet34",
             "optimizer": "SGD",
             "lr": 0.02,
             "weight_decay": 5e-4,
