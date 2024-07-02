@@ -170,7 +170,7 @@ class PES_semi(LearningStrategyModule):
         Lu = torch.mean((probs_u - mixed_target[batch_size * 2:])**2)
         loss = Lx + linear_rampup(self.current_epoch + batch_idx / self.num_iter, self.warmup_epochs, lambda_u=self.lambda_u) * Lu
 
-        self.log("mix_match_loss", loss, prog_bar=True, on_epoch=True)
+        self.log("mix_match_loss", loss, prog_bar=True, on_epoch=True, batch_size=logits.size(0))
         return loss
 
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
