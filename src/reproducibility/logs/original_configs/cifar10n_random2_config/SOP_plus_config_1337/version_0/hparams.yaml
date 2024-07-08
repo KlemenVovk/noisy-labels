@@ -1,0 +1,8 @@
+lr_u: 10
+lr_v: 10
+overparam_mean: 0.0
+overparam_momentum: 0
+overparam_std: 1.0e-08
+overparam_weight_decay: 0
+ratio_balance: 0.1
+ratio_consistency: 0.9

@@ -1,0 +1,324 @@
+{
+"CIFAR10N":    {   
+        "CAL": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.1,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([60], 0.1)",
+            "epochs": 165,
+
+            "alpha": 0.0,
+            "alpha_scheduler" : "seg",
+            "warmup_epochs" : 65,
+            "alpha_list_warmup": [0.0, 2.0],
+            "milestones_warmup": [10, 40],
+            "alpha_list": [0.0, 1.0, 1.0],
+            "milestones": [10, 40, 80]
+    
+        },
+        "CE": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.1,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([60], 0.1)",
+            "epochs": 100
+        },
+        "co_teaching": {
+            "classifier": "ResNet34",
+            "optimizer": "Adam",
+            "lr": 0.001,
+            "weight_decay": 0,
+            "scheduler": "alpha_schedule",
+            "epochs": 200,
+
+            "forget_rate": 0.2,
+            "exponent": 1,
+            "num_gradual": 10,
+            "epoch_decay_start": 80
+        },
+        "co_teaching_plus": {
+            "classifier": "ResNet34",
+            "optimizer": "Adam",
+            "lr": 0.001,
+            "weight_decay": 0,
+            "scheduler": "alpha_schedule",
+            "epochs": 200,
+            "init_epoch": 20,
+
+            "forget_rate": 0.2,
+            "exponent": 1,
+            "num_gradual": 10,
+            "epoch_decay_start": 80
+        },
+        "divide_mix": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "LambdaLR",
+            "epochs": 300,
+
+            "alpha": 4,
+            "noise_type": "asymmetric",
+            "p_thresh": 0.5,
+            "temperature": 0.5,
+            "lambda_u": 0,
+            "warmup_epochs": 10
+        },
+        "ELR": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 0.001,
+            "momentum": 0.9,
+            "scheduler": "CosineAnnealing",
+            "epochs": 120,
+
+            "beta": 0.7,
+            "lmbd": 3
+        },
+        "ELR_plus": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([150], 0.1)",
+            "epochs": 200,
+
+            "beta": 0.7,
+            "lmbd": 3,
+            "alpha": 1,
+            "gamma": 0.997,
+            "ema_step": 40000,
+            "coef_step": 0
+        },
+        "PES_semi": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "CosineAnnealing",
+            "epochs": 300,
+            
+            "PES_lr": 1e-4,
+            "warmup_epochs": 20,
+            "T2": 5,
+            "lambda_u": 5,
+            "temperature": 0.5,
+            "alpha": 4
+        },
+        "SOP": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([40, 80], 0.1)",
+            "epochs": 120,
+
+            "lr_u": 10,
+            "lr_v": 10,
+            "overparam_mean": 0.0,
+            "overparam_std":  1e-8,
+            "ratio_balance": 0.0,
+            "ratio_consistency": 0.0
+        },
+        "SOP_plus": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "CosineAnnealing",
+            "epochs": 300,
+
+            "lr_u": 10,
+            "lr_v": 10,
+            "overparam_mean": 0.0,
+            "overparam_std":  1e-8,
+            "ratio_balance": 0.1,
+            "ratio_consistency": 0.9
+        },
+        "volminnet": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.01,
+            "weight_decay": 1e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([30, 60], 0.1)",
+            "epochs": 80,
+
+            "lam": 1e-4,
+            "init_t": 2,
+            "optimizer_transition_mtx": "SGD"
+        }
+    },
+
+    "CIFAR100N": {
+        "CAL": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.1,
+            "weight_decay": 0.0005,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([60], 0.1)",
+            "epochs": 165,
+
+            "alpha": 0.0,
+            "alpha_scheduler" : "seg",
+            "warmup_epochs" : 65,
+            "alpha_list_warmup": [0.0, 1.0],
+            "milestones_warmup": [10, 40],
+            "alpha_list": [0.0, 1.0, 1.0],
+            "milestones": [10, 40, 80]
+        },
+        "CE": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.1,
+            "weight_decay": 0.0005,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([60], 0.1)",
+            "epochs": 100
+        },
+        "co_teaching": {
+            "classifier": "ResNet34",
+            "optimizer": "Adam",
+            "lr": 0.001,
+            "weight_decay": 0,
+            "scheduler": "alpha_schedule",
+            "epochs": 200,
+            
+            "forget_rate": 0.2,
+            "exponent": 1,
+            "num_gradual": 10,
+            "epoch_decay_start": 100
+        },
+        "co_teaching_plus": {
+            "classifier": "ResNet34",
+            "optimizer": "Adam",
+            "lr": 0.001,
+            "weight_decay": 0,
+            "scheduler": "alpha_schedule",
+            "epochs": 200,
+
+            "init_epoch": 5,
+            "forget_rate": 0.2,
+            "exponent": 1,
+            "num_gradual": 10,
+            "epoch_decay_start": 80
+        },
+        "divide_mix": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "LambdaLR",
+            "epochs": 300,
+
+            "alpha": 4,
+            "noise_type": "asymmetric",
+            "p_thresh": 0.5,
+            "temperature": 0.5,
+            "lambda_u": 0,
+            "warmup_epochs": 30
+        },
+        "ELR": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 0.001,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([80, 120], 0.01)",
+            "epochs": 150,
+
+            "beta": 0.9,
+            "lmbd": 7
+        },
+        "ELR_plus": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([200], 0.1)",
+            "epochs": 250,
+
+            "beta": 0.9,
+            "lmbd": 7,
+            "alpha": 1,
+            "gamma": 0.997,
+            "ema_step": 40000,
+            "coef_step": 40000
+        },
+        "PES_semi": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "CosineAnnealing",
+            "epochs": 300,
+            
+            "PES_lr": 1e-4,
+            "warmup_epochs": 35,
+            "T2": 5,
+            "lambda_u": 75,
+            "temperature": 0.5,
+            "alpha": 4
+        },
+        "SOP": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([40, 80], 0.1)",
+            "epochs": 150,
+
+            "lr_u": 1,
+            "lr_v": 10,
+            "overparam_mean": 0.0,
+            "overparam_std":  1e-8,
+            "ratio_balance": 0.0,
+            "ratio_consistency": 0.0
+        },
+        "SOP_plus": {
+            "classifier": "PreResNet18",
+            "optimizer": "SGD",
+            "lr": 0.02,
+            "weight_decay": 5e-4,
+            "momentum": 0.9,
+            "scheduler": "CosineAnnealing",
+            "epochs": 300,
+
+            "lr_u": 1,
+            "lr_v": 10,
+            "overparam_mean": 0.0,
+            "overparam_std":  1e-8,
+            "ratio_balance": 0.1,
+            "ratio_consistency": 0.9
+        },
+        "volminnet": {
+            "classifier": "ResNet34",
+            "optimizer": "SGD",
+            "lr": 0.01,
+            "weight_decay": 1e-4,
+            "momentum": 0.9,
+            "scheduler": "MultiStepLR ([30, 60], 0.1)",
+            "epochs": 80,
+
+            "lam": 1e-4,
+            "init_t": 2,
+            "optimizer_transition_mtx": "Adam"
+        }
+    }
+}

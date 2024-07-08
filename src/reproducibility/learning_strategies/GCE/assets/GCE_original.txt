@@ -1,0 +1,540 @@
+Files already downloaded and verified
+Loaded random_label1 from data/CIFAR-10_human.pt.
+The overall noise rate is 0.17234000000000005
+noisy labels loaded from data/CIFAR-10_human.pt
+The noisy data ratio in each class is [0.10042 0.11116 0.10292 0.09388 0.0889  0.10766 0.0935  0.1051  0.09842
+ 0.09804]
+over all noise rate is  0.17234
+Files already downloaded and verified
+==> Building model.. (Default : ResNet34)
+Using 1 GPUs.
+Using CUDA..
+
+Epoch: 0
+train Loss: 0.403 | Acc: 29.426%
+Saving..
+val Loss: 0.265 | Acc: 40.110%
+
+Epoch: 1
+train Loss: 0.288 | Acc: 38.476%
+Saving..
+val Loss: 0.174 | Acc: 47.130%
+
+Epoch: 2
+train Loss: 0.229 | Acc: 42.836%
+Saving..
+val Loss: 0.109 | Acc: 51.380%
+
+Epoch: 3
+train Loss: 0.194 | Acc: 45.548%
+Saving..
+val Loss: 0.083 | Acc: 53.500%
+
+Epoch: 4
+train Loss: 0.158 | Acc: 48.322%
+Saving..
+val Loss: 0.042 | Acc: 56.930%
+
+Epoch: 5
+train Loss: 0.128 | Acc: 50.590%
+Saving..
+val Loss: 0.008 | Acc: 59.190%
+
+Epoch: 6
+train Loss: 0.107 | Acc: 52.022%
+Saving..
+val Loss: -0.013 | Acc: 60.770%
+
+Epoch: 7
+train Loss: 0.086 | Acc: 53.648%
+val Loss: 0.007 | Acc: 59.510%
+
+Epoch: 8
+train Loss: 0.065 | Acc: 55.174%
+Saving..
+val Loss: -0.020 | Acc: 61.380%
+
+Epoch: 9
+train Loss: 0.051 | Acc: 56.356%
+Saving..
+val Loss: -0.066 | Acc: 64.520%
+
+Epoch: 10
+train Loss: 0.041 | Acc: 57.044%
+Saving..
+val Loss: -0.083 | Acc: 65.750%
+
+Epoch: 11
+train Loss: 0.027 | Acc: 58.052%
+val Loss: -0.060 | Acc: 64.110%
+
+Epoch: 12
+train Loss: 0.015 | Acc: 58.954%
+Saving..
+val Loss: -0.100 | Acc: 66.950%
+
+Epoch: 13
+train Loss: 0.006 | Acc: 59.698%
+val Loss: -0.084 | Acc: 65.860%
+
+Epoch: 14
+train Loss: -0.005 | Acc: 60.588%
+Saving..
+val Loss: -0.118 | Acc: 68.200%
+
+Epoch: 15
+train Loss: -0.009 | Acc: 60.706%
+Saving..
+val Loss: -0.120 | Acc: 68.560%
+
+Epoch: 16
+train Loss: -0.018 | Acc: 61.278%
+Saving..
+val Loss: -0.136 | Acc: 69.760%
+
+Epoch: 17
+train Loss: -0.020 | Acc: 61.540%
+Saving..
+val Loss: -0.147 | Acc: 70.460%
+
+Epoch: 18
+train Loss: -0.033 | Acc: 62.476%
+val Loss: -0.138 | Acc: 69.550%
+
+Epoch: 19
+train Loss: -0.038 | Acc: 62.920%
+Saving..
+val Loss: -0.155 | Acc: 71.180%
+
+Epoch: 20
+train Loss: -0.043 | Acc: 63.224%
+Saving..
+val Loss: -0.173 | Acc: 72.310%
+
+Epoch: 21
+train Loss: -0.049 | Acc: 63.658%
+val Loss: -0.167 | Acc: 71.980%
+
+Epoch: 22
+train Loss: -0.056 | Acc: 64.270%
+val Loss: -0.169 | Acc: 71.960%
+
+Epoch: 23
+train Loss: -0.060 | Acc: 64.642%
+Saving..
+val Loss: -0.184 | Acc: 73.160%
+
+Epoch: 24
+train Loss: -0.062 | Acc: 64.656%
+Saving..
+val Loss: -0.188 | Acc: 73.230%
+
+Epoch: 25
+train Loss: -0.071 | Acc: 65.332%
+val Loss: -0.171 | Acc: 72.150%
+
+Epoch: 26
+train Loss: -0.076 | Acc: 65.790%
+Saving..
+val Loss: -0.192 | Acc: 73.540%
+
+Epoch: 27
+train Loss: -0.076 | Acc: 65.660%
+Saving..
+val Loss: -0.201 | Acc: 74.270%
+
+Epoch: 28
+train Loss: -0.079 | Acc: 65.890%
+val Loss: -0.181 | Acc: 72.980%
+
+Epoch: 29
+train Loss: -0.086 | Acc: 66.274%
+val Loss: -0.187 | Acc: 73.470%
+
+Epoch: 30
+train Loss: -0.090 | Acc: 66.822%
+val Loss: -0.195 | Acc: 73.830%
+
+Epoch: 31
+train Loss: -0.095 | Acc: 67.188%
+Saving..
+val Loss: -0.208 | Acc: 74.870%
+
+Epoch: 32
+train Loss: -0.099 | Acc: 67.454%
+val Loss: -0.200 | Acc: 74.320%
+
+Epoch: 33
+train Loss: -0.102 | Acc: 67.642%
+val Loss: -0.210 | Acc: 74.750%
+
+Epoch: 34
+train Loss: -0.101 | Acc: 67.664%
+val Loss: -0.180 | Acc: 72.700%
+
+Epoch: 35
+train Loss: -0.106 | Acc: 67.936%
+Saving..
+val Loss: -0.212 | Acc: 75.070%
+
+Epoch: 36
+train Loss: -0.108 | Acc: 68.146%
+val Loss: -0.210 | Acc: 75.010%
+
+Epoch: 37
+train Loss: -0.112 | Acc: 68.396%
+Saving..
+val Loss: -0.232 | Acc: 76.490%
+
+Epoch: 38
+train Loss: -0.117 | Acc: 68.756%
+val Loss: -0.214 | Acc: 75.100%
+
+Epoch: 39
+pruning...
+train Loss: -0.274 | Acc: 68.740%
+val Loss: -0.150 | Acc: 75.100%
+
+Epoch: 40
+train Loss: -0.286 | Acc: 69.116%
+Saving..
+val Loss: -0.159 | Acc: 76.530%
+
+Epoch: 41
+train Loss: -0.287 | Acc: 68.952%
+val Loss: -0.158 | Acc: 76.310%
+
+Epoch: 42
+train Loss: -0.285 | Acc: 68.622%
+val Loss: -0.146 | Acc: 75.350%
+
+Epoch: 43
+train Loss: -0.285 | Acc: 68.496%
+val Loss: -0.149 | Acc: 75.590%
+
+Epoch: 44
+train Loss: -0.287 | Acc: 68.834%
+val Loss: -0.152 | Acc: 75.850%
+
+Epoch: 45
+train Loss: -0.289 | Acc: 68.846%
+Saving..
+val Loss: -0.160 | Acc: 76.690%
+
+Epoch: 46
+train Loss: -0.289 | Acc: 68.912%
+val Loss: -0.154 | Acc: 76.130%
+
+Epoch: 47
+train Loss: -0.290 | Acc: 68.924%
+val Loss: -0.159 | Acc: 76.550%
+
+Epoch: 48
+train Loss: -0.294 | Acc: 69.290%
+Saving..
+val Loss: -0.161 | Acc: 76.720%
+
+Epoch: 49
+pruning...
+train Loss: -0.313 | Acc: 69.570%
+val Loss: -0.165 | Acc: 76.720%
+
+Epoch: 50
+train Loss: -0.298 | Acc: 69.188%
+val Loss: -0.154 | Acc: 76.030%
+
+Epoch: 51
+train Loss: -0.293 | Acc: 68.762%
+Saving..
+val Loss: -0.164 | Acc: 76.830%
+
+Epoch: 52
+train Loss: -0.295 | Acc: 69.032%
+val Loss: -0.147 | Acc: 75.260%
+
+Epoch: 53
+train Loss: -0.301 | Acc: 69.492%
+val Loss: -0.158 | Acc: 76.200%
+
+Epoch: 54
+train Loss: -0.298 | Acc: 69.156%
+val Loss: -0.161 | Acc: 76.430%
+
+Epoch: 55
+train Loss: -0.302 | Acc: 69.542%
+val Loss: -0.163 | Acc: 76.580%
+
+Epoch: 56
+train Loss: -0.304 | Acc: 69.466%
+Saving..
+val Loss: -0.167 | Acc: 77.390%
+
+Epoch: 57
+train Loss: -0.301 | Acc: 69.320%
+val Loss: -0.158 | Acc: 75.850%
+
+Epoch: 58
+train Loss: -0.306 | Acc: 69.568%
+val Loss: -0.156 | Acc: 75.900%
+
+Epoch: 59
+pruning...
+train Loss: -0.303 | Acc: 70.002%
+val Loss: -0.154 | Acc: 75.900%
+
+Epoch: 60
+train Loss: -0.304 | Acc: 69.670%
+val Loss: -0.153 | Acc: 75.730%
+
+Epoch: 61
+train Loss: -0.304 | Acc: 69.790%
+val Loss: -0.163 | Acc: 77.010%
+
+Epoch: 62
+train Loss: -0.306 | Acc: 69.644%
+val Loss: -0.166 | Acc: 77.040%
+
+Epoch: 63
+train Loss: -0.307 | Acc: 69.806%
+Saving..
+val Loss: -0.171 | Acc: 77.660%
+
+Epoch: 64
+train Loss: -0.308 | Acc: 69.754%
+val Loss: -0.159 | Acc: 76.450%
+
+Epoch: 65
+train Loss: -0.310 | Acc: 70.164%
+val Loss: -0.167 | Acc: 77.330%
+
+Epoch: 66
+train Loss: -0.309 | Acc: 69.908%
+val Loss: -0.161 | Acc: 76.700%
+
+Epoch: 67
+train Loss: -0.312 | Acc: 70.036%
+val Loss: -0.163 | Acc: 76.840%
+
+Epoch: 68
+train Loss: -0.311 | Acc: 69.958%
+val Loss: -0.168 | Acc: 77.390%
+
+Epoch: 69
+pruning...
+train Loss: -0.310 | Acc: 70.626%
+val Loss: -0.169 | Acc: 77.390%
+
+Epoch: 70
+train Loss: -0.309 | Acc: 70.404%
+val Loss: -0.166 | Acc: 76.870%
+
+Epoch: 71
+train Loss: -0.310 | Acc: 70.328%
+val Loss: -0.167 | Acc: 77.350%
+
+Epoch: 72
+train Loss: -0.309 | Acc: 70.244%
+val Loss: -0.166 | Acc: 77.560%
+
+Epoch: 73
+train Loss: -0.313 | Acc: 70.392%
+val Loss: -0.172 | Acc: 77.550%
+
+Epoch: 74
+train Loss: -0.312 | Acc: 70.326%
+val Loss: -0.170 | Acc: 77.550%
+
+Epoch: 75
+train Loss: -0.315 | Acc: 70.566%
+val Loss: -0.167 | Acc: 77.170%
+
+Epoch: 76
+train Loss: -0.315 | Acc: 70.502%
+val Loss: -0.168 | Acc: 77.490%
+
+Epoch: 77
+train Loss: -0.316 | Acc: 70.504%
+val Loss: -0.171 | Acc: 77.630%
+
+Epoch: 78
+train Loss: -0.317 | Acc: 70.756%
+val Loss: -0.173 | Acc: 77.570%
+
+Epoch: 79
+pruning...
+train Loss: -0.313 | Acc: 70.584%
+val Loss: -0.173 | Acc: 77.570%
+
+Epoch: 80
+train Loss: -0.316 | Acc: 70.876%
+val Loss: -0.172 | Acc: 77.570%
+
+Epoch: 81
+train Loss: -0.316 | Acc: 70.818%
+val Loss: -0.169 | Acc: 77.390%
+
+Epoch: 82
+train Loss: -0.317 | Acc: 70.802%
+Saving..
+val Loss: -0.174 | Acc: 78.160%
+
+Epoch: 83
+train Loss: -0.316 | Acc: 70.700%
+Saving..
+val Loss: -0.178 | Acc: 78.280%
+
+Epoch: 84
+train Loss: -0.317 | Acc: 70.760%
+Saving..
+val Loss: -0.179 | Acc: 78.390%
+
+Epoch: 85
+train Loss: -0.321 | Acc: 71.092%
+val Loss: -0.171 | Acc: 77.710%
+
+Epoch: 86
+train Loss: -0.321 | Acc: 71.062%
+val Loss: -0.167 | Acc: 77.400%
+
+Epoch: 87
+train Loss: -0.321 | Acc: 71.048%
+val Loss: -0.170 | Acc: 77.330%
+
+Epoch: 88
+train Loss: -0.321 | Acc: 71.230%
+val Loss: -0.174 | Acc: 77.970%
+
+Epoch: 89
+pruning...
+train Loss: -0.317 | Acc: 71.370%
+val Loss: -0.175 | Acc: 77.970%
+
+Epoch: 90
+train Loss: -0.320 | Acc: 71.140%
+Saving..
+val Loss: -0.178 | Acc: 78.540%
+
+Epoch: 91
+train Loss: -0.319 | Acc: 71.028%
+val Loss: -0.166 | Acc: 77.020%
+
+Epoch: 92
+train Loss: -0.321 | Acc: 71.318%
+val Loss: -0.177 | Acc: 78.180%
+
+Epoch: 93
+train Loss: -0.324 | Acc: 71.456%
+val Loss: -0.178 | Acc: 78.190%
+
+Epoch: 94
+train Loss: -0.323 | Acc: 71.424%
+val Loss: -0.182 | Acc: 78.390%
+
+Epoch: 95
+train Loss: -0.324 | Acc: 71.434%
+val Loss: -0.183 | Acc: 78.470%
+
+Epoch: 96
+train Loss: -0.326 | Acc: 71.410%
+val Loss: -0.180 | Acc: 78.270%
+
+Epoch: 97
+train Loss: -0.323 | Acc: 71.232%
+Saving..
+val Loss: -0.182 | Acc: 78.570%
+
+Epoch: 98
+train Loss: -0.326 | Acc: 71.602%
+val Loss: -0.179 | Acc: 77.990%
+
+Epoch: 99
+pruning...
+train Loss: -0.319 | Acc: 71.392%
+val Loss: -0.180 | Acc: 77.990%
+
+Epoch: 100
+train Loss: -0.322 | Acc: 71.588%
+val Loss: -0.175 | Acc: 77.920%
+
+Epoch: 101
+train Loss: -0.325 | Acc: 71.646%
+val Loss: -0.179 | Acc: 78.400%
+
+Epoch: 102
+train Loss: -0.325 | Acc: 71.574%
+val Loss: -0.178 | Acc: 78.000%
+
+Epoch: 103
+train Loss: -0.325 | Acc: 71.526%
+val Loss: -0.174 | Acc: 77.610%
+
+Epoch: 104
+train Loss: -0.329 | Acc: 71.892%
+val Loss: -0.183 | Acc: 78.540%
+
+Epoch: 105
+train Loss: -0.329 | Acc: 71.768%
+Saving..
+val Loss: -0.183 | Acc: 78.600%
+
+Epoch: 106
+train Loss: -0.330 | Acc: 71.820%
+val Loss: -0.179 | Acc: 78.120%
+
+Epoch: 107
+train Loss: -0.330 | Acc: 71.928%
+val Loss: -0.178 | Acc: 78.230%
+
+Epoch: 108
+train Loss: -0.332 | Acc: 72.018%
+val Loss: -0.184 | Acc: 78.530%
+
+Epoch: 109
+pruning...
+train Loss: -0.327 | Acc: 72.408%
+val Loss: -0.184 | Acc: 78.530%
+
+Epoch: 110
+train Loss: -0.329 | Acc: 72.056%
+Saving..
+val Loss: -0.183 | Acc: 78.670%
+
+Epoch: 111
+train Loss: -0.327 | Acc: 71.828%
+Saving..
+val Loss: -0.183 | Acc: 78.780%
+
+Epoch: 112
+train Loss: -0.329 | Acc: 71.988%
+val Loss: -0.182 | Acc: 78.570%
+
+Epoch: 113
+train Loss: -0.331 | Acc: 72.050%
+val Loss: -0.181 | Acc: 78.320%
+
+Epoch: 114
+train Loss: -0.332 | Acc: 72.304%
+Saving..
+val Loss: -0.189 | Acc: 79.000%
+
+Epoch: 115
+train Loss: -0.334 | Acc: 72.324%
+val Loss: -0.184 | Acc: 78.650%
+
+Epoch: 116
+train Loss: -0.332 | Acc: 72.132%
+val Loss: -0.184 | Acc: 78.950%
+
+Epoch: 117
+train Loss: -0.334 | Acc: 72.222%
+val Loss: -0.189 | Acc: 78.970%
+
+Epoch: 118
+train Loss: -0.334 | Acc: 72.220%
+Saving..
+val Loss: -0.187 | Acc: 79.140%
+
+Epoch: 119
+pruning...
+train Loss: -0.346 | Acc: 72.916%
+val Loss: -0.190 | Acc: 79.140%

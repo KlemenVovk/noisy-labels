@@ -1,0 +1,334 @@
+Estimate transition matirx......Waiting......
+epoch 1
+Train Loss: 1.964491, Acc: 0.308889
+Val Loss: 1.923354, Acc: 0.378800
+epoch 2
+Train Loss: 1.777134, Acc: 0.408244
+Val Loss: 1.819192, Acc: 0.428800
+epoch 3
+Train Loss: 1.669073, Acc: 0.467067
+Val Loss: 1.851803, Acc: 0.416600
+epoch 4
+Train Loss: 1.599228, Acc: 0.501022
+Val Loss: 1.782009, Acc: 0.454800
+epoch 5
+Train Loss: 1.547235, Acc: 0.525133
+Val Loss: 1.829467, Acc: 0.439000
+epoch 6
+Train Loss: 1.500973, Acc: 0.549867
+Val Loss: 1.633960, Acc: 0.524800
+epoch 7
+Train Loss: 1.462002, Acc: 0.567000
+Val Loss: 1.560503, Acc: 0.560400
+epoch 8
+Train Loss: 1.424061, Acc: 0.584089
+Val Loss: 1.576312, Acc: 0.563600
+epoch 9
+Train Loss: 1.399579, Acc: 0.594511
+Val Loss: 1.543101, Acc: 0.571000
+epoch 10
+Train Loss: 1.368371, Acc: 0.607267
+Val Loss: 1.597265, Acc: 0.550200
+epoch 11
+Train Loss: 1.342663, Acc: 0.620622
+Val Loss: 1.482778, Acc: 0.601200
+epoch 12
+Train Loss: 1.325006, Acc: 0.627733
+Val Loss: 1.464532, Acc: 0.601000
+epoch 13
+Train Loss: 1.303248, Acc: 0.635289
+Val Loss: 1.567528, Acc: 0.553400
+epoch 14
+Train Loss: 1.287799, Acc: 0.642578
+Val Loss: 1.522769, Acc: 0.589600
+epoch 15
+Train Loss: 1.269284, Acc: 0.648756
+Val Loss: 1.566775, Acc: 0.572000
+epoch 16
+Train Loss: 1.257122, Acc: 0.652467
+Val Loss: 1.490033, Acc: 0.598800
+epoch 17
+Train Loss: 1.238336, Acc: 0.662933
+Val Loss: 1.431657, Acc: 0.627800
+epoch 18
+Train Loss: 1.226669, Acc: 0.665578
+Val Loss: 1.445987, Acc: 0.610200
+epoch 19
+Train Loss: 1.213662, Acc: 0.671000
+Val Loss: 1.433272, Acc: 0.626200
+epoch 20
+Train Loss: 1.198686, Acc: 0.676133
+Val Loss: 1.453857, Acc: 0.629200
+The estimation error is 0.2416833380589054
+Estimate finish.....Training......
+epoch 1
+Train Loss: 0.990819, Acc: 0.537444
+Val Loss: 0.839609, Acc: 0.551200
+Test Loss: 1.032234, Acc: 0.682400
+epoch 2
+Train Loss: 0.779437, Acc: 0.602489
+Val Loss: 0.703138, Acc: 0.595600
+Test Loss: 0.917956, Acc: 0.720200
+epoch 3
+Train Loss: 0.689656, Acc: 0.631844
+Val Loss: 0.610906, Acc: 0.637800
+Test Loss: 0.724548, Acc: 0.778100
+epoch 4
+Train Loss: 0.639504, Acc: 0.648978
+Val Loss: 0.549397, Acc: 0.658600
+Test Loss: 0.640119, Acc: 0.804300
+epoch 5
+Train Loss: 0.619439, Acc: 0.658844
+Val Loss: 0.558617, Acc: 0.642000
+Test Loss: 0.683058, Acc: 0.800500
+epoch 6
+Train Loss: 0.577880, Acc: 0.672844
+Val Loss: 0.576512, Acc: 0.640200
+Test Loss: 0.644276, Acc: 0.798900
+epoch 7
+Train Loss: 0.553622, Acc: 0.681333
+Val Loss: 0.582847, Acc: 0.659200
+Test Loss: 0.596450, Acc: 0.819000
+epoch 8
+Train Loss: 0.531739, Acc: 0.687733
+Val Loss: 0.527799, Acc: 0.653800
+Test Loss: 0.692791, Acc: 0.801000
+epoch 9
+Train Loss: 0.508243, Acc: 0.694378
+Val Loss: 0.565664, Acc: 0.657800
+Test Loss: 0.614460, Acc: 0.813300
+epoch 10
+Train Loss: 0.489520, Acc: 0.699511
+Val Loss: 0.526656, Acc: 0.654200
+Test Loss: 0.694032, Acc: 0.803100
+epoch 11
+Train Loss: 0.479631, Acc: 0.705933
+Val Loss: 0.436480, Acc: 0.670800
+Test Loss: 0.682967, Acc: 0.815100
+epoch 12
+Train Loss: 0.464604, Acc: 0.711044
+Val Loss: 0.529641, Acc: 0.668800
+Test Loss: 0.578675, Acc: 0.831300
+epoch 13
+Train Loss: 0.448486, Acc: 0.714778
+Val Loss: 0.470338, Acc: 0.683800
+Test Loss: 0.523528, Acc: 0.854100
+epoch 14
+Train Loss: 0.436207, Acc: 0.721400
+Val Loss: 0.477313, Acc: 0.657800
+Test Loss: 0.684356, Acc: 0.820800
+epoch 15
+Train Loss: 0.428135, Acc: 0.722533
+Val Loss: 0.425370, Acc: 0.674400
+Test Loss: 0.578827, Acc: 0.837500
+epoch 16
+Train Loss: 0.421907, Acc: 0.726289
+Val Loss: 0.413573, Acc: 0.672400
+Test Loss: 0.710481, Acc: 0.817100
+epoch 17
+Train Loss: 0.411864, Acc: 0.730311
+Val Loss: 0.475072, Acc: 0.681600
+Test Loss: 0.537385, Acc: 0.845200
+epoch 18
+Train Loss: 0.400927, Acc: 0.734178
+Val Loss: 0.472335, Acc: 0.679000
+Test Loss: 0.582092, Acc: 0.842800
+epoch 19
+Train Loss: 0.397717, Acc: 0.737844
+Val Loss: 0.439974, Acc: 0.679800
+Test Loss: 0.601858, Acc: 0.838700
+epoch 20
+Train Loss: 0.385031, Acc: 0.741067
+Val Loss: 0.447229, Acc: 0.686200
+Test Loss: 0.538874, Acc: 0.851500
+epoch 21
+Train Loss: 0.381100, Acc: 0.742133
+Val Loss: 0.436850, Acc: 0.692600
+Test Loss: 0.497085, Acc: 0.865000
+epoch 22
+Train Loss: 0.377421, Acc: 0.744511
+Val Loss: 0.441157, Acc: 0.698200
+Test Loss: 0.490869, Acc: 0.867400
+epoch 23
+Train Loss: 0.369666, Acc: 0.745311
+Val Loss: 0.405800, Acc: 0.684400
+Test Loss: 0.592878, Acc: 0.844900
+epoch 24
+Train Loss: 0.350098, Acc: 0.751578
+Val Loss: 0.435014, Acc: 0.688200
+Test Loss: 0.520333, Acc: 0.861400
+epoch 25
+Train Loss: 0.348553, Acc: 0.751978
+Val Loss: 0.404892, Acc: 0.696000
+Test Loss: 0.531693, Acc: 0.853600
+epoch 26
+Train Loss: 0.343273, Acc: 0.756889
+Val Loss: 0.434672, Acc: 0.687200
+Test Loss: 0.581502, Acc: 0.850500
+epoch 27
+Train Loss: 0.339577, Acc: 0.758644
+Val Loss: 0.386337, Acc: 0.680400
+Test Loss: 0.703472, Acc: 0.833800
+epoch 28
+Train Loss: 0.336288, Acc: 0.759756
+Val Loss: 0.369788, Acc: 0.696400
+Test Loss: 0.580292, Acc: 0.853700
+epoch 29
+Train Loss: 0.324137, Acc: 0.761311
+Val Loss: 0.362156, Acc: 0.693000
+Test Loss: 0.538792, Acc: 0.857600
+epoch 30
+Train Loss: 0.322745, Acc: 0.763533
+Val Loss: 0.366426, Acc: 0.687200
+Test Loss: 0.597544, Acc: 0.857800
+Revision......
+epoch 1
+Estimate error: 0.241369
+Train Loss: 0.336822, Acc: 0.757556
+Val Loss: 0.329723, Acc: 0.704600
+Test Loss: 0.468255, Acc: 0.873500
+epoch 2
+Estimate error: 0.241110
+Train Loss: 0.273799, Acc: 0.762244
+Val Loss: 0.281255, Acc: 0.706400
+Test Loss: 0.447679, Acc: 0.879100
+epoch 3
+Estimate error: 0.240894
+Train Loss: 0.232703, Acc: 0.764000
+Val Loss: 0.248698, Acc: 0.707600
+Test Loss: 0.436994, Acc: 0.882000
+epoch 4
+Estimate error: 0.240699
+Train Loss: 0.207007, Acc: 0.763822
+Val Loss: 0.218727, Acc: 0.709400
+Test Loss: 0.441802, Acc: 0.883900
+epoch 5
+Estimate error: 0.240520
+Train Loss: 0.187412, Acc: 0.764711
+Val Loss: 0.205095, Acc: 0.708200
+Test Loss: 0.437403, Acc: 0.885400
+epoch 6
+Estimate error: 0.240341
+Train Loss: 0.173814, Acc: 0.765689
+Val Loss: 0.195928, Acc: 0.710800
+Test Loss: 0.434457, Acc: 0.886200
+epoch 7
+Estimate error: 0.240174
+Train Loss: 0.160722, Acc: 0.767622
+Val Loss: 0.181736, Acc: 0.711600
+Test Loss: 0.436639, Acc: 0.887000
+epoch 8
+Estimate error: 0.240012
+Train Loss: 0.147829, Acc: 0.768356
+Val Loss: 0.175362, Acc: 0.711000
+Test Loss: 0.440160, Acc: 0.886500
+epoch 9
+Estimate error: 0.239854
+Train Loss: 0.143638, Acc: 0.766756
+Val Loss: 0.164759, Acc: 0.712200
+Test Loss: 0.439270, Acc: 0.888000
+epoch 10
+Estimate error: 0.239690
+Train Loss: 0.134537, Acc: 0.768889
+Val Loss: 0.160052, Acc: 0.710800
+Test Loss: 0.436395, Acc: 0.889200
+epoch 11
+Estimate error: 0.239525
+Train Loss: 0.129175, Acc: 0.768622
+Val Loss: 0.153283, Acc: 0.712600
+Test Loss: 0.441601, Acc: 0.888500
+epoch 12
+Estimate error: 0.239356
+Train Loss: 0.123181, Acc: 0.769889
+Val Loss: 0.144426, Acc: 0.713600
+Test Loss: 0.441235, Acc: 0.889100
+epoch 13
+Estimate error: 0.239190
+Train Loss: 0.116421, Acc: 0.770267
+Val Loss: 0.141429, Acc: 0.713400
+Test Loss: 0.440933, Acc: 0.890100
+epoch 14
+Estimate error: 0.239013
+Train Loss: 0.113106, Acc: 0.769244
+Val Loss: 0.136051, Acc: 0.713800
+Test Loss: 0.441738, Acc: 0.890800
+epoch 15
+Estimate error: 0.238835
+Train Loss: 0.108853, Acc: 0.769889
+Val Loss: 0.133366, Acc: 0.714000
+Test Loss: 0.443019, Acc: 0.890500
+epoch 16
+Estimate error: 0.238662
+Train Loss: 0.104654, Acc: 0.770800
+Val Loss: 0.128855, Acc: 0.711800
+Test Loss: 0.454009, Acc: 0.890500
+epoch 17
+Estimate error: 0.238491
+Train Loss: 0.101968, Acc: 0.769578
+Val Loss: 0.125479, Acc: 0.713800
+Test Loss: 0.450914, Acc: 0.890400
+epoch 18
+Estimate error: 0.238317
+Train Loss: 0.099022, Acc: 0.770156
+Val Loss: 0.120721, Acc: 0.714600
+Test Loss: 0.454123, Acc: 0.891600
+epoch 19
+Estimate error: 0.238141
+Train Loss: 0.095433, Acc: 0.771133
+Val Loss: 0.117380, Acc: 0.715000
+Test Loss: 0.456098, Acc: 0.891600
+epoch 20
+Estimate error: 0.237962
+Train Loss: 0.092387, Acc: 0.770311
+Val Loss: 0.113053, Acc: 0.716000
+Test Loss: 0.456748, Acc: 0.893300
+epoch 21
+Estimate error: 0.237776
+Train Loss: 0.090398, Acc: 0.770933
+Val Loss: 0.111607, Acc: 0.714800
+Test Loss: 0.455840, Acc: 0.892300
+epoch 22
+Estimate error: 0.237594
+Train Loss: 0.085727, Acc: 0.771800
+Val Loss: 0.109271, Acc: 0.715000
+Test Loss: 0.463435, Acc: 0.892500
+epoch 23
+Estimate error: 0.237410
+Train Loss: 0.085905, Acc: 0.770733
+Val Loss: 0.107931, Acc: 0.716000
+Test Loss: 0.459227, Acc: 0.892300
+epoch 24
+Estimate error: 0.237215
+Train Loss: 0.080998, Acc: 0.771867
+Val Loss: 0.103884, Acc: 0.714800
+Test Loss: 0.463279, Acc: 0.893700
+epoch 25
+Estimate error: 0.237035
+Train Loss: 0.079973, Acc: 0.771644
+Val Loss: 0.102194, Acc: 0.715200
+Test Loss: 0.459901, Acc: 0.894100
+epoch 26
+Estimate error: 0.236847
+Train Loss: 0.077939, Acc: 0.771956
+Val Loss: 0.100037, Acc: 0.715200
+Test Loss: 0.466187, Acc: 0.894000
+epoch 27
+Estimate error: 0.236667
+Train Loss: 0.076980, Acc: 0.772311
+Val Loss: 0.097359, Acc: 0.715000
+Test Loss: 0.471901, Acc: 0.893200
+epoch 28
+Estimate error: 0.236490
+Train Loss: 0.074842, Acc: 0.772822
+Val Loss: 0.094202, Acc: 0.718000
+Test Loss: 0.470010, Acc: 0.894900
+epoch 29
+Estimate error: 0.236312
+Train Loss: 0.074213, Acc: 0.771844
+Val Loss: 0.093103, Acc: 0.716400
+Test Loss: 0.472999, Acc: 0.894300
+epoch 30
+Estimate error: 0.236125
+Train Loss: 0.071268, Acc: 0.772267
+Val Loss: 0.092000, Acc: 0.714200
+Test Loss: 0.479534, Acc: 0.893400
