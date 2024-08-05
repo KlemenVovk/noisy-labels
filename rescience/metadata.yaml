@@ -70,7 +70,8 @@ replication:
  - doi:  https://doi.org/10.48550/arXiv.2110.12088 # Regular digital object identifier
 
 # Don't forget to surround abstract with double quotes
-abstract: "We reproduce the paper \\emph{Learning with noisy labels revisited: A study using real-world human annotations}, the authors of which present novel noisy label sets for the established CIFAR datasets, based on human labelling errors. They try to prove that learning with the real-world noise present in their labels is a harder task with by conducting qualitative and quantitative experiments. We manage to confirm most of their claims, but due to weakly presented methodology fail to obtain the exact same results."
+abstract: "Learning with noisy labels (LNL) is a subfield of supervised machine learning investingating scenarios in which the training data contains errors. Previous research has primarily focused on synthetic label noise, where incorrect labels are randomly generated, rather than human noise, where errors arise from misannotations. Wei et al. propose CIFAR-N, a dataset with human labeling errors. They claim that real-world noise presents a more challenging learning problem compared to synthetic noise and benchmark 20 state-of-the-art LNL methods on CIFAR-N.
+  This study aims to reproduce and validate their findings. We reproduce 20 LNL methods and incorporate them into a LNL framework. We confirm that human noise differs significantly from synthetic noise with minor variations in results. Initially, we were unable to reproduce the benchmark results using the authors' described methodology. However, by reverse-engineering the hyperparameters we are able to reproduce the benchmark results for a subset of 10 LNL methods."
 
 # Bibliography file (yours)
 bibliography: bibliography.bib
