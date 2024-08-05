@@ -8,14 +8,14 @@ We implement and test the following experiments:
 
 1) Noise hypothesis testing (section 4.2. in the original publication). With this experiment, the authors claim that real-world noisy labels differ significantly from their synthetic counterparts. We confirm their claim, albeit with slightly different results.
 
-![human-cluster](article/figures/human_cluster.svg)
-![synthetic-cluster](article/figures/synthetic_cluster.svg)
+![human-cluster](rescience/figures/human_cluster.svg)
+![synthetic-cluster](rescience/figures/synthetic_cluster.svg)
 
 <p style="text-align: center;">Transition vectors within real-world (top) and synthetic (bottom) clusters for <i>Random1</i> label</p>
 
 2) Noise memorization effects (section 5.2. in the original publication). The authors claim that models start to overfit on the real-world noisy labels faster than on their synthetic counterparts, indicating a harder learning task. We confirm their claim.
 
-![memo](article/figures/memorisation.svg)
+![memo](rescience/figures/memorisation.svg)
 <p style="text-align: center;">Noise memorisation effects.</p>
 
 3) Benchmark of LNL approaches (section 5.1. in the original publication). The authors claim that LNL approaches perform worse on real-world noisy labels than on their synthetic counterparts. We confirm their claim, but not with their supposed hyperparameter setup.
