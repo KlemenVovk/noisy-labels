@@ -36,9 +36,7 @@ We implement and test the following experiments:
 
 <p style="text-align: center;">Our results on the real-world noise (CIFAR-10N and CIFAR-100n)</p>
 
-## Environment
-
-Using conda:
+## Installation
 ```bash
 conda create -n noisylables python=3.10
 conda activate noisylabels
