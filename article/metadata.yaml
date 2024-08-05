@@ -1,0 +1,128 @@
+# To be filled by the author(s) at the time of submission
+# -------------------------------------------------------
+
+# Title of the article:
+#  - For a successful replication, it should be prefixed with "[Re]"
+#  - For a failed replication, it should be prefixed with "[¬Re]"
+#  - For other article types, no instruction (but please, not too long)
+title: "[Re] Learning with Noisy Labels Revisited: A Study Using Real-World Human Annotations"
+
+# List of authors with name, orcid number, email and affiliation
+# Affiliation "*" means contact author (required even for single-authored papers)
+# To include author suffix format name as Last Suffix, First M.I. (e.g. Schackart III, Kenneth E.)
+authors:
+  - name: Valter Hudovernik
+    orcid: 0000-0003-3045-521X
+    email: vh0153@student.uni-lj.si
+    affiliations: 1,*
+
+  - name: Žiga Rot
+    orcid: 0009-0001-0524-5221
+    email: zr13891@student.uni-lj.si
+    affiliations: 1
+
+  - name: Klemen Vovk
+    orcid: 0009-0001-0543-484X
+    email: kv4582@student.uni-lj.si
+    affiliations: 1
+
+  - name: Luka Škodnik
+    orcid: 0009-0008-0188-8757
+    email: ls1906@student.uni-lj.si
+    affiliations: 1
+
+  - name: Luka Čehovin Zajc
+    orcid: 0000-0003-2823-272X
+    email: luka.cehovin@fri.uni-lj.si
+    affiliations: 1
+
+# List of affiliations with code (corresponding to author affiliations), name
+# and address. You can also use these affiliations to add text such as "Equal
+# contributions" as name (with no address).
+affiliations:
+  - code:    1
+    name:    University of Ljubljana, Faculty of Computer and Information Science
+    address: Večna pot 113, 1000 Ljubljana
+
+
+# List of keywords (adding the programming language might be a good idea)
+keywords: Learning with noisy labels, deep learning, Python
+
+# Code URL and DOI/SWH (url is mandatory for replication, doi after acceptance)
+# You can get a DOI for your code from Zenodo, or an SWH identifier from
+# Software Heritage.
+#   see https://guides.github.com/activities/citable-code/
+code:
+  - url: https://github.com/KlemenVovk/noisy-labels
+  - doi: 
+  - swh: 
+
+# Data URL and DOI (optional if no data)
+data:
+  - url:
+  - doi:
+
+# Information about the original article that has been replicated
+replication:
+ - cite: "WEI, Jiaheng, et al. Learning with noisy labels revisited: A study using real-world human annotations. arXiv preprint arXiv:2110.12088, 2021." # Full textual citation
+ - bib:  noisylabels-benchmark # Bibtex key (if any) in your bibliography file
+ - url:  https://openreview.net/pdf?id=TBWA6PLJZQm # URL to the PDF, try to link to a non-paywall version
+ - doi:  https://doi.org/10.48550/arXiv.2110.12088 # Regular digital object identifier
+
+# Don't forget to surround abstract with double quotes
+abstract: "We reproduce the paper \\emph{Learning with noisy labels revisited: A study using real-world human annotations}, the authors of which present novel noisy label sets for the established CIFAR datasets, based on human labelling errors. They try to prove that learning with the real-world noise present in their labels is a harder task with by conducting qualitative and quantitative experiments. We manage to confirm most of their claims, but due to weakly presented methodology fail to obtain the exact same results."
+
+# Bibliography file (yours)
+bibliography: bibliography.bib
+  
+# Type of the article
+# Type can be:
+#  * Editorial
+#  * Letter
+#  * Replication
+type: Replication
+
+# Scientific domain of the article (e.g. Computational Neuroscience)
+#  (one domain only & try to be not overly specific)
+domain: Machine Learning
+
+# Coding language (main one only if several)
+language: Python
+
+  
+# To be filled by the author(s) after acceptance
+# -----------------------------------------------------------------------------
+
+# For example, the URL of the GitHub issue where review actually occured
+review: 
+  - url: 
+
+contributors:
+  - name:
+    orcid: 
+    role: editor
+  - name:
+    orcid:
+    role: reviewer
+  - name:
+    orcid:
+    role: reviewer
+
+# This information will be provided by the editor
+dates:
+  - received:  November 1, 2018
+  - accepted:
+  - published: 
+
+# This information will be provided by the editor
+article:
+  - number: # Article number will be automatically assigned during publication
+  - doi:    # DOI from Zenodo
+  - url:    # Final PDF URL (Zenodo or rescience website?)
+
+# This information will be provided by the editor
+journal:
+  - name:   "ReScience C"
+  - issn:   2430-3658
+  - volume: 4
+  - issue:  1
