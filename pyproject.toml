@@ -25,6 +25,12 @@ dependencies = [
     "requests",
 ]
 
+[project.optional-dependencies]
+reproducibility=[
+  "matplotlib",
+  "ipykernel"
+]
+
 [project.urls]
 Homepage = "TODO"
 Issues = "TODO"
