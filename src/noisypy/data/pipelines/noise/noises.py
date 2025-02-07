@@ -51,7 +51,7 @@ class Noise(ABC):
 
     @staticmethod
     def load_state(fpath: str) -> "Noise":
-        return torch.load(fpath)
+        return torch.load(fpath, weights_only=False)
 
 
 class InstanceNoise(Noise):

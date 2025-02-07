@@ -11,7 +11,7 @@ from ..common import cifar10_base_config
 
 class cifar10_index_noise_config(cifar10_base_config):
     dataset_train_augmentation = Compose([
-        AddNoise(noise=InstanceNoise(torch.load("methods/learning_strategies/CAL/reproducibility/IDN_0.4_C10.pt"))), 
+        AddNoise(noise=InstanceNoise(torch.load("methods/learning_strategies/CAL/reproducibility/IDN_0.4_C10.pt", weights_only=False))), 
         AddIndex()]) 
 
 class cal_cifar10_noise(cal_cifar10_clean):

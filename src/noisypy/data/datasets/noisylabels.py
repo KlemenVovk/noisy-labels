@@ -50,7 +50,7 @@ class NoisyLabelsLoader:
     def load_all(self) -> Dict[str, Tensor]:
         if self.save_path.exists():
             with open(self.save_path, "rb") as f:
-                noise_dict = torch.load(f)
+                noise_dict = torch.load(f, weights_only=False)
             return noise_dict
         else:
             raise ValueError(f"Cannot find label file at {self.save_path}.")
