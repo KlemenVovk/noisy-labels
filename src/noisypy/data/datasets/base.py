@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from typing import Tuple, Any
+from typing import Any
 
 from torch.utils.data.dataset import Dataset as DatasetPT
 from torch import Tensor
