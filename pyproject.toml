@@ -29,6 +29,7 @@ dependencies = [
 reproducibility=[
   "matplotlib",
   "ipykernel"
+  "pandas",
 ]
 
 [project.urls]
