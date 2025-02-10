@@ -1,9 +1,8 @@
-from typing import Any
+from typing import Any, Type
 
 import lightning as L
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import torchmetrics
-import torch
 from torch.nn.functional import cross_entropy, one_hot
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -15,10 +14,10 @@ from .utils import overparametrization_loss
 class SOP(LearningStrategyModule):
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  ratio_consistency: float, ratio_balance: float, lr_u: float, lr_v: float,
-                 overparam_optimizer_cls: type[Optimizer], overparam_weight_decay: float, 
+                 overparam_optimizer_cls: Type[Optimizer], overparam_weight_decay: float, 
                  overparam_momentum: float, overparam_mean: float, overparam_std: float,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(

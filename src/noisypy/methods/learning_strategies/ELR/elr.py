@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import lightning as L
 from lightning.pytorch.utilities.types import STEP_OUTPUT
@@ -14,8 +14,8 @@ from .utils import elr_loss
 class ELR(LearningStrategyModule):
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  beta: float, lmbd: float,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(

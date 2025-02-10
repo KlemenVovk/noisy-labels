@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 from copy import deepcopy
 
 import lightning as L
@@ -21,8 +21,8 @@ class TRevision(MultiStageLearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: list[type[Optimizer]], optimizer_args: list[dict],
-                 scheduler_cls: list[type[LRScheduler]], scheduler_args: list[dict],
+                 optimizer_cls: list[Type[Optimizer]], optimizer_args: list[dict],
+                 scheduler_cls: list[Type[LRScheduler]], scheduler_args: list[dict],
                  stage_epochs: list[int],
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(

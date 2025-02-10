@@ -1,4 +1,3 @@
-from typing import Callable, Any
 from torchvision.datasets import CIFAR100 as CIFAR100PT
 from torchvision import transforms
 

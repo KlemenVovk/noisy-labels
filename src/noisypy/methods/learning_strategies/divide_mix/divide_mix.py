@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 from tqdm import tqdm
 import lightning as L
@@ -18,9 +18,9 @@ from .utils import NegEntropy, SemiLoss, BATCH_MAP, end_warmup, set_probabilitie
 
 class DivideMix(LearningStrategyModule):
     def __init__(self, datamodule: L.LightningDataModule,
-                 classifier_cls: type[Module], classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 classifier_cls: Type[Module], classifier_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  warmup_epochs: int, noise_type: str, noise_rate: float, 
                  p_thresh: float, temperature: float, alpha: float, 
                  lambda_u: float, *args: Any, **kwargs: Any) -> None:

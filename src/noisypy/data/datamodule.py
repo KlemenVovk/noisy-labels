@@ -1,5 +1,4 @@
 from lightning import LightningDataModule
-from lightning.pytorch.utilities.combined_loader import CombinedLoader
 from lightning.pytorch.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADERS
 
 from torch.utils.data import DataLoader

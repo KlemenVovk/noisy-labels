@@ -1,5 +1,5 @@
 import torch
-
+from typing import Type
 from .base import AugmentationPipeline
 from ..datasets.base import DatasetFW
 
@@ -10,7 +10,7 @@ class ShuffleImages(AugmentationPipeline):
         super().__init__()
         self.shuffled_idxs = None
    
-    def transform(self, dataset_cls: type[DatasetFW]) -> type[DatasetFW]:
+    def transform(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
         self_ = self
 
         class ShuffledDataset(dataset_cls):

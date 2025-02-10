@@ -7,7 +7,6 @@ import lightning as L
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
-from torch.nn.functional import cross_entropy
 
 from .utils import CrossEntropyLossStable, ProbLossStable, Divergence
 from ..base import LearningStrategyWithWarmupModule
@@ -18,8 +17,8 @@ class FDivergence(LearningStrategyWithWarmupModule):
     def __init__(self,
                  datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  warmup_epochs: int,
                  divergence: str = "Total-Variation",
                  *args: Any, **kwargs: Any) -> None:

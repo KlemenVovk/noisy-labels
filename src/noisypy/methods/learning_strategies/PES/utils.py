@@ -89,7 +89,7 @@ def predict_softmax(predict_loader: DataLoader, model: nn.Module, device: torch.
     model.eval()
     softmax_outs = []
     with torch.no_grad():
-        for images1, images2 in tqdm(predict_loader, desc=f'Predicting', leave=False):
+        for images1, images2 in tqdm(predict_loader, desc='Predicting', leave=False):
             logits1 = model(images1.to(device)) 
             logits2 = model(images2.to(device))
             outputs = (F.softmax(logits1, dim=1) + F.softmax(logits2, dim=1)) / 2

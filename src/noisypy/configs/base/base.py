@@ -1,5 +1,4 @@
 from typing import Any
-from copy import deepcopy
 
 class ConfigMeta(type):
 
@@ -18,6 +17,7 @@ class Config(metaclass=ConfigMeta):
 
     @classmethod
     def update_field(cls, field_name, new_value) -> "Config":
-        class UpdatedConfig(cls): pass
+        class UpdatedConfig(cls):
+            pass
         setattr(UpdatedConfig, field_name, new_value)
         return UpdatedConfig

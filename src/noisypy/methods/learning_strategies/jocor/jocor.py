@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import lightning as L
 import torch
@@ -14,8 +14,8 @@ class JoCoR(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  forget_rate: float, exponent: float, num_gradual: int,
                  co_lambda: float,
                  num_epochs: int,
