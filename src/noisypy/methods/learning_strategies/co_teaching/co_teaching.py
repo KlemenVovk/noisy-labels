@@ -31,6 +31,7 @@ class CoTeaching(LearningStrategyModule):
         self.model1 = classifier_cls(**classifier_args)
         self.model2 = classifier_cls(**classifier_args)
         self.criterion = loss_coteaching
+        self.val_criterion = torch.nn.CrossEntropyLoss()
         
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
@@ -82,6 +83,8 @@ class CoTeaching(LearningStrategyModule):
         logits1 = self.model1(x)
         logits2 = self.model2(x)
         logits = (logits1 + logits2) / 2
+        loss = self.val_criterion(logits, y_true)
+        self.log("val_loss", loss)
         self.log("val_acc", self.val_acc(logits, y_true))
     
     def test_step(self, batch: Any, batch_idx: int):
