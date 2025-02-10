@@ -3,6 +3,7 @@ from typing import Any
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 from lightning.pytorch.utilities import move_data_to_device
 import lightning as L
+import numpy as np
 from tqdm import tqdm
 import torch
 from torch.nn import Module
@@ -65,12 +66,15 @@ class PES_semi(LearningStrategyModule):
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
         if self.current_epoch == 0:
             train_dataset = self.trainer.datamodule.train_datasets[0]
-            self.train_data = train_dataset.data
+            self.train_data = []
             self.train_labels = []
             for i in tqdm(range(len(train_dataset)), desc=f'Saving Training Data', leave=False):
                 _, y, *_ = train_dataset[i]
+                x = train_dataset.data[i]
                 self.train_labels.append(y)
+                self.train_data.append(x)
             self.train_labels = torch.LongTensor(self.train_labels)
+            self.train_data = np.stack(self.train_data)
             self.train_transform = train_dataset.transform
             
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:
