@@ -39,9 +39,7 @@ def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pyto
             reset_resnet_layer_parameters(model.layer4)
         
         print("re-initalize the final layer")
-        model.fc.reset_parameters()
-        for param in model.fc.parameters():
-            param.requires_grad = True
+        model.fc = nn.Linear(512, num_classes)
     elif model_class == 'paper_resnet':
         if last_num_layers >= 3:
             print("re-initalize block 2")
