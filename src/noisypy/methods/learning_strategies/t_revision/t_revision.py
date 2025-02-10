@@ -15,9 +15,6 @@ from ..base import MultiStageLearningStrategyModule
 from .utils import ReweightLoss, ReweightRevisionLoss
 from ..FBT.utils import estimate_noise_mtx
 
-# TODO: in configs, try to figure out how
-# to show the correct amount of expected parameters
-# A: typing Annotated[list[int], 3]
 # NOTE: skip warmup: set stage epochs to 0
 
 class TRevision(MultiStageLearningStrategyModule):
@@ -50,8 +47,6 @@ class TRevision(MultiStageLearningStrategyModule):
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.test_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
 
-        #TODO: maybe it's better to dump model to disk
-        # misc
         self._best_model = None # buffer for best model
         self._best_val_acc = 0
         self._probs = []

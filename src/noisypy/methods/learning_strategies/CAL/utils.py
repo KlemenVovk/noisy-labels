@@ -83,7 +83,7 @@ class CrossEntropyStableCALMultiple(nn.Module):
             T_mat_indicator_true_sum = torch.sum(T_mat_indicator_true, dim = 2)
             T_mat_indicator_true_sum[T_mat_indicator_true_sum==0] = 1.0
             loss_out_true = torch.sum(torch.sum(torch.sum(T_mat_true * loss_all_norm_true, dim = 2)/T_mat_indicator_true_sum, dim = 1) * 1.0/T_mat.shape[0])
-        loss_out = torch.sum(torch.sum(torch.sum(T_mat * loss_all_norm, dim = 2)/T_mat_indicator_sum, dim = 1) * self.P_y_distill) # TODO: test even p_y_distill
+        loss_out = torch.sum(torch.sum(torch.sum(T_mat * loss_all_norm, dim = 2)/T_mat_indicator_sum, dim = 1) * self.P_y_distill)
         if self.T_mat_true is not None:
             return loss_out, loss_out_true, loss_rec_all, loss_rec_all_true
         else:

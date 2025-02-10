@@ -4,19 +4,6 @@ from abc import abstractmethod, ABC
 import torch
 from torch import Tensor
 
-# EARLY ALPHA STUFF; SUBJECT TO CHANGES
-
-# TODO: looking at this now, perhaps, it would be better
-# if you just apply noise to whole vector of targets
-# instead of on individual labels
-# PROS: + perhaps faster (almost certainly if you do this in prepare())
-#       + persistence of ys between batches is handled in dataset wrapper, 
-#         as the noise only gets called once on all targets
-# CONS: - wrapper becomes a bit dirtier, since you first need
-#         to sample all the ys of original dataset, and the only
-#         way to do so, is to iterate through the original dataset
-#         with __getitem__(i) (or [i])
-
 class Noise(ABC):
     """Base class for noise functions.
     _generated dict instance variable holds cached noisy labels {index: noisy_label},
@@ -43,9 +30,7 @@ class Noise(ABC):
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
         raise NotImplementedError
     
-    # TODO: could be improved in the future,
-    # saving only _generated does not work
-    # as you need to save fcn as well for LambdaNoise for example
+    # NOTE: saving only _generated does not work as you need to save fcn as well for LambdaNoise for example
     def save_state(self, fpath: str) -> "Noise":
         torch.save(self, fpath)
 
@@ -60,7 +45,6 @@ class InstanceNoise(Noise):
 
     def __init__(self, noisy_targets: Tensor) -> None:
         super().__init__()
-        # TODO: _generated can be precached here
         self.noisy_targets = noisy_targets # vector of noisy labels
 
     def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:

@@ -36,7 +36,6 @@ class pes_cifar10_clean(MethodConfig):
         reload_dataloaders_every_n_epochs=1,
         max_epochs=200,
         deterministic=True,
-        # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="pes_clean")
     )
 

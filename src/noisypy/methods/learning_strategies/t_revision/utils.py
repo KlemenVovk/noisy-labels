@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-# TODO: merge these two losses into 1
 class ReweightLoss(nn.Module):
 
     def __init__(self):

@@ -95,7 +95,7 @@ class DivideMix(LearningStrategyModule):
         loss = self.CEloss(outputs, y_noisy.to(self.device))
         # penalize confident prediction for asymmetric noise
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L132
-        if self.noise_type == 'asymmetric':     # TODO: This seems like data leakage
+        if self.noise_type == 'asymmetric':     # NOTE: This seems like data leakage
             penalty = self.conf_penalty(outputs)
             loss += penalty
         
@@ -124,7 +124,7 @@ class DivideMix(LearningStrategyModule):
 
         # average loss over last 5 epochs to improve convergence stability
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L178
-        if self.noise_rate == 0.9:              # TODO: This seems like data leakage
+        if self.noise_rate == 0.9:              # NOTE: This seems like data leakage
             history = torch.stack(loss_hist)
             input_loss = history[-5].mean(0)
             input_loss = input_loss.reshape(-1, 1)

@@ -10,7 +10,6 @@ from ..base import LearningStrategyModule
 from .utils import loss_coteaching, loss_coteaching_plus
 
 # NOTE: needs AddIndex dataset augmentation
-# TODO: figure out how to make CoTeachingPlus cleaner, since only loss calc is different
 
 class CoTeaching(LearningStrategyModule):
 
@@ -19,7 +18,7 @@ class CoTeaching(LearningStrategyModule):
                  optimizer_cls: type[Optimizer], optimizer_args: dict,
                  scheduler_cls: type[LRScheduler], scheduler_args: dict,
                  forget_rate: float, exponent: float, num_gradual: int,
-                 num_epochs: int, # TODO: figure out how to remove num of epochs
+                 num_epochs: int,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 

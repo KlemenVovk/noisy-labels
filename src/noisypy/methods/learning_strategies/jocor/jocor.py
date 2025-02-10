@@ -78,7 +78,7 @@ class JoCoR(LearningStrategyModule):
     
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
-        y_pred = self.model1(x) #TODO maybe both?
+        y_pred = self.model1(x)
         self.test_acc(y_pred, y)
         self.log("test_acc", self.test_acc, on_epoch=True)
     

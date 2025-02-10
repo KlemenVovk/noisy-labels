@@ -1,13 +1,6 @@
 from typing import Any
 from copy import deepcopy
 
-# TODO I think I finally realised what's bothering me about this config system.
-# The thing is that though it is better than doing yaml files, the hierarchy
-# still doesn't make sense. You have to know how the modules are initialised
-# in the background to effectively write a config with no errors.
-# For a normal user this will not be the case. Think about how this could be improved.
-# ANSWER: METAPROGRAMMING BABY: when you hit a dict argument update it with current dict ;D
-
 class ConfigMeta(type):
 
     def __new__(cls, clsname, bases, attrs):

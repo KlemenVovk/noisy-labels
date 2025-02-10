@@ -35,7 +35,6 @@ class sop_cifar10_noise(sop_cifar10_clean):
     trainer_args = dict(
         max_epochs=120,
         deterministic=True,
-        # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="sop_symmetric")
     )
 

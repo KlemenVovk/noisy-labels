@@ -13,7 +13,7 @@ class DoubleAugmentation(AugmentationPipeline):
         transform1 = self.transform1
         transform2 = self.transform2
         class DoubleAugmentationDataset(dataset_cls):
-            # TODO: transforms should be none for the original dataset
+            # NOTE: transforms should be none for the original dataset
             # currently done in data config, but could be ensured here?
             def __init__ (self, *dataset_args, **dataset_kwargs):
                 self.initialized = False

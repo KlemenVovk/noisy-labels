@@ -31,7 +31,6 @@ class elr_plus_cifar10_noise(elr_plus_cifar10_clean):
     trainer_args = dict(
         max_epochs=200 * 2,
         deterministic=True,
-        # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="elr_plus_symmetric")
     )
 

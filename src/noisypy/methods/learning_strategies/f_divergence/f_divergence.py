@@ -13,8 +13,6 @@ from .utils import CrossEntropyLossStable, ProbLossStable, Divergence
 from ..base import LearningStrategyWithWarmupModule
 
 
-# TODO: maybe add bias estimation but the original authors do it in a very weird way (data leakage)
-
 class FDivergence(LearningStrategyWithWarmupModule):
 
     def __init__(self,

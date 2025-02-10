@@ -37,11 +37,6 @@ class LearningStrategyWithWarmupModule(LearningStrategyModule):
         )
         self.warmup_epochs = warmup_epochs
 
-# TODO: cumsum should be decremented by 1
-# TODO: test - what happens if you go over the cumsum
-# TODO: stage skipping - either by just setting epochs to 0 or with custom method
-# TODO: override the rest of the methods
-# TODO: implement on_stage_end in on_validation end when last epoch of stage is reached
 
 class MultiStageLearningStrategyModule(LearningStrategyModule):
     

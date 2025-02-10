@@ -1,8 +1,6 @@
 from typing import Any, Protocol
 
-# TODO: idk if this is the correct way to specify the classifier
-# would want a callable that takes num classes as input argument,
-# so we can autofill it during config building
+# A callable that takes num classes as input argument so we can autofill it during config building
 
 class Classifier(Protocol):
 

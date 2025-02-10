@@ -13,8 +13,6 @@ from torch.optim.lr_scheduler import LRScheduler
 from .utils import ForwardTLoss, BackwardTLoss, estimate_noise_mtx
 from ..base import LearningStrategyWithWarmupModule
 
-# TODO port this to MultiStageLearningStrategyModule
-
 class ForwardT(LearningStrategyWithWarmupModule):
 
     def __init__(self, 

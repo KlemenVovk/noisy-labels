@@ -1,8 +1,6 @@
 import torch
 from torch import nn
 
-
-# TODO: try normal crossentropy
 class CrossEntropyLossStable(nn.Module):
     def __init__(self, reduction='mean', eps=1e-5):
         super(CrossEntropyLossStable, self).__init__()
@@ -14,8 +12,7 @@ class CrossEntropyLossStable(nn.Module):
     def forward(self, outputs, labels):
         return self._nllloss( torch.log( self._softmax(outputs) + self._eps ), labels )
 
-
-# TODO: rewrite so it's not hardcoded to max of 340 epochs
+# NOTE: currently hardcoded to max of 340 epochs
 def f_alpha(epoch, r=0.1):
     if r <= 0.3:
     # Sparse setting

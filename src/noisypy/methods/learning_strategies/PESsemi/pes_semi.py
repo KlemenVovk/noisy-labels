@@ -61,7 +61,7 @@ class PES_semi(LearningStrategyModule):
         self.automatic_optimization = False
 
     def on_train_epoch_start(self) -> None:
-        self.model.train() # TODO: I don't think this is necessary
+        self.model.train()
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
         if self.current_epoch == 0:
             train_dataset = self.trainer.datamodule.train_datasets[0]

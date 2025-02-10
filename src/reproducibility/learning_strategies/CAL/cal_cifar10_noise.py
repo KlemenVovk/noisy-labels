@@ -34,7 +34,6 @@ class cal_cifar10_noise(cal_cifar10_clean):
     trainer_args = dict(
         max_epochs=165,
         deterministic=True,
-        # TODO: move to logs when we are not running from src/
         logger=CSVLogger("../logs", name="cal_noise")
     )
 

@@ -3,9 +3,6 @@ import torch
 from .base import AugmentationPipeline
 from ..datasets.base import DatasetFW
 
-# TODO: test if num_workers breaks this somehow
-# TODO: implement which thing in __getitem__ needs to be shuffled
-
 class ShuffleImages(AugmentationPipeline):
     # shuffles images within the dataset
 
