@@ -82,12 +82,14 @@ class CoTeaching(LearningStrategyModule):
         x, y_true = batch
         logits1 = self.model1(x)
         logits2 = self.model2(x)
-        self.log("val_acc1", self.val_acc(logits1, y_true))
-        self.log("val_acc2", self.val_acc(logits2, y_true))
+        logits = (logits1 + logits2) / 2
+        self.log("val_acc", self.val_acc(logits, y_true))
     
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
-        y_pred = self.model1(x) #TODO maybe both? idk
+        y_pred1 = self.model1(x) 
+        y_pred2 = self.model2(x)
+        y_pred = (y_pred1 + y_pred2) / 2
         self.test_acc(y_pred, y)
         self.log("test_acc", self.test_acc, on_epoch=True)
     
