@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
@@ -39,7 +39,7 @@ class GCE_cifar10_clean(MethodConfig):
     trainer_args = dict(
         max_epochs=100,
         deterministic=True,
-        logger=AimLogger(experiment="GCE")
+        logger=CSVLogger("../logs", name="GCE_clean"),
     )
 
     seed = 1337

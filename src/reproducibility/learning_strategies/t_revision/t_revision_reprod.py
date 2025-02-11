@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 from torch.optim import SGD, Adam
 from torch.optim.lr_scheduler import MultiStepLR, LambdaLR
 
@@ -50,7 +50,7 @@ class t_revision_reprod(MethodConfig):
         max_epochs=sum(stages)+1,
         deterministic=True,
         num_sanity_val_steps=0,
-        logger=AimLogger(experiment="T-Revision")
+        logger=CSVLogger("../logs", name="T-Revision_reprod"),
     )
 
     seed = 1337

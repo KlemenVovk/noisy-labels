@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 from torch.optim import Adam
 from torch.optim.lr_scheduler import LambdaLR
 from torchvision.transforms import ToTensor
@@ -65,7 +65,7 @@ class jocor_reprod(MethodConfig):
     trainer_args = dict(
         max_epochs=200,
         deterministic=True,
-        logger=AimLogger(experiment="JoCoR")
+        logger=CSVLogger("../logs", name="JoCoR_symmetric"),
     )
 
     seed = 1

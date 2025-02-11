@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 import torch
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
@@ -58,7 +58,7 @@ class peer_loss_reprod(MethodConfig):
     trainer_args = dict(
         max_epochs=sum(stages)+1,
         deterministic=True,
-        logger=AimLogger(experiment="PeerLoss")
+        logger=CSVLogger("../logs", name="PeerLoss_symmetric"),
     )
 
     seed = 1337

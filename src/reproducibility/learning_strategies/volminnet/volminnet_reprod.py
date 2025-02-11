@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
@@ -45,7 +45,7 @@ class volminnet_reprod(MethodConfig):
     trainer_args = dict(
         max_epochs=80,
         deterministic=True,
-        logger=AimLogger(experiment="VolMinNet")
+        logger=CSVLogger("../logs", name="VolMinNet_reprod"),
     )
 
     seed = 1337
