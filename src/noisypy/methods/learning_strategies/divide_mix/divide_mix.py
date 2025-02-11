@@ -224,13 +224,16 @@ class DivideMix(LearningStrategyModule):
             unlabeled_batch1 = batch[BATCH_MAP["unlabeled1"]]
             labeled_batch2 = batch[BATCH_MAP["labeled2"]]
             unlabeled_batch2 = batch[BATCH_MAP["unlabeled2"]]
+            if (unlabeled_batch1[0].size(0) <= 1 or unlabeled_batch2[0].size(0) <= 1 or 
+                labeled_batch1[0].size(0) <= 1 or labeled_batch2[0].size(0) <= 1):
+                return # FIXME: Should probably drop last batch in the dataloader.
             num_iter1 = len(self.trainer.datamodule.train_datasets[BATCH_MAP["labeled1"]]) // self.trainer.datamodule.batch_size
             num_iter2 = len(self.trainer.datamodule.train_datasets[BATCH_MAP["labeled2"]]) // self.trainer.datamodule.batch_size
             loss1 = self.train_step(labeled_batch1, unlabeled_batch1, self.model1, self.model2, opt1, batch_idx, num_iter1)
             loss2 = self.train_step(labeled_batch2, unlabeled_batch2, self.model2, self.model1, opt2, batch_idx, num_iter2)
 
         # average loss over two models
-        loss = loss1 + loss2 / 2    
+        loss = (loss1 + loss2) / 2    
         self.log('train_loss', loss, prog_bar=True)
         return loss
 
