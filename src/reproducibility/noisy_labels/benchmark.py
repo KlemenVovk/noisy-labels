@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-import torch
 
 from configs.benchmark_configs.cifar10n import *
 from utils import update_config, TestCallback
