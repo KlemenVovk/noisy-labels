@@ -1,4 +1,4 @@
-# SILLY AHH RESNET DO NOT USE ELSEWHERE
+# ResNet implementation based on https://github.com/kuangliu/pytorch-cifar
 
 import torch.nn as nn
 import torch.nn.functional as F

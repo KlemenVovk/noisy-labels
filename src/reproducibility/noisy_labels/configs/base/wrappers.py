@@ -3,7 +3,6 @@ from noisypy.data.datasets.cifar10 import cifar10_train_transform
 from noisypy.methods.learning_strategies.SOPplus.utils import autoaug_paper_cifar10
 
 
-# some serious mental retardation incoming
 def add_index_wrapper(data_config):
     class new_data_config(data_config):
         dataset_train_augmentation = AddIndex()
