@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 from tqdm import tqdm
 import lightning as L
@@ -18,9 +18,9 @@ from .utils import NegEntropy, SemiLoss, BATCH_MAP, end_warmup, set_probabilitie
 
 class DivideMix(LearningStrategyModule):
     def __init__(self, datamodule: L.LightningDataModule,
-                 classifier_cls: type[Module], classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 classifier_cls: Type[Module], classifier_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  warmup_epochs: int, noise_type: str, noise_rate: float, 
                  p_thresh: float, temperature: float, alpha: float, 
                  lambda_u: float, *args: Any, **kwargs: Any) -> None:
@@ -95,7 +95,7 @@ class DivideMix(LearningStrategyModule):
         loss = self.CEloss(outputs, y_noisy.to(self.device))
         # penalize confident prediction for asymmetric noise
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L132
-        if self.noise_type == 'asymmetric':     # TODO: This seems like data leakage
+        if self.noise_type == 'asymmetric':     # NOTE: This seems like data leakage
             penalty = self.conf_penalty(outputs)
             loss += penalty
         
@@ -124,7 +124,7 @@ class DivideMix(LearningStrategyModule):
 
         # average loss over last 5 epochs to improve convergence stability
         # https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/Train_cifar.py#L178
-        if self.noise_rate == 0.9:              # TODO: This seems like data leakage
+        if self.noise_rate == 0.9:              # NOTE: This seems like data leakage
             history = torch.stack(loss_hist)
             input_loss = history[-5].mean(0)
             input_loss = input_loss.reshape(-1, 1)
@@ -224,13 +224,16 @@ class DivideMix(LearningStrategyModule):
             unlabeled_batch1 = batch[BATCH_MAP["unlabeled1"]]
             labeled_batch2 = batch[BATCH_MAP["labeled2"]]
             unlabeled_batch2 = batch[BATCH_MAP["unlabeled2"]]
+            if (unlabeled_batch1[0].size(0) <= 1 or unlabeled_batch2[0].size(0) <= 1 or 
+                labeled_batch1[0].size(0) <= 1 or labeled_batch2[0].size(0) <= 1):
+                return # FIXME: Should probably drop last batch in the dataloader.
             num_iter1 = len(self.trainer.datamodule.train_datasets[BATCH_MAP["labeled1"]]) // self.trainer.datamodule.batch_size
             num_iter2 = len(self.trainer.datamodule.train_datasets[BATCH_MAP["labeled2"]]) // self.trainer.datamodule.batch_size
             loss1 = self.train_step(labeled_batch1, unlabeled_batch1, self.model1, self.model2, opt1, batch_idx, num_iter1)
             loss2 = self.train_step(labeled_batch2, unlabeled_batch2, self.model2, self.model1, opt2, batch_idx, num_iter2)
 
         # average loss over two models
-        loss = loss1 + loss2 / 2    
+        loss = (loss1 + loss2) / 2    
         self.log('train_loss', loss, prog_bar=True)
         return loss
 

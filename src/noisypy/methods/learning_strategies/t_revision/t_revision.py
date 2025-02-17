@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 from copy import deepcopy
 
 import lightning as L
@@ -15,17 +15,14 @@ from ..base import MultiStageLearningStrategyModule
 from .utils import ReweightLoss, ReweightRevisionLoss
 from ..FBT.utils import estimate_noise_mtx
 
-# TODO: in configs, try to figure out how
-# to show the correct amount of expected parameters
-# A: typing Annotated[list[int], 3]
 # NOTE: skip warmup: set stage epochs to 0
 
 class TRevision(MultiStageLearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: list[type[Optimizer]], optimizer_args: list[dict],
-                 scheduler_cls: list[type[LRScheduler]], scheduler_args: list[dict],
+                 optimizer_cls: list[Type[Optimizer]], optimizer_args: list[dict],
+                 scheduler_cls: list[Type[LRScheduler]], scheduler_args: list[dict],
                  stage_epochs: list[int],
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -50,8 +47,6 @@ class TRevision(MultiStageLearningStrategyModule):
         self.val_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
         self.test_acc = torchmetrics.Accuracy(num_classes=N, top_k=1, task='multiclass', average="micro")
 
-        #TODO: maybe it's better to dump model to disk
-        # misc
         self._best_model = None # buffer for best model
         self._best_val_acc = 0
         self._probs = []

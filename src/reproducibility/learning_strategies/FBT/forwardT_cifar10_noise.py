@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
@@ -44,7 +44,7 @@ class forwardT_cifar10_noise(MethodConfig):
         max_epochs=240,
         deterministic=True,
         num_sanity_val_steps=0,
-        logger=AimLogger(experiment="forwardT")
+        logger=CSVLogger("../logs", name="forwardT_symmetric"),
     )
 
     seed = 1337

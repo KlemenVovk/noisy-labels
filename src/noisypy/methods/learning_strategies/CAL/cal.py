@@ -22,8 +22,8 @@ class CAL(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  alpha: float, warmup_epochs: int,
                  alpha_scheduler_cls: type, alpha_scheduler_args: dict,
                  alpha_scheduler_args_warmup: dict,
@@ -46,7 +46,7 @@ class CAL(LearningStrategyModule):
         self.distilled_label = torch.zeros(self.num_training_samples).long()
         self.distilled_label_new = torch.zeros(self.num_training_samples).long()
         self.train_labels = []
-        for i in tqdm(range(len(datamodule.train_datasets[0])), desc=f'Saving Training Labels', leave=False):
+        for i in tqdm(range(len(datamodule.train_datasets[0])), desc='Saving Training Labels', leave=False):
             _, y, *_ = datamodule.train_datasets[0][i]
             self.train_labels.append(y)
         self.train_labels = torch.LongTensor(self.train_labels)

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 from lightning.pytorch.utilities import move_data_to_device
@@ -19,11 +19,11 @@ from .utils import update_train_data_and_criterion, update_dataloader, renew_lay
 class PES(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
-                 classifier_cls: type[Module], classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 classifier_cls: Type[Module], classifier_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  PES_lr: float, warmup_epochs: int, T2: int, T3: int,
-                 optimizer_refine_cls: type[Optimizer],
+                 optimizer_refine_cls: Type[Optimizer],
                  model_type: str = 'pytorch_resnet',
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -64,7 +64,7 @@ class PES(LearningStrategyModule):
             index = train_dataset.valid_idxs
             self.train_data = train_dataset.data[index]
             self.train_labels = []
-            for i in tqdm(index, desc=f'Saving Training Data', leave=False):
+            for i in tqdm(index, desc='Saving Training Data', leave=False):
                 _, y, *_ = train_dataset[i]
                 self.train_labels.append(y)
             self.train_labels = torch.LongTensor(self.train_labels)

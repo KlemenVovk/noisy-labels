@@ -34,3 +34,13 @@ class cifar100n_noisy_config(cifar100n_clean_config):
         cifar_dir="../data/cifar",
         download=True,
     )
+
+
+# Configs used for the benchmark (with validation set)
+class cifar100n_clean_benchmark_config(cifar100n_clean_config):
+
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR100N)
+
+class cifar100n_noisy_benchmark_config(cifar100n_noisy_config):
+
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR100N)

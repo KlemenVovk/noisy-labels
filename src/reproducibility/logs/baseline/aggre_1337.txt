@@ -1,0 +1,1010 @@
+Files already downloaded and verified
+Loaded aggre_label from ./data/CIFAR-10_human.pt.
+The overall noise rate is 0.09009999999999996
+noisy labels loaded from ./data/CIFAR-10_human.pt
+The noisy data ratio in each class is [0.10628 0.11018 0.10814 0.09242 0.08698 0.09926 0.09232 0.10006 0.10694
+ 0.09742]
+over all noise rate is  0.0901
+train_labels: 50000 [6, 9, 9, 4, 1, 1, 2, 7, 8, 3]
+building model...
+building model done
+epoch 0
+Epoch [1/100], Iter [50/390] Training Accuracy: 11.7188, Loss: 2.3873
+Epoch [1/100], Iter [100/390] Training Accuracy: 21.0938, Loss: 2.1353
+Epoch [1/100], Iter [150/390] Training Accuracy: 25.7812, Loss: 1.9614
+Epoch [1/100], Iter [200/390] Training Accuracy: 25.7812, Loss: 2.0191
+Epoch [1/100], Iter [250/390] Training Accuracy: 28.1250, Loss: 1.9382
+Epoch [1/100], Iter [300/390] Training Accuracy: 25.0000, Loss: 1.9649
+Epoch [1/100], Iter [350/390] Training Accuracy: 28.9062, Loss: 1.9056
+train acc on train images is  23.185342071611252
+test acc on test images is  36.59
+epoch 1
+Epoch [2/100], Iter [50/390] Training Accuracy: 36.7188, Loss: 1.7105
+Epoch [2/100], Iter [100/390] Training Accuracy: 43.7500, Loss: 1.6053
+Epoch [2/100], Iter [150/390] Training Accuracy: 35.1562, Loss: 1.6819
+Epoch [2/100], Iter [200/390] Training Accuracy: 46.8750, Loss: 1.4150
+Epoch [2/100], Iter [250/390] Training Accuracy: 40.6250, Loss: 1.5046
+Epoch [2/100], Iter [300/390] Training Accuracy: 42.1875, Loss: 1.5732
+Epoch [2/100], Iter [350/390] Training Accuracy: 40.6250, Loss: 1.5889
+train acc on train images is  37.83168158567775
+test acc on test images is  44.66
+epoch 2
+Epoch [3/100], Iter [50/390] Training Accuracy: 44.5312, Loss: 1.4744
+Epoch [3/100], Iter [100/390] Training Accuracy: 41.4062, Loss: 1.5383
+Epoch [3/100], Iter [150/390] Training Accuracy: 49.2188, Loss: 1.3580
+Epoch [3/100], Iter [200/390] Training Accuracy: 54.6875, Loss: 1.3264
+Epoch [3/100], Iter [250/390] Training Accuracy: 53.9062, Loss: 1.4506
+Epoch [3/100], Iter [300/390] Training Accuracy: 40.6250, Loss: 1.4891
+Epoch [3/100], Iter [350/390] Training Accuracy: 54.6875, Loss: 1.2891
+train acc on train images is  47.42207480818414
+test acc on test images is  53.67
+epoch 3
+Epoch [4/100], Iter [50/390] Training Accuracy: 50.0000, Loss: 1.3605
+Epoch [4/100], Iter [100/390] Training Accuracy: 53.1250, Loss: 1.3212
+Epoch [4/100], Iter [150/390] Training Accuracy: 64.0625, Loss: 1.1151
+Epoch [4/100], Iter [200/390] Training Accuracy: 53.1250, Loss: 1.3320
+Epoch [4/100], Iter [250/390] Training Accuracy: 53.1250, Loss: 1.3314
+Epoch [4/100], Iter [300/390] Training Accuracy: 59.3750, Loss: 1.1841
+Epoch [4/100], Iter [350/390] Training Accuracy: 53.9062, Loss: 1.3460
+train acc on train images is  55.28692455242967
+test acc on test images is  60.31
+epoch 4
+Epoch [5/100], Iter [50/390] Training Accuracy: 53.1250, Loss: 1.2577
+Epoch [5/100], Iter [100/390] Training Accuracy: 60.9375, Loss: 1.1743
+Epoch [5/100], Iter [150/390] Training Accuracy: 54.6875, Loss: 1.2842
+Epoch [5/100], Iter [200/390] Training Accuracy: 63.2812, Loss: 1.1809
+Epoch [5/100], Iter [250/390] Training Accuracy: 66.4062, Loss: 1.0292
+Epoch [5/100], Iter [300/390] Training Accuracy: 61.7188, Loss: 1.0937
+Epoch [5/100], Iter [350/390] Training Accuracy: 64.0625, Loss: 1.0455
+train acc on train images is  60.49592391304348
+test acc on test images is  55.93
+epoch 5
+Epoch [6/100], Iter [50/390] Training Accuracy: 69.5312, Loss: 0.9444
+Epoch [6/100], Iter [100/390] Training Accuracy: 60.9375, Loss: 1.1045
+Epoch [6/100], Iter [150/390] Training Accuracy: 72.6562, Loss: 0.8167
+Epoch [6/100], Iter [200/390] Training Accuracy: 60.9375, Loss: 1.1459
+Epoch [6/100], Iter [250/390] Training Accuracy: 64.8438, Loss: 1.0367
+Epoch [6/100], Iter [300/390] Training Accuracy: 71.8750, Loss: 1.0301
+Epoch [6/100], Iter [350/390] Training Accuracy: 65.6250, Loss: 1.0647
+train acc on train images is  64.6199648337596
+test acc on test images is  61.58
+epoch 6
+Epoch [7/100], Iter [50/390] Training Accuracy: 67.9688, Loss: 0.9508
+Epoch [7/100], Iter [100/390] Training Accuracy: 67.1875, Loss: 1.0165
+Epoch [7/100], Iter [150/390] Training Accuracy: 66.4062, Loss: 1.0625
+Epoch [7/100], Iter [200/390] Training Accuracy: 69.5312, Loss: 1.0068
+Epoch [7/100], Iter [250/390] Training Accuracy: 72.6562, Loss: 0.8037
+Epoch [7/100], Iter [300/390] Training Accuracy: 66.4062, Loss: 0.9334
+Epoch [7/100], Iter [350/390] Training Accuracy: 71.8750, Loss: 0.8850
+train acc on train images is  67.41088554987212
+test acc on test images is  68.23
+epoch 7
+Epoch [8/100], Iter [50/390] Training Accuracy: 67.1875, Loss: 1.0167
+Epoch [8/100], Iter [100/390] Training Accuracy: 69.5312, Loss: 0.7668
+Epoch [8/100], Iter [150/390] Training Accuracy: 72.6562, Loss: 0.9264
+Epoch [8/100], Iter [200/390] Training Accuracy: 68.7500, Loss: 0.9875
+Epoch [8/100], Iter [250/390] Training Accuracy: 71.0938, Loss: 0.9525
+Epoch [8/100], Iter [300/390] Training Accuracy: 67.1875, Loss: 1.0442
+Epoch [8/100], Iter [350/390] Training Accuracy: 65.6250, Loss: 1.0468
+train acc on train images is  71.25359654731457
+test acc on test images is  72.44
+epoch 8
+Epoch [9/100], Iter [50/390] Training Accuracy: 65.6250, Loss: 1.0136
+Epoch [9/100], Iter [100/390] Training Accuracy: 73.4375, Loss: 0.8067
+Epoch [9/100], Iter [150/390] Training Accuracy: 78.1250, Loss: 0.6515
+Epoch [9/100], Iter [200/390] Training Accuracy: 73.4375, Loss: 0.9602
+Epoch [9/100], Iter [250/390] Training Accuracy: 71.0938, Loss: 0.9187
+Epoch [9/100], Iter [300/390] Training Accuracy: 64.0625, Loss: 1.1701
+Epoch [9/100], Iter [350/390] Training Accuracy: 68.7500, Loss: 1.0064
+train acc on train images is  72.9923273657289
+test acc on test images is  75.97
+epoch 9
+Epoch [10/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.6685
+Epoch [10/100], Iter [100/390] Training Accuracy: 70.3125, Loss: 0.8614
+Epoch [10/100], Iter [150/390] Training Accuracy: 71.0938, Loss: 0.9339
+Epoch [10/100], Iter [200/390] Training Accuracy: 68.7500, Loss: 0.9893
+Epoch [10/100], Iter [250/390] Training Accuracy: 83.5938, Loss: 0.5881
+Epoch [10/100], Iter [300/390] Training Accuracy: 73.4375, Loss: 0.7358
+Epoch [10/100], Iter [350/390] Training Accuracy: 75.7812, Loss: 0.7413
+train acc on train images is  74.72786125319693
+test acc on test images is  78.73
+epoch 10
+Epoch [11/100], Iter [50/390] Training Accuracy: 76.5625, Loss: 0.7750
+Epoch [11/100], Iter [100/390] Training Accuracy: 76.5625, Loss: 0.7715
+Epoch [11/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.6656
+Epoch [11/100], Iter [200/390] Training Accuracy: 78.1250, Loss: 0.7911
+Epoch [11/100], Iter [250/390] Training Accuracy: 75.7812, Loss: 0.8298
+Epoch [11/100], Iter [300/390] Training Accuracy: 85.1562, Loss: 0.5964
+Epoch [11/100], Iter [350/390] Training Accuracy: 72.6562, Loss: 0.8196
+train acc on train images is  75.80922314578005
+test acc on test images is  76.47
+epoch 11
+Epoch [12/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.7561
+Epoch [12/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.7980
+Epoch [12/100], Iter [150/390] Training Accuracy: 80.4688, Loss: 0.7335
+Epoch [12/100], Iter [200/390] Training Accuracy: 71.0938, Loss: 0.9311
+Epoch [12/100], Iter [250/390] Training Accuracy: 75.7812, Loss: 0.8119
+Epoch [12/100], Iter [300/390] Training Accuracy: 75.7812, Loss: 0.9094
+Epoch [12/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.7597
+train acc on train images is  76.56449808184144
+test acc on test images is  74.12
+epoch 12
+Epoch [13/100], Iter [50/390] Training Accuracy: 77.3438, Loss: 0.7119
+Epoch [13/100], Iter [100/390] Training Accuracy: 72.6562, Loss: 0.8975
+Epoch [13/100], Iter [150/390] Training Accuracy: 80.4688, Loss: 0.6343
+Epoch [13/100], Iter [200/390] Training Accuracy: 75.7812, Loss: 0.7553
+Epoch [13/100], Iter [250/390] Training Accuracy: 69.5312, Loss: 0.9610
+Epoch [13/100], Iter [300/390] Training Accuracy: 74.2188, Loss: 0.8377
+Epoch [13/100], Iter [350/390] Training Accuracy: 79.6875, Loss: 0.6454
+train acc on train images is  77.34175191815856
+test acc on test images is  77.28
+epoch 13
+Epoch [14/100], Iter [50/390] Training Accuracy: 76.5625, Loss: 0.8500
+Epoch [14/100], Iter [100/390] Training Accuracy: 78.9062, Loss: 0.6902
+Epoch [14/100], Iter [150/390] Training Accuracy: 75.7812, Loss: 0.7697
+Epoch [14/100], Iter [200/390] Training Accuracy: 82.8125, Loss: 0.5969
+Epoch [14/100], Iter [250/390] Training Accuracy: 77.3438, Loss: 0.6400
+Epoch [14/100], Iter [300/390] Training Accuracy: 82.8125, Loss: 0.5421
+Epoch [14/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.5759
+train acc on train images is  77.69501278772378
+test acc on test images is  73.39
+epoch 14
+Epoch [15/100], Iter [50/390] Training Accuracy: 75.0000, Loss: 0.7535
+Epoch [15/100], Iter [100/390] Training Accuracy: 77.3438, Loss: 0.6401
+Epoch [15/100], Iter [150/390] Training Accuracy: 67.9688, Loss: 0.9501
+Epoch [15/100], Iter [200/390] Training Accuracy: 78.1250, Loss: 0.8135
+Epoch [15/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.5827
+Epoch [15/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.5738
+Epoch [15/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.6945
+train acc on train images is  78.2105179028133
+test acc on test images is  78.28
+epoch 15
+Epoch [16/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.7241
+Epoch [16/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.6197
+Epoch [16/100], Iter [150/390] Training Accuracy: 79.6875, Loss: 0.6287
+Epoch [16/100], Iter [200/390] Training Accuracy: 78.1250, Loss: 0.6710
+Epoch [16/100], Iter [250/390] Training Accuracy: 76.5625, Loss: 0.6532
+Epoch [16/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.6116
+Epoch [16/100], Iter [350/390] Training Accuracy: 81.2500, Loss: 0.5979
+train acc on train images is  78.73561381074168
+test acc on test images is  78.96
+epoch 16
+Epoch [17/100], Iter [50/390] Training Accuracy: 78.9062, Loss: 0.6289
+Epoch [17/100], Iter [100/390] Training Accuracy: 82.8125, Loss: 0.5149
+Epoch [17/100], Iter [150/390] Training Accuracy: 75.7812, Loss: 0.8163
+Epoch [17/100], Iter [200/390] Training Accuracy: 78.1250, Loss: 0.6918
+Epoch [17/100], Iter [250/390] Training Accuracy: 84.3750, Loss: 0.6016
+Epoch [17/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.6751
+Epoch [17/100], Iter [350/390] Training Accuracy: 82.0312, Loss: 0.5864
+train acc on train images is  78.93342391304348
+test acc on test images is  78.13
+epoch 17
+Epoch [18/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.7546
+Epoch [18/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.7716
+Epoch [18/100], Iter [150/390] Training Accuracy: 78.1250, Loss: 0.6868
+Epoch [18/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.5946
+Epoch [18/100], Iter [250/390] Training Accuracy: 84.3750, Loss: 0.5449
+Epoch [18/100], Iter [300/390] Training Accuracy: 82.8125, Loss: 0.5254
+Epoch [18/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.7191
+train acc on train images is  79.40377237851662
+test acc on test images is  78.15
+epoch 18
+Epoch [19/100], Iter [50/390] Training Accuracy: 80.4688, Loss: 0.7008
+Epoch [19/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.8401
+Epoch [19/100], Iter [150/390] Training Accuracy: 77.3438, Loss: 0.6785
+Epoch [19/100], Iter [200/390] Training Accuracy: 76.5625, Loss: 0.6930
+Epoch [19/100], Iter [250/390] Training Accuracy: 77.3438, Loss: 0.6498
+Epoch [19/100], Iter [300/390] Training Accuracy: 78.9062, Loss: 0.6608
+Epoch [19/100], Iter [350/390] Training Accuracy: 78.1250, Loss: 0.7701
+train acc on train images is  79.4045716112532
+test acc on test images is  76.03
+epoch 19
+Epoch [20/100], Iter [50/390] Training Accuracy: 81.2500, Loss: 0.5475
+Epoch [20/100], Iter [100/390] Training Accuracy: 81.2500, Loss: 0.5437
+Epoch [20/100], Iter [150/390] Training Accuracy: 83.5938, Loss: 0.6496
+Epoch [20/100], Iter [200/390] Training Accuracy: 79.6875, Loss: 0.7020
+Epoch [20/100], Iter [250/390] Training Accuracy: 79.6875, Loss: 0.5856
+Epoch [20/100], Iter [300/390] Training Accuracy: 83.5938, Loss: 0.7469
+Epoch [20/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.8437
+train acc on train images is  79.82456841432226
+test acc on test images is  81.49
+epoch 20
+Epoch [21/100], Iter [50/390] Training Accuracy: 71.0938, Loss: 0.9050
+Epoch [21/100], Iter [100/390] Training Accuracy: 75.7812, Loss: 0.7455
+Epoch [21/100], Iter [150/390] Training Accuracy: 78.9062, Loss: 0.7737
+Epoch [21/100], Iter [200/390] Training Accuracy: 76.5625, Loss: 0.7367
+Epoch [21/100], Iter [250/390] Training Accuracy: 75.7812, Loss: 0.7426
+Epoch [21/100], Iter [300/390] Training Accuracy: 78.1250, Loss: 0.6497
+Epoch [21/100], Iter [350/390] Training Accuracy: 75.7812, Loss: 0.8672
+train acc on train images is  79.846547314578
+test acc on test images is  78.73
+epoch 21
+Epoch [22/100], Iter [50/390] Training Accuracy: 81.2500, Loss: 0.5951
+Epoch [22/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.6605
+Epoch [22/100], Iter [150/390] Training Accuracy: 80.4688, Loss: 0.6020
+Epoch [22/100], Iter [200/390] Training Accuracy: 78.1250, Loss: 0.6805
+Epoch [22/100], Iter [250/390] Training Accuracy: 78.1250, Loss: 0.6853
+Epoch [22/100], Iter [300/390] Training Accuracy: 78.9062, Loss: 0.6975
+Epoch [22/100], Iter [350/390] Training Accuracy: 75.0000, Loss: 0.6715
+train acc on train images is  80.42998721227622
+test acc on test images is  81.91
+epoch 22
+Epoch [23/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.5908
+Epoch [23/100], Iter [100/390] Training Accuracy: 79.6875, Loss: 0.5834
+Epoch [23/100], Iter [150/390] Training Accuracy: 83.5938, Loss: 0.6084
+Epoch [23/100], Iter [200/390] Training Accuracy: 75.7812, Loss: 0.9064
+Epoch [23/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.6181
+Epoch [23/100], Iter [300/390] Training Accuracy: 74.2188, Loss: 0.8917
+Epoch [23/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.7401
+train acc on train images is  80.51790281329923
+test acc on test images is  77.38
+epoch 23
+Epoch [24/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.6201
+Epoch [24/100], Iter [100/390] Training Accuracy: 74.2188, Loss: 0.9030
+Epoch [24/100], Iter [150/390] Training Accuracy: 82.0312, Loss: 0.5249
+Epoch [24/100], Iter [200/390] Training Accuracy: 86.7188, Loss: 0.5180
+Epoch [24/100], Iter [250/390] Training Accuracy: 81.2500, Loss: 0.6318
+Epoch [24/100], Iter [300/390] Training Accuracy: 80.4688, Loss: 0.6908
+Epoch [24/100], Iter [350/390] Training Accuracy: 78.9062, Loss: 0.7097
+train acc on train images is  80.59502877237851
+test acc on test images is  81.17
+epoch 24
+Epoch [25/100], Iter [50/390] Training Accuracy: 76.5625, Loss: 0.6456
+Epoch [25/100], Iter [100/390] Training Accuracy: 85.9375, Loss: 0.4774
+Epoch [25/100], Iter [150/390] Training Accuracy: 77.3438, Loss: 0.6778
+Epoch [25/100], Iter [200/390] Training Accuracy: 75.7812, Loss: 0.8300
+Epoch [25/100], Iter [250/390] Training Accuracy: 78.1250, Loss: 0.6094
+Epoch [25/100], Iter [300/390] Training Accuracy: 84.3750, Loss: 0.5270
+Epoch [25/100], Iter [350/390] Training Accuracy: 75.0000, Loss: 0.7251
+train acc on train images is  80.75847186700767
+test acc on test images is  83.21
+epoch 25
+Epoch [26/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.6893
+Epoch [26/100], Iter [100/390] Training Accuracy: 85.9375, Loss: 0.4741
+Epoch [26/100], Iter [150/390] Training Accuracy: 82.8125, Loss: 0.5920
+Epoch [26/100], Iter [200/390] Training Accuracy: 83.5938, Loss: 0.6259
+Epoch [26/100], Iter [250/390] Training Accuracy: 78.9062, Loss: 0.7233
+Epoch [26/100], Iter [300/390] Training Accuracy: 76.5625, Loss: 0.7307
+Epoch [26/100], Iter [350/390] Training Accuracy: 81.2500, Loss: 0.6335
+train acc on train images is  80.81481777493606
+test acc on test images is  77.89
+epoch 26
+Epoch [27/100], Iter [50/390] Training Accuracy: 74.2188, Loss: 0.8290
+Epoch [27/100], Iter [100/390] Training Accuracy: 82.8125, Loss: 0.6076
+Epoch [27/100], Iter [150/390] Training Accuracy: 80.4688, Loss: 0.6927
+Epoch [27/100], Iter [200/390] Training Accuracy: 77.3438, Loss: 0.7294
+Epoch [27/100], Iter [250/390] Training Accuracy: 75.0000, Loss: 0.7015
+Epoch [27/100], Iter [300/390] Training Accuracy: 83.5938, Loss: 0.5324
+Epoch [27/100], Iter [350/390] Training Accuracy: 82.8125, Loss: 0.5596
+train acc on train images is  81.00663363171356
+test acc on test images is  79.87
+epoch 27
+Epoch [28/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.5872
+Epoch [28/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.6200
+Epoch [28/100], Iter [150/390] Training Accuracy: 84.3750, Loss: 0.4930
+Epoch [28/100], Iter [200/390] Training Accuracy: 82.8125, Loss: 0.5895
+Epoch [28/100], Iter [250/390] Training Accuracy: 82.0312, Loss: 0.5208
+Epoch [28/100], Iter [300/390] Training Accuracy: 82.8125, Loss: 0.5308
+Epoch [28/100], Iter [350/390] Training Accuracy: 71.8750, Loss: 0.8539
+train acc on train images is  81.12611892583121
+test acc on test images is  78.23
+epoch 28
+Epoch [29/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.5548
+Epoch [29/100], Iter [100/390] Training Accuracy: 71.8750, Loss: 0.8697
+Epoch [29/100], Iter [150/390] Training Accuracy: 82.0312, Loss: 0.5062
+Epoch [29/100], Iter [200/390] Training Accuracy: 82.8125, Loss: 0.5737
+Epoch [29/100], Iter [250/390] Training Accuracy: 82.8125, Loss: 0.6351
+Epoch [29/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.6735
+Epoch [29/100], Iter [350/390] Training Accuracy: 75.0000, Loss: 0.8078
+train acc on train images is  81.30754475703324
+test acc on test images is  82.15
+epoch 29
+Epoch [30/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.6092
+Epoch [30/100], Iter [100/390] Training Accuracy: 67.1875, Loss: 0.9157
+Epoch [30/100], Iter [150/390] Training Accuracy: 77.3438, Loss: 0.7450
+Epoch [30/100], Iter [200/390] Training Accuracy: 83.5938, Loss: 0.5826
+Epoch [30/100], Iter [250/390] Training Accuracy: 87.5000, Loss: 0.5939
+Epoch [30/100], Iter [300/390] Training Accuracy: 90.6250, Loss: 0.4649
+Epoch [30/100], Iter [350/390] Training Accuracy: 82.8125, Loss: 0.6406
+train acc on train images is  81.66160485933504
+test acc on test images is  82.1
+epoch 30
+Epoch [31/100], Iter [50/390] Training Accuracy: 78.1250, Loss: 0.7558
+Epoch [31/100], Iter [100/390] Training Accuracy: 86.7188, Loss: 0.5252
+Epoch [31/100], Iter [150/390] Training Accuracy: 74.2188, Loss: 0.6763
+Epoch [31/100], Iter [200/390] Training Accuracy: 77.3438, Loss: 0.6343
+Epoch [31/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.6208
+Epoch [31/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.7071
+Epoch [31/100], Iter [350/390] Training Accuracy: 85.9375, Loss: 0.5631
+train acc on train images is  81.18646099744245
+test acc on test images is  81.37
+epoch 31
+Epoch [32/100], Iter [50/390] Training Accuracy: 81.2500, Loss: 0.6459
+Epoch [32/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.5314
+Epoch [32/100], Iter [150/390] Training Accuracy: 84.3750, Loss: 0.5382
+Epoch [32/100], Iter [200/390] Training Accuracy: 86.7188, Loss: 0.4393
+Epoch [32/100], Iter [250/390] Training Accuracy: 85.9375, Loss: 0.5367
+Epoch [32/100], Iter [300/390] Training Accuracy: 85.1562, Loss: 0.4738
+Epoch [32/100], Iter [350/390] Training Accuracy: 81.2500, Loss: 0.6706
+train acc on train images is  81.41703964194373
+test acc on test images is  78.41
+epoch 32
+Epoch [33/100], Iter [50/390] Training Accuracy: 80.4688, Loss: 0.7073
+Epoch [33/100], Iter [100/390] Training Accuracy: 84.3750, Loss: 0.5700
+Epoch [33/100], Iter [150/390] Training Accuracy: 87.5000, Loss: 0.3944
+Epoch [33/100], Iter [200/390] Training Accuracy: 87.5000, Loss: 0.5032
+Epoch [33/100], Iter [250/390] Training Accuracy: 78.9062, Loss: 0.6280
+Epoch [33/100], Iter [300/390] Training Accuracy: 85.9375, Loss: 0.5678
+Epoch [33/100], Iter [350/390] Training Accuracy: 82.8125, Loss: 0.5585
+train acc on train images is  81.78908248081841
+test acc on test images is  77.77
+epoch 33
+Epoch [34/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.5638
+Epoch [34/100], Iter [100/390] Training Accuracy: 85.1562, Loss: 0.5676
+Epoch [34/100], Iter [150/390] Training Accuracy: 79.6875, Loss: 0.5936
+Epoch [34/100], Iter [200/390] Training Accuracy: 81.2500, Loss: 0.6126
+Epoch [34/100], Iter [250/390] Training Accuracy: 82.0312, Loss: 0.6209
+Epoch [34/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.6947
+Epoch [34/100], Iter [350/390] Training Accuracy: 85.9375, Loss: 0.4035
+train acc on train images is  81.70636189258312
+test acc on test images is  76.03
+epoch 34
+Epoch [35/100], Iter [50/390] Training Accuracy: 85.1562, Loss: 0.5500
+Epoch [35/100], Iter [100/390] Training Accuracy: 79.6875, Loss: 0.5401
+Epoch [35/100], Iter [150/390] Training Accuracy: 82.0312, Loss: 0.6238
+Epoch [35/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.5296
+Epoch [35/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.6656
+Epoch [35/100], Iter [300/390] Training Accuracy: 80.4688, Loss: 0.6466
+Epoch [35/100], Iter [350/390] Training Accuracy: 78.1250, Loss: 0.7413
+train acc on train images is  81.86181265984655
+test acc on test images is  83.07
+epoch 35
+Epoch [36/100], Iter [50/390] Training Accuracy: 85.9375, Loss: 0.6060
+Epoch [36/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.5953
+Epoch [36/100], Iter [150/390] Training Accuracy: 76.5625, Loss: 0.6064
+Epoch [36/100], Iter [200/390] Training Accuracy: 89.0625, Loss: 0.4203
+Epoch [36/100], Iter [250/390] Training Accuracy: 76.5625, Loss: 0.7368
+Epoch [36/100], Iter [300/390] Training Accuracy: 80.4688, Loss: 0.6344
+Epoch [36/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.6683
+train acc on train images is  81.88179347826087
+test acc on test images is  81.73
+epoch 36
+Epoch [37/100], Iter [50/390] Training Accuracy: 83.5938, Loss: 0.6129
+Epoch [37/100], Iter [100/390] Training Accuracy: 81.2500, Loss: 0.5649
+Epoch [37/100], Iter [150/390] Training Accuracy: 84.3750, Loss: 0.5837
+Epoch [37/100], Iter [200/390] Training Accuracy: 85.1562, Loss: 0.5854
+Epoch [37/100], Iter [250/390] Training Accuracy: 82.8125, Loss: 0.5099
+Epoch [37/100], Iter [300/390] Training Accuracy: 84.3750, Loss: 0.5048
+Epoch [37/100], Iter [350/390] Training Accuracy: 84.3750, Loss: 0.4954
+train acc on train images is  81.7483216112532
+test acc on test images is  83.55
+epoch 37
+Epoch [38/100], Iter [50/390] Training Accuracy: 81.2500, Loss: 0.5794
+Epoch [38/100], Iter [100/390] Training Accuracy: 82.0312, Loss: 0.6257
+Epoch [38/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.5896
+Epoch [38/100], Iter [200/390] Training Accuracy: 85.9375, Loss: 0.5915
+Epoch [38/100], Iter [250/390] Training Accuracy: 77.3438, Loss: 0.6382
+Epoch [38/100], Iter [300/390] Training Accuracy: 82.8125, Loss: 0.5556
+Epoch [38/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.8095
+train acc on train images is  81.88179347826087
+test acc on test images is  81.47
+epoch 38
+Epoch [39/100], Iter [50/390] Training Accuracy: 87.5000, Loss: 0.4790
+Epoch [39/100], Iter [100/390] Training Accuracy: 86.7188, Loss: 0.4099
+Epoch [39/100], Iter [150/390] Training Accuracy: 85.9375, Loss: 0.4321
+Epoch [39/100], Iter [200/390] Training Accuracy: 82.0312, Loss: 0.6458
+Epoch [39/100], Iter [250/390] Training Accuracy: 86.7188, Loss: 0.5120
+Epoch [39/100], Iter [300/390] Training Accuracy: 78.1250, Loss: 0.7639
+Epoch [39/100], Iter [350/390] Training Accuracy: 82.8125, Loss: 0.5757
+train acc on train images is  82.08799552429667
+test acc on test images is  84.76
+epoch 39
+Epoch [40/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.5794
+Epoch [40/100], Iter [100/390] Training Accuracy: 81.2500, Loss: 0.6276
+Epoch [40/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.6496
+Epoch [40/100], Iter [200/390] Training Accuracy: 78.9062, Loss: 0.6207
+Epoch [40/100], Iter [250/390] Training Accuracy: 78.9062, Loss: 0.7018
+Epoch [40/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.5842
+Epoch [40/100], Iter [350/390] Training Accuracy: 76.5625, Loss: 0.7385
+train acc on train images is  82.03764386189258
+test acc on test images is  79.93
+epoch 40
+Epoch [41/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.5399
+Epoch [41/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.7965
+Epoch [41/100], Iter [150/390] Training Accuracy: 78.1250, Loss: 0.6963
+Epoch [41/100], Iter [200/390] Training Accuracy: 82.8125, Loss: 0.5840
+Epoch [41/100], Iter [250/390] Training Accuracy: 81.2500, Loss: 0.6538
+Epoch [41/100], Iter [300/390] Training Accuracy: 80.4688, Loss: 0.6953
+Epoch [41/100], Iter [350/390] Training Accuracy: 82.0312, Loss: 0.5511
+train acc on train images is  82.05083120204604
+test acc on test images is  78.74
+epoch 41
+Epoch [42/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.5560
+Epoch [42/100], Iter [100/390] Training Accuracy: 80.4688, Loss: 0.5836
+Epoch [42/100], Iter [150/390] Training Accuracy: 86.7188, Loss: 0.5664
+Epoch [42/100], Iter [200/390] Training Accuracy: 82.0312, Loss: 0.6219
+Epoch [42/100], Iter [250/390] Training Accuracy: 85.9375, Loss: 0.5380
+Epoch [42/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.6922
+Epoch [42/100], Iter [350/390] Training Accuracy: 88.2812, Loss: 0.4511
+train acc on train images is  82.08559782608695
+test acc on test images is  83.06
+epoch 42
+Epoch [43/100], Iter [50/390] Training Accuracy: 77.3438, Loss: 0.6021
+Epoch [43/100], Iter [100/390] Training Accuracy: 85.1562, Loss: 0.5238
+Epoch [43/100], Iter [150/390] Training Accuracy: 82.8125, Loss: 0.6333
+Epoch [43/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.5727
+Epoch [43/100], Iter [250/390] Training Accuracy: 85.1562, Loss: 0.4539
+Epoch [43/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.6906
+Epoch [43/100], Iter [350/390] Training Accuracy: 74.2188, Loss: 0.6981
+train acc on train images is  82.1463395140665
+test acc on test images is  82.96
+epoch 43
+Epoch [44/100], Iter [50/390] Training Accuracy: 78.9062, Loss: 0.6719
+Epoch [44/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.6756
+Epoch [44/100], Iter [150/390] Training Accuracy: 80.4688, Loss: 0.5849
+Epoch [44/100], Iter [200/390] Training Accuracy: 79.6875, Loss: 0.7368
+Epoch [44/100], Iter [250/390] Training Accuracy: 79.6875, Loss: 0.6611
+Epoch [44/100], Iter [300/390] Training Accuracy: 86.7188, Loss: 0.4990
+Epoch [44/100], Iter [350/390] Training Accuracy: 85.9375, Loss: 0.4784
+train acc on train images is  82.09199168797954
+test acc on test images is  85.15
+epoch 44
+Epoch [45/100], Iter [50/390] Training Accuracy: 87.5000, Loss: 0.4707
+Epoch [45/100], Iter [100/390] Training Accuracy: 84.3750, Loss: 0.5152
+Epoch [45/100], Iter [150/390] Training Accuracy: 83.5938, Loss: 0.5126
+Epoch [45/100], Iter [200/390] Training Accuracy: 81.2500, Loss: 0.5960
+Epoch [45/100], Iter [250/390] Training Accuracy: 82.8125, Loss: 0.6887
+Epoch [45/100], Iter [300/390] Training Accuracy: 80.4688, Loss: 0.6866
+Epoch [45/100], Iter [350/390] Training Accuracy: 83.5938, Loss: 0.5288
+train acc on train images is  82.15872762148338
+test acc on test images is  82.83
+epoch 45
+Epoch [46/100], Iter [50/390] Training Accuracy: 82.8125, Loss: 0.5791
+Epoch [46/100], Iter [100/390] Training Accuracy: 84.3750, Loss: 0.5207
+Epoch [46/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.6193
+Epoch [46/100], Iter [200/390] Training Accuracy: 81.2500, Loss: 0.6302
+Epoch [46/100], Iter [250/390] Training Accuracy: 84.3750, Loss: 0.5730
+Epoch [46/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.5305
+Epoch [46/100], Iter [350/390] Training Accuracy: 86.7188, Loss: 0.4462
+train acc on train images is  82.40409207161126
+test acc on test images is  81.81
+epoch 46
+Epoch [47/100], Iter [50/390] Training Accuracy: 83.5938, Loss: 0.5380
+Epoch [47/100], Iter [100/390] Training Accuracy: 82.8125, Loss: 0.5621
+Epoch [47/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.6202
+Epoch [47/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.5114
+Epoch [47/100], Iter [250/390] Training Accuracy: 86.7188, Loss: 0.4384
+Epoch [47/100], Iter [300/390] Training Accuracy: 83.5938, Loss: 0.5688
+Epoch [47/100], Iter [350/390] Training Accuracy: 74.2188, Loss: 0.8099
+train acc on train images is  82.2522378516624
+test acc on test images is  83.01
+epoch 47
+Epoch [48/100], Iter [50/390] Training Accuracy: 83.5938, Loss: 0.5558
+Epoch [48/100], Iter [100/390] Training Accuracy: 89.0625, Loss: 0.3830
+Epoch [48/100], Iter [150/390] Training Accuracy: 81.2500, Loss: 0.5563
+Epoch [48/100], Iter [200/390] Training Accuracy: 79.6875, Loss: 0.6429
+Epoch [48/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.5671
+Epoch [48/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.6384
+Epoch [48/100], Iter [350/390] Training Accuracy: 81.2500, Loss: 0.6908
+train acc on train images is  82.59390984654732
+test acc on test images is  82.86
+epoch 48
+Epoch [49/100], Iter [50/390] Training Accuracy: 81.2500, Loss: 0.5592
+Epoch [49/100], Iter [100/390] Training Accuracy: 86.7188, Loss: 0.3858
+Epoch [49/100], Iter [150/390] Training Accuracy: 85.9375, Loss: 0.4761
+Epoch [49/100], Iter [200/390] Training Accuracy: 79.6875, Loss: 0.6993
+Epoch [49/100], Iter [250/390] Training Accuracy: 76.5625, Loss: 0.7009
+Epoch [49/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.5911
+Epoch [49/100], Iter [350/390] Training Accuracy: 89.0625, Loss: 0.3928
+train acc on train images is  82.31577685421995
+test acc on test images is  81.83
+epoch 49
+Epoch [50/100], Iter [50/390] Training Accuracy: 84.3750, Loss: 0.5211
+Epoch [50/100], Iter [100/390] Training Accuracy: 85.1562, Loss: 0.4307
+Epoch [50/100], Iter [150/390] Training Accuracy: 89.8438, Loss: 0.4439
+Epoch [50/100], Iter [200/390] Training Accuracy: 75.0000, Loss: 0.8182
+Epoch [50/100], Iter [250/390] Training Accuracy: 85.9375, Loss: 0.5664
+Epoch [50/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.5884
+Epoch [50/100], Iter [350/390] Training Accuracy: 85.1562, Loss: 0.4400
+train acc on train images is  82.30418797953965
+test acc on test images is  81.26
+epoch 50
+Epoch [51/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.5649
+Epoch [51/100], Iter [100/390] Training Accuracy: 86.7188, Loss: 0.4388
+Epoch [51/100], Iter [150/390] Training Accuracy: 88.2812, Loss: 0.4776
+Epoch [51/100], Iter [200/390] Training Accuracy: 82.0312, Loss: 0.6578
+Epoch [51/100], Iter [250/390] Training Accuracy: 79.6875, Loss: 0.6543
+Epoch [51/100], Iter [300/390] Training Accuracy: 85.1562, Loss: 0.4995
+Epoch [51/100], Iter [350/390] Training Accuracy: 86.7188, Loss: 0.4822
+train acc on train images is  82.80770460358056
+test acc on test images is  79.62
+epoch 51
+Epoch [52/100], Iter [50/390] Training Accuracy: 78.9062, Loss: 0.5940
+Epoch [52/100], Iter [100/390] Training Accuracy: 72.6562, Loss: 0.8687
+Epoch [52/100], Iter [150/390] Training Accuracy: 84.3750, Loss: 0.7006
+Epoch [52/100], Iter [200/390] Training Accuracy: 82.0312, Loss: 0.6651
+Epoch [52/100], Iter [250/390] Training Accuracy: 84.3750, Loss: 0.5262
+Epoch [52/100], Iter [300/390] Training Accuracy: 78.9062, Loss: 0.6794
+Epoch [52/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.6575
+train acc on train images is  82.41088554987212
+test acc on test images is  83.93
+epoch 52
+Epoch [53/100], Iter [50/390] Training Accuracy: 77.3438, Loss: 0.6793
+Epoch [53/100], Iter [100/390] Training Accuracy: 79.6875, Loss: 0.6284
+Epoch [53/100], Iter [150/390] Training Accuracy: 79.6875, Loss: 0.5694
+Epoch [53/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.4735
+Epoch [53/100], Iter [250/390] Training Accuracy: 82.0312, Loss: 0.6189
+Epoch [53/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.6551
+Epoch [53/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.6483
+train acc on train images is  82.53276854219949
+test acc on test images is  81.12
+epoch 53
+Epoch [54/100], Iter [50/390] Training Accuracy: 85.1562, Loss: 0.4864
+Epoch [54/100], Iter [100/390] Training Accuracy: 84.3750, Loss: 0.5093
+Epoch [54/100], Iter [150/390] Training Accuracy: 84.3750, Loss: 0.5004
+Epoch [54/100], Iter [200/390] Training Accuracy: 81.2500, Loss: 0.6763
+Epoch [54/100], Iter [250/390] Training Accuracy: 85.1562, Loss: 0.5438
+Epoch [54/100], Iter [300/390] Training Accuracy: 85.1562, Loss: 0.5216
+Epoch [54/100], Iter [350/390] Training Accuracy: 86.7188, Loss: 0.4374
+train acc on train images is  82.51598465473145
+test acc on test images is  83.56
+epoch 54
+Epoch [55/100], Iter [50/390] Training Accuracy: 82.0312, Loss: 0.6157
+Epoch [55/100], Iter [100/390] Training Accuracy: 86.7188, Loss: 0.4961
+Epoch [55/100], Iter [150/390] Training Accuracy: 77.3438, Loss: 0.6646
+Epoch [55/100], Iter [200/390] Training Accuracy: 83.5938, Loss: 0.6062
+Epoch [55/100], Iter [250/390] Training Accuracy: 80.4688, Loss: 0.6042
+Epoch [55/100], Iter [300/390] Training Accuracy: 83.5938, Loss: 0.6170
+Epoch [55/100], Iter [350/390] Training Accuracy: 79.6875, Loss: 0.6639
+train acc on train images is  82.84926470588235
+test acc on test images is  82.71
+epoch 55
+Epoch [56/100], Iter [50/390] Training Accuracy: 79.6875, Loss: 0.6954
+Epoch [56/100], Iter [100/390] Training Accuracy: 85.1562, Loss: 0.5176
+Epoch [56/100], Iter [150/390] Training Accuracy: 85.1562, Loss: 0.4832
+Epoch [56/100], Iter [200/390] Training Accuracy: 88.2812, Loss: 0.3947
+Epoch [56/100], Iter [250/390] Training Accuracy: 81.2500, Loss: 0.5544
+Epoch [56/100], Iter [300/390] Training Accuracy: 85.9375, Loss: 0.5481
+Epoch [56/100], Iter [350/390] Training Accuracy: 77.3438, Loss: 0.7332
+train acc on train images is  82.64985613810742
+test acc on test images is  82.22
+epoch 56
+Epoch [57/100], Iter [50/390] Training Accuracy: 87.5000, Loss: 0.4644
+Epoch [57/100], Iter [100/390] Training Accuracy: 78.1250, Loss: 0.7232
+Epoch [57/100], Iter [150/390] Training Accuracy: 78.9062, Loss: 0.6173
+Epoch [57/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.4610
+Epoch [57/100], Iter [250/390] Training Accuracy: 81.2500, Loss: 0.5706
+Epoch [57/100], Iter [300/390] Training Accuracy: 86.7188, Loss: 0.4406
+Epoch [57/100], Iter [350/390] Training Accuracy: 80.4688, Loss: 0.6508
+train acc on train images is  82.58751598465473
+test acc on test images is  81.16
+epoch 57
+Epoch [58/100], Iter [50/390] Training Accuracy: 85.1562, Loss: 0.5676
+Epoch [58/100], Iter [100/390] Training Accuracy: 85.9375, Loss: 0.5782
+Epoch [58/100], Iter [150/390] Training Accuracy: 83.5938, Loss: 0.4851
+Epoch [58/100], Iter [200/390] Training Accuracy: 82.8125, Loss: 0.6583
+Epoch [58/100], Iter [250/390] Training Accuracy: 75.7812, Loss: 0.6491
+Epoch [58/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.5822
+Epoch [58/100], Iter [350/390] Training Accuracy: 84.3750, Loss: 0.5571
+train acc on train images is  82.49800191815856
+test acc on test images is  78.99
+epoch 58
+Epoch [59/100], Iter [50/390] Training Accuracy: 85.9375, Loss: 0.4605
+Epoch [59/100], Iter [100/390] Training Accuracy: 85.9375, Loss: 0.4258
+Epoch [59/100], Iter [150/390] Training Accuracy: 78.1250, Loss: 0.6829
+Epoch [59/100], Iter [200/390] Training Accuracy: 82.0312, Loss: 0.5321
+Epoch [59/100], Iter [250/390] Training Accuracy: 79.6875, Loss: 0.5890
+Epoch [59/100], Iter [300/390] Training Accuracy: 81.2500, Loss: 0.6222
+Epoch [59/100], Iter [350/390] Training Accuracy: 87.5000, Loss: 0.4581
+train acc on train images is  82.55634590792839
+test acc on test images is  82.26
+epoch 59
+Epoch [60/100], Iter [50/390] Training Accuracy: 76.5625, Loss: 0.5612
+Epoch [60/100], Iter [100/390] Training Accuracy: 83.5938, Loss: 0.5022
+Epoch [60/100], Iter [150/390] Training Accuracy: 85.9375, Loss: 0.5893
+Epoch [60/100], Iter [200/390] Training Accuracy: 84.3750, Loss: 0.5238
+Epoch [60/100], Iter [250/390] Training Accuracy: 82.0312, Loss: 0.6536
+Epoch [60/100], Iter [300/390] Training Accuracy: 79.6875, Loss: 0.5876
+Epoch [60/100], Iter [350/390] Training Accuracy: 82.8125, Loss: 0.6099
+train acc on train images is  82.67862851662404
+test acc on test images is  82.84
+epoch 60
+Epoch [61/100], Iter [50/390] Training Accuracy: 88.2812, Loss: 0.5058
+Epoch [61/100], Iter [100/390] Training Accuracy: 88.2812, Loss: 0.4378
+Epoch [61/100], Iter [150/390] Training Accuracy: 85.9375, Loss: 0.5525
+Epoch [61/100], Iter [200/390] Training Accuracy: 89.8438, Loss: 0.4003
+Epoch [61/100], Iter [250/390] Training Accuracy: 89.8438, Loss: 0.3449
+Epoch [61/100], Iter [300/390] Training Accuracy: 85.1562, Loss: 0.4306
+Epoch [61/100], Iter [350/390] Training Accuracy: 88.2812, Loss: 0.3464
+train acc on train images is  87.58911445012788
+test acc on test images is  91.16
+epoch 61
+Epoch [62/100], Iter [50/390] Training Accuracy: 90.6250, Loss: 0.4035
+Epoch [62/100], Iter [100/390] Training Accuracy: 88.2812, Loss: 0.4406
+Epoch [62/100], Iter [150/390] Training Accuracy: 86.7188, Loss: 0.4347
+Epoch [62/100], Iter [200/390] Training Accuracy: 91.4062, Loss: 0.3054
+Epoch [62/100], Iter [250/390] Training Accuracy: 91.4062, Loss: 0.3136
+Epoch [62/100], Iter [300/390] Training Accuracy: 89.8438, Loss: 0.4416
+Epoch [62/100], Iter [350/390] Training Accuracy: 88.2812, Loss: 0.3983
+train acc on train images is  89.13483056265984
+test acc on test images is  91.55
+epoch 62
+Epoch [63/100], Iter [50/390] Training Accuracy: 89.8438, Loss: 0.3056
+Epoch [63/100], Iter [100/390] Training Accuracy: 85.9375, Loss: 0.5036
+Epoch [63/100], Iter [150/390] Training Accuracy: 89.0625, Loss: 0.4128
+Epoch [63/100], Iter [200/390] Training Accuracy: 85.9375, Loss: 0.4546
+Epoch [63/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.3347
+Epoch [63/100], Iter [300/390] Training Accuracy: 89.8438, Loss: 0.3897
+Epoch [63/100], Iter [350/390] Training Accuracy: 85.9375, Loss: 0.4943
+train acc on train images is  89.65433184143222
+test acc on test images is  91.58
+epoch 63
+Epoch [64/100], Iter [50/390] Training Accuracy: 90.6250, Loss: 0.3934
+Epoch [64/100], Iter [100/390] Training Accuracy: 89.8438, Loss: 0.3634
+Epoch [64/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.2683
+Epoch [64/100], Iter [200/390] Training Accuracy: 91.4062, Loss: 0.3512
+Epoch [64/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.2762
+Epoch [64/100], Iter [300/390] Training Accuracy: 89.0625, Loss: 0.4109
+Epoch [64/100], Iter [350/390] Training Accuracy: 88.2812, Loss: 0.3732
+train acc on train images is  90.23777173913044
+test acc on test images is  91.58
+epoch 64
+Epoch [65/100], Iter [50/390] Training Accuracy: 90.6250, Loss: 0.3613
+Epoch [65/100], Iter [100/390] Training Accuracy: 91.4062, Loss: 0.3368
+Epoch [65/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.2481
+Epoch [65/100], Iter [200/390] Training Accuracy: 88.2812, Loss: 0.3793
+Epoch [65/100], Iter [250/390] Training Accuracy: 89.0625, Loss: 0.3593
+Epoch [65/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.2363
+Epoch [65/100], Iter [350/390] Training Accuracy: 85.9375, Loss: 0.4634
+train acc on train images is  90.73809143222506
+test acc on test images is  91.24
+epoch 65
+Epoch [66/100], Iter [50/390] Training Accuracy: 89.0625, Loss: 0.3997
+Epoch [66/100], Iter [100/390] Training Accuracy: 89.8438, Loss: 0.2696
+Epoch [66/100], Iter [150/390] Training Accuracy: 91.4062, Loss: 0.2561
+Epoch [66/100], Iter [200/390] Training Accuracy: 92.9688, Loss: 0.2582
+Epoch [66/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.3014
+Epoch [66/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.3051
+Epoch [66/100], Iter [350/390] Training Accuracy: 89.0625, Loss: 0.4018
+train acc on train images is  90.95428388746804
+test acc on test images is  91.43
+epoch 66
+Epoch [67/100], Iter [50/390] Training Accuracy: 92.1875, Loss: 0.2968
+Epoch [67/100], Iter [100/390] Training Accuracy: 89.0625, Loss: 0.3313
+Epoch [67/100], Iter [150/390] Training Accuracy: 92.9688, Loss: 0.2441
+Epoch [67/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.3307
+Epoch [67/100], Iter [250/390] Training Accuracy: 92.9688, Loss: 0.2657
+Epoch [67/100], Iter [300/390] Training Accuracy: 82.0312, Loss: 0.6123
+Epoch [67/100], Iter [350/390] Training Accuracy: 93.7500, Loss: 0.2693
+train acc on train images is  91.54012148337596
+test acc on test images is  90.88
+epoch 67
+Epoch [68/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.2050
+Epoch [68/100], Iter [100/390] Training Accuracy: 92.9688, Loss: 0.2352
+Epoch [68/100], Iter [150/390] Training Accuracy: 92.1875, Loss: 0.2404
+Epoch [68/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.1727
+Epoch [68/100], Iter [250/390] Training Accuracy: 91.4062, Loss: 0.3352
+Epoch [68/100], Iter [300/390] Training Accuracy: 94.5312, Loss: 0.2008
+Epoch [68/100], Iter [350/390] Training Accuracy: 92.9688, Loss: 0.2448
+train acc on train images is  91.81106138107417
+test acc on test images is  90.18
+epoch 68
+Epoch [69/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.2253
+Epoch [69/100], Iter [100/390] Training Accuracy: 96.0938, Loss: 0.1511
+Epoch [69/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.2837
+Epoch [69/100], Iter [200/390] Training Accuracy: 94.5312, Loss: 0.1683
+Epoch [69/100], Iter [250/390] Training Accuracy: 92.9688, Loss: 0.2651
+Epoch [69/100], Iter [300/390] Training Accuracy: 92.1875, Loss: 0.2160
+Epoch [69/100], Iter [350/390] Training Accuracy: 93.7500, Loss: 0.2464
+train acc on train images is  92.09159207161126
+test acc on test images is  90.29
+epoch 69
+Epoch [70/100], Iter [50/390] Training Accuracy: 91.4062, Loss: 0.2724
+Epoch [70/100], Iter [100/390] Training Accuracy: 93.7500, Loss: 0.1820
+Epoch [70/100], Iter [150/390] Training Accuracy: 94.5312, Loss: 0.2338
+Epoch [70/100], Iter [200/390] Training Accuracy: 94.5312, Loss: 0.2748
+Epoch [70/100], Iter [250/390] Training Accuracy: 90.6250, Loss: 0.3596
+Epoch [70/100], Iter [300/390] Training Accuracy: 90.6250, Loss: 0.3207
+Epoch [70/100], Iter [350/390] Training Accuracy: 86.7188, Loss: 0.3918
+train acc on train images is  92.45364450127877
+test acc on test images is  89.81
+epoch 70
+Epoch [71/100], Iter [50/390] Training Accuracy: 92.1875, Loss: 0.3158
+Epoch [71/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1465
+Epoch [71/100], Iter [150/390] Training Accuracy: 95.3125, Loss: 0.1795
+Epoch [71/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.2597
+Epoch [71/100], Iter [250/390] Training Accuracy: 88.2812, Loss: 0.2906
+Epoch [71/100], Iter [300/390] Training Accuracy: 86.7188, Loss: 0.3884
+Epoch [71/100], Iter [350/390] Training Accuracy: 88.2812, Loss: 0.2581
+train acc on train images is  92.58351982097187
+test acc on test images is  89.96
+epoch 71
+Epoch [72/100], Iter [50/390] Training Accuracy: 89.0625, Loss: 0.3720
+Epoch [72/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.2081
+Epoch [72/100], Iter [150/390] Training Accuracy: 91.4062, Loss: 0.3596
+Epoch [72/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1738
+Epoch [72/100], Iter [250/390] Training Accuracy: 94.5312, Loss: 0.2240
+Epoch [72/100], Iter [300/390] Training Accuracy: 91.4062, Loss: 0.2804
+Epoch [72/100], Iter [350/390] Training Accuracy: 94.5312, Loss: 0.1855
+train acc on train images is  92.88403132992327
+test acc on test images is  89.94
+epoch 72
+Epoch [73/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1927
+Epoch [73/100], Iter [100/390] Training Accuracy: 93.7500, Loss: 0.2795
+Epoch [73/100], Iter [150/390] Training Accuracy: 92.1875, Loss: 0.2505
+Epoch [73/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.2070
+Epoch [73/100], Iter [250/390] Training Accuracy: 91.4062, Loss: 0.2430
+Epoch [73/100], Iter [300/390] Training Accuracy: 92.1875, Loss: 0.2478
+Epoch [73/100], Iter [350/390] Training Accuracy: 90.6250, Loss: 0.2559
+train acc on train images is  93.042679028133
+test acc on test images is  88.89
+epoch 73
+Epoch [74/100], Iter [50/390] Training Accuracy: 90.6250, Loss: 0.3544
+Epoch [74/100], Iter [100/390] Training Accuracy: 92.1875, Loss: 0.2666
+Epoch [74/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1297
+Epoch [74/100], Iter [200/390] Training Accuracy: 92.1875, Loss: 0.2634
+Epoch [74/100], Iter [250/390] Training Accuracy: 96.0938, Loss: 0.1579
+Epoch [74/100], Iter [300/390] Training Accuracy: 94.5312, Loss: 0.2194
+Epoch [74/100], Iter [350/390] Training Accuracy: 92.1875, Loss: 0.2343
+train acc on train images is  93.13778772378517
+test acc on test images is  89.43
+epoch 74
+Epoch [75/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1744
+Epoch [75/100], Iter [100/390] Training Accuracy: 96.0938, Loss: 0.1667
+Epoch [75/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1910
+Epoch [75/100], Iter [200/390] Training Accuracy: 89.8438, Loss: 0.3183
+Epoch [75/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.2278
+Epoch [75/100], Iter [300/390] Training Accuracy: 97.6562, Loss: 0.1152
+Epoch [75/100], Iter [350/390] Training Accuracy: 93.7500, Loss: 0.2075
+train acc on train images is  93.34998401534527
+test acc on test images is  88.28
+epoch 75
+Epoch [76/100], Iter [50/390] Training Accuracy: 96.8750, Loss: 0.1378
+Epoch [76/100], Iter [100/390] Training Accuracy: 96.8750, Loss: 0.0917
+Epoch [76/100], Iter [150/390] Training Accuracy: 87.5000, Loss: 0.3522
+Epoch [76/100], Iter [200/390] Training Accuracy: 92.9688, Loss: 0.2533
+Epoch [76/100], Iter [250/390] Training Accuracy: 88.2812, Loss: 0.3564
+Epoch [76/100], Iter [300/390] Training Accuracy: 92.1875, Loss: 0.2230
+Epoch [76/100], Iter [350/390] Training Accuracy: 89.0625, Loss: 0.3761
+train acc on train images is  93.20092710997443
+test acc on test images is  89.14
+epoch 76
+Epoch [77/100], Iter [50/390] Training Accuracy: 90.6250, Loss: 0.3012
+Epoch [77/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1778
+Epoch [77/100], Iter [150/390] Training Accuracy: 95.3125, Loss: 0.2134
+Epoch [77/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1755
+Epoch [77/100], Iter [250/390] Training Accuracy: 96.0938, Loss: 0.1652
+Epoch [77/100], Iter [300/390] Training Accuracy: 93.7500, Loss: 0.1789
+Epoch [77/100], Iter [350/390] Training Accuracy: 90.6250, Loss: 0.2726
+train acc on train images is  93.40273337595907
+test acc on test images is  89.03
+epoch 77
+Epoch [78/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1871
+Epoch [78/100], Iter [100/390] Training Accuracy: 93.7500, Loss: 0.1816
+Epoch [78/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1310
+Epoch [78/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.2336
+Epoch [78/100], Iter [250/390] Training Accuracy: 89.8438, Loss: 0.3284
+Epoch [78/100], Iter [300/390] Training Accuracy: 90.6250, Loss: 0.3128
+Epoch [78/100], Iter [350/390] Training Accuracy: 92.1875, Loss: 0.2429
+train acc on train images is  93.64170396419438
+test acc on test images is  88.17
+epoch 78
+Epoch [79/100], Iter [50/390] Training Accuracy: 88.2812, Loss: 0.2859
+Epoch [79/100], Iter [100/390] Training Accuracy: 93.7500, Loss: 0.1606
+Epoch [79/100], Iter [150/390] Training Accuracy: 94.5312, Loss: 0.1784
+Epoch [79/100], Iter [200/390] Training Accuracy: 89.8438, Loss: 0.3513
+Epoch [79/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.1601
+Epoch [79/100], Iter [300/390] Training Accuracy: 93.7500, Loss: 0.2394
+Epoch [79/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.1907
+train acc on train images is  93.58256074168798
+test acc on test images is  88.13
+epoch 79
+Epoch [80/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1475
+Epoch [80/100], Iter [100/390] Training Accuracy: 94.5312, Loss: 0.1972
+Epoch [80/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1953
+Epoch [80/100], Iter [200/390] Training Accuracy: 92.9688, Loss: 0.2763
+Epoch [80/100], Iter [250/390] Training Accuracy: 92.9688, Loss: 0.2349
+Epoch [80/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.3023
+Epoch [80/100], Iter [350/390] Training Accuracy: 96.0938, Loss: 0.1799
+train acc on train images is  93.55019181585678
+test acc on test images is  89.38
+epoch 80
+Epoch [81/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.1317
+Epoch [81/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1903
+Epoch [81/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1961
+Epoch [81/100], Iter [200/390] Training Accuracy: 92.1875, Loss: 0.2342
+Epoch [81/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.2158
+Epoch [81/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.2590
+Epoch [81/100], Iter [350/390] Training Accuracy: 89.8438, Loss: 0.2931
+train acc on train images is  93.92303388746804
+test acc on test images is  89.08
+epoch 81
+Epoch [82/100], Iter [50/390] Training Accuracy: 96.8750, Loss: 0.1095
+Epoch [82/100], Iter [100/390] Training Accuracy: 94.5312, Loss: 0.2301
+Epoch [82/100], Iter [150/390] Training Accuracy: 88.2812, Loss: 0.3784
+Epoch [82/100], Iter [200/390] Training Accuracy: 92.9688, Loss: 0.1746
+Epoch [82/100], Iter [250/390] Training Accuracy: 91.4062, Loss: 0.2511
+Epoch [82/100], Iter [300/390] Training Accuracy: 88.2812, Loss: 0.3099
+Epoch [82/100], Iter [350/390] Training Accuracy: 96.8750, Loss: 0.1251
+train acc on train images is  93.89785805626599
+test acc on test images is  88.28
+epoch 82
+Epoch [83/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.1678
+Epoch [83/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1663
+Epoch [83/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1796
+Epoch [83/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1359
+Epoch [83/100], Iter [250/390] Training Accuracy: 95.3125, Loss: 0.1841
+Epoch [83/100], Iter [300/390] Training Accuracy: 89.0625, Loss: 0.2901
+Epoch [83/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.1785
+train acc on train images is  94.03732416879795
+test acc on test images is  87.92
+epoch 83
+Epoch [84/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1394
+Epoch [84/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1625
+Epoch [84/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1486
+Epoch [84/100], Iter [200/390] Training Accuracy: 92.9688, Loss: 0.2228
+Epoch [84/100], Iter [250/390] Training Accuracy: 95.3125, Loss: 0.1439
+Epoch [84/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.2090
+Epoch [84/100], Iter [350/390] Training Accuracy: 96.0938, Loss: 0.1429
+train acc on train images is  94.0005594629156
+test acc on test images is  88.15
+epoch 84
+Epoch [85/100], Iter [50/390] Training Accuracy: 92.9688, Loss: 0.1966
+Epoch [85/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1576
+Epoch [85/100], Iter [150/390] Training Accuracy: 89.8438, Loss: 0.2586
+Epoch [85/100], Iter [200/390] Training Accuracy: 91.4062, Loss: 0.2610
+Epoch [85/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.2185
+Epoch [85/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.2190
+Epoch [85/100], Iter [350/390] Training Accuracy: 93.7500, Loss: 0.2323
+train acc on train images is  94.0329283887468
+test acc on test images is  87.89
+epoch 85
+Epoch [86/100], Iter [50/390] Training Accuracy: 96.8750, Loss: 0.1186
+Epoch [86/100], Iter [100/390] Training Accuracy: 96.0938, Loss: 0.1709
+Epoch [86/100], Iter [150/390] Training Accuracy: 91.4062, Loss: 0.2515
+Epoch [86/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1391
+Epoch [86/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.2652
+Epoch [86/100], Iter [300/390] Training Accuracy: 96.0938, Loss: 0.1045
+Epoch [86/100], Iter [350/390] Training Accuracy: 96.0938, Loss: 0.1099
+train acc on train images is  94.20316496163683
+test acc on test images is  87.33
+epoch 86
+Epoch [87/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.2379
+Epoch [87/100], Iter [100/390] Training Accuracy: 94.5312, Loss: 0.2069
+Epoch [87/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1939
+Epoch [87/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.2149
+Epoch [87/100], Iter [250/390] Training Accuracy: 95.3125, Loss: 0.1692
+Epoch [87/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.1815
+Epoch [87/100], Iter [350/390] Training Accuracy: 94.5312, Loss: 0.2318
+train acc on train images is  94.29747442455243
+test acc on test images is  88.69
+epoch 87
+Epoch [88/100], Iter [50/390] Training Accuracy: 92.9688, Loss: 0.2163
+Epoch [88/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1876
+Epoch [88/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1907
+Epoch [88/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.2407
+Epoch [88/100], Iter [250/390] Training Accuracy: 96.0938, Loss: 0.1798
+Epoch [88/100], Iter [300/390] Training Accuracy: 90.6250, Loss: 0.2248
+Epoch [88/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.1438
+train acc on train images is  94.34662723785166
+test acc on test images is  88.59
+epoch 88
+Epoch [89/100], Iter [50/390] Training Accuracy: 97.6562, Loss: 0.0824
+Epoch [89/100], Iter [100/390] Training Accuracy: 96.8750, Loss: 0.1092
+Epoch [89/100], Iter [150/390] Training Accuracy: 94.5312, Loss: 0.1876
+Epoch [89/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1100
+Epoch [89/100], Iter [250/390] Training Accuracy: 96.0938, Loss: 0.1164
+Epoch [89/100], Iter [300/390] Training Accuracy: 92.9688, Loss: 0.1892
+Epoch [89/100], Iter [350/390] Training Accuracy: 94.5312, Loss: 0.2453
+train acc on train images is  94.42295396419438
+test acc on test images is  87.09
+epoch 89
+Epoch [90/100], Iter [50/390] Training Accuracy: 96.0938, Loss: 0.1147
+Epoch [90/100], Iter [100/390] Training Accuracy: 96.0938, Loss: 0.1238
+Epoch [90/100], Iter [150/390] Training Accuracy: 95.3125, Loss: 0.1529
+Epoch [90/100], Iter [200/390] Training Accuracy: 97.6562, Loss: 0.0983
+Epoch [90/100], Iter [250/390] Training Accuracy: 94.5312, Loss: 0.1730
+Epoch [90/100], Iter [300/390] Training Accuracy: 95.3125, Loss: 0.1145
+Epoch [90/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.1957
+train acc on train images is  94.48489450127877
+test acc on test images is  85.48
+epoch 90
+Epoch [91/100], Iter [50/390] Training Accuracy: 92.9688, Loss: 0.1444
+Epoch [91/100], Iter [100/390] Training Accuracy: 94.5312, Loss: 0.1992
+Epoch [91/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1219
+Epoch [91/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1997
+Epoch [91/100], Iter [250/390] Training Accuracy: 92.1875, Loss: 0.2519
+Epoch [91/100], Iter [300/390] Training Accuracy: 96.8750, Loss: 0.1162
+Epoch [91/100], Iter [350/390] Training Accuracy: 89.8438, Loss: 0.3128
+train acc on train images is  94.43294437340154
+test acc on test images is  88.84
+epoch 91
+Epoch [92/100], Iter [50/390] Training Accuracy: 96.8750, Loss: 0.1101
+Epoch [92/100], Iter [100/390] Training Accuracy: 98.4375, Loss: 0.0564
+Epoch [92/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1623
+Epoch [92/100], Iter [200/390] Training Accuracy: 95.3125, Loss: 0.1722
+Epoch [92/100], Iter [250/390] Training Accuracy: 96.8750, Loss: 0.1042
+Epoch [92/100], Iter [300/390] Training Accuracy: 95.3125, Loss: 0.2010
+Epoch [92/100], Iter [350/390] Training Accuracy: 91.4062, Loss: 0.2937
+train acc on train images is  94.84255115089515
+test acc on test images is  86.47
+epoch 92
+Epoch [93/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.1651
+Epoch [93/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.1180
+Epoch [93/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1481
+Epoch [93/100], Iter [200/390] Training Accuracy: 94.5312, Loss: 0.1707
+Epoch [93/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.2341
+Epoch [93/100], Iter [300/390] Training Accuracy: 94.5312, Loss: 0.2211
+Epoch [93/100], Iter [350/390] Training Accuracy: 92.1875, Loss: 0.2555
+train acc on train images is  94.83535805626599
+test acc on test images is  87.87
+epoch 93
+Epoch [94/100], Iter [50/390] Training Accuracy: 94.5312, Loss: 0.1730
+Epoch [94/100], Iter [100/390] Training Accuracy: 96.8750, Loss: 0.0930
+Epoch [94/100], Iter [150/390] Training Accuracy: 93.7500, Loss: 0.1505
+Epoch [94/100], Iter [200/390] Training Accuracy: 96.0938, Loss: 0.1745
+Epoch [94/100], Iter [250/390] Training Accuracy: 94.5312, Loss: 0.2020
+Epoch [94/100], Iter [300/390] Training Accuracy: 89.8438, Loss: 0.2257
+Epoch [94/100], Iter [350/390] Training Accuracy: 96.8750, Loss: 0.1157
+train acc on train images is  94.81337915601023
+test acc on test images is  87.48
+epoch 94
+Epoch [95/100], Iter [50/390] Training Accuracy: 92.9688, Loss: 0.1461
+Epoch [95/100], Iter [100/390] Training Accuracy: 96.0938, Loss: 0.1635
+Epoch [95/100], Iter [150/390] Training Accuracy: 96.8750, Loss: 0.1208
+Epoch [95/100], Iter [200/390] Training Accuracy: 92.1875, Loss: 0.2283
+Epoch [95/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.1859
+Epoch [95/100], Iter [300/390] Training Accuracy: 94.5312, Loss: 0.1803
+Epoch [95/100], Iter [350/390] Training Accuracy: 92.9688, Loss: 0.2435
+train acc on train images is  94.97602301790282
+test acc on test images is  88.37
+epoch 95
+Epoch [96/100], Iter [50/390] Training Accuracy: 91.4062, Loss: 0.2856
+Epoch [96/100], Iter [100/390] Training Accuracy: 98.4375, Loss: 0.0693
+Epoch [96/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1111
+Epoch [96/100], Iter [200/390] Training Accuracy: 94.5312, Loss: 0.1873
+Epoch [96/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.1567
+Epoch [96/100], Iter [300/390] Training Accuracy: 94.5312, Loss: 0.1182
+Epoch [96/100], Iter [350/390] Training Accuracy: 96.0938, Loss: 0.1269
+train acc on train images is  94.97442455242967
+test acc on test images is  87.94
+epoch 96
+Epoch [97/100], Iter [50/390] Training Accuracy: 96.0938, Loss: 0.1256
+Epoch [97/100], Iter [100/390] Training Accuracy: 93.7500, Loss: 0.1653
+Epoch [97/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1662
+Epoch [97/100], Iter [200/390] Training Accuracy: 94.5312, Loss: 0.1413
+Epoch [97/100], Iter [250/390] Training Accuracy: 92.9688, Loss: 0.1910
+Epoch [97/100], Iter [300/390] Training Accuracy: 96.8750, Loss: 0.1021
+Epoch [97/100], Iter [350/390] Training Accuracy: 97.6562, Loss: 0.0944
+train acc on train images is  95.05874360613811
+test acc on test images is  87.0
+epoch 97
+Epoch [98/100], Iter [50/390] Training Accuracy: 97.6562, Loss: 0.1032
+Epoch [98/100], Iter [100/390] Training Accuracy: 95.3125, Loss: 0.0915
+Epoch [98/100], Iter [150/390] Training Accuracy: 96.8750, Loss: 0.1262
+Epoch [98/100], Iter [200/390] Training Accuracy: 91.4062, Loss: 0.2324
+Epoch [98/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.1485
+Epoch [98/100], Iter [300/390] Training Accuracy: 93.7500, Loss: 0.1974
+Epoch [98/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.1476
+train acc on train images is  95.23777173913044
+test acc on test images is  87.59
+epoch 98
+Epoch [99/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1201
+Epoch [99/100], Iter [100/390] Training Accuracy: 94.5312, Loss: 0.1227
+Epoch [99/100], Iter [150/390] Training Accuracy: 96.0938, Loss: 0.1578
+Epoch [99/100], Iter [200/390] Training Accuracy: 96.0938, Loss: 0.1470
+Epoch [99/100], Iter [250/390] Training Accuracy: 93.7500, Loss: 0.1954
+Epoch [99/100], Iter [300/390] Training Accuracy: 96.8750, Loss: 0.1160
+Epoch [99/100], Iter [350/390] Training Accuracy: 96.8750, Loss: 0.1211
+train acc on train images is  95.32368925831202
+test acc on test images is  88.22
+epoch 99
+Epoch [100/100], Iter [50/390] Training Accuracy: 95.3125, Loss: 0.1407
+Epoch [100/100], Iter [100/390] Training Accuracy: 96.8750, Loss: 0.1146
+Epoch [100/100], Iter [150/390] Training Accuracy: 96.8750, Loss: 0.0678
+Epoch [100/100], Iter [200/390] Training Accuracy: 93.7500, Loss: 0.2526
+Epoch [100/100], Iter [250/390] Training Accuracy: 95.3125, Loss: 0.1424
+Epoch [100/100], Iter [300/390] Training Accuracy: 96.0938, Loss: 0.1674
+Epoch [100/100], Iter [350/390] Training Accuracy: 95.3125, Loss: 0.2146
+train acc on train images is  95.51230818414322
+test acc on test images is  88.13

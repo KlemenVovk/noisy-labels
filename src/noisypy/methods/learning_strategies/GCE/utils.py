@@ -3,8 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 
 # optimized code, no numpy operations, no explicit to.(cuda) usage
-# TODO: make this numerically stable
-# currently, lr = 0.1 NaNs out gradients
+# NOTE: not numerically stable - currently, lr = 0.1 NaNs out gradients
 
 class GCELoss(nn.Module):
 

@@ -1,9 +1,10 @@
-from typing import Any
+from typing import Any, Type
 from copy import deepcopy
 from functools import partial
 
 import lightning as L
 from lightning.pytorch.utilities.types import STEP_OUTPUT
+import torch.nn as nn
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 import torchmetrics
@@ -17,9 +18,9 @@ class PeerLoss(MultiStageLearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: list[type[Optimizer]], optimizer_args: list[dict],
-                 scheduler_cls: list[type[LRScheduler]], scheduler_args: list[dict],
-                 stage_epochs: list[int],
+                 optimizer_cls: list[Type[Optimizer]], optimizer_args: list[dict],
+                 scheduler_cls: list[Type[LRScheduler]], scheduler_args: list[dict],
+                 stage_epochs: list[int], warmup_criterion: nn.Module = CrossEntropyLossStable,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
@@ -32,6 +33,7 @@ class PeerLoss(MultiStageLearningStrategyModule):
 
         # criterions
         self.criterion = CrossEntropyLossStable()
+        self.warmup_criterion = warmup_criterion()
         
         # metrics
         N = self.datamodule.num_classes
@@ -67,7 +69,7 @@ class PeerLoss(MultiStageLearningStrategyModule):
     def training_step_stage0(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x, y_noise = batch[0]
         y_pred = self.model(x)
-        loss = self.criterion(y_pred, y_noise)
+        loss = self.warmup_criterion(y_pred, y_noise)
         
         self.log("train_loss", loss, prog_bar=True)
         self.log("train_acc", self.train_acc(y_pred, y_noise), on_epoch=True, on_step=False)

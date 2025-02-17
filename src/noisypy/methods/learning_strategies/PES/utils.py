@@ -39,9 +39,7 @@ def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pyto
             reset_resnet_layer_parameters(model.layer4)
         
         print("re-initalize the final layer")
-        model.fc.reset_parameters()
-        for param in model.fc.parameters():
-            param.requires_grad = True
+        model.fc = nn.Linear(512, num_classes)
     elif model_class == 'paper_resnet':
         if last_num_layers >= 3:
             print("re-initalize block 2")
@@ -91,7 +89,7 @@ def predict_softmax(predict_loader: DataLoader, model: nn.Module, device: torch.
     model.eval()
     softmax_outs = []
     with torch.no_grad():
-        for images1, images2 in tqdm(predict_loader, desc=f'Predicting', leave=False):
+        for images1, images2 in tqdm(predict_loader, desc='Predicting', leave=False):
             logits1 = model(images1.to(device)) 
             logits2 = model(images2.to(device))
             outputs = (F.softmax(logits1, dim=1) + F.softmax(logits2, dim=1)) / 2

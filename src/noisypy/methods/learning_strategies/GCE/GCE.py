@@ -1,7 +1,5 @@
-from typing import Any
-import os
+from typing import Any, Type
 from copy import deepcopy
-from pathlib import Path
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
@@ -21,8 +19,8 @@ class GCE(LearningStrategyModule):
     def __init__(self, 
                  datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  prune_start_epoch: int, prune_freq: int,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -86,7 +84,7 @@ class GCE(LearningStrategyModule):
         self.log("val_acc", self.val_acc(y_pred, y_true))
 
     def on_validation_end(self) -> None:
-        # TODO: data leak if you have test set as validation set
+        # NOTE: data leak if you have test set as validation set
         # save model if it has highest val_acc
         val_acc = self.trainer.callback_metrics["val_acc"]
         if val_acc > self.best_acc:

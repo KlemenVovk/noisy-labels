@@ -1,17 +1,6 @@
 import torch
-from torch import nn
-from torch.nn import functional as F
 import numpy as np
 import torch.nn.functional as F
-
-# TODO: remove numpy and .cpu() calls
-
-#def kl_loss_compute(pred, soft_targets, reduce=True):
-#    kl = F.kl_div(F.log_softmax(pred, dim=1),F.softmax(soft_targets, dim=1),reduce=False)
-#    if reduce:
-#        return torch.mean(torch.sum(kl, dim=1))
-#    else:
-#        return torch.sum(kl, 1)
 
 def kl_loss_compute(pred, soft_targets, reduce=True):
     kl = F.kl_div(

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import lightning as L
 from torch.nn import functional as F
@@ -17,9 +17,9 @@ class VolMinNet(LearningStrategyModule):
         datamodule: L.LightningDataModule,
         classifier_cls: type,
         classifier_args: dict,
-        optimizer_cls: type[Optimizer],
+        optimizer_cls: Type[Optimizer],
         optimizer_args: dict,
-        scheduler_cls: type[LRScheduler],
+        scheduler_cls: Type[LRScheduler],
         scheduler_args: dict,
         lam: float,
         init_t: float,

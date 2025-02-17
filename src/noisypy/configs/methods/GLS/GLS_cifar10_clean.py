@@ -4,7 +4,6 @@ from lightning.pytorch.loggers import CSVLogger
 
 from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.GLS.GLS import GLS
-from noisypy.data.pipelines.index import AddIndex
 from noisypy.configs.base.method import MethodConfig
 from noisypy.configs.data.cifar10 import cifar10_base_config
 

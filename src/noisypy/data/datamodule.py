@@ -1,5 +1,4 @@
 from lightning import LightningDataModule
-from lightning.pytorch.utilities.combined_loader import CombinedLoader
 from lightning.pytorch.utilities.types import EVAL_DATALOADERS, TRAIN_DATALOADERS
 
 from torch.utils.data import DataLoader
@@ -31,7 +30,7 @@ class MultiSampleDataModule(LightningDataModule):
 
     @property
     def num_train_samples(self) -> int:
-        return len(self.train_datasets[0]) # TODO: bug if different lengths - will this ever happen?
+        return len(self.train_datasets[0])
     
     @property
     def num_val_samples(self) -> int:
@@ -46,7 +45,6 @@ class MultiSampleDataModule(LightningDataModule):
         return self.train_datasets[0].num_classes
 
     def setup(self, stage: str = None) -> None:
-        # TODO: figure out how to handle setup
         pass
     
     def train_dataloader(self) -> TRAIN_DATALOADERS:

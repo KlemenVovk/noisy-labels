@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Any
+from typing import Any, Type
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 import lightning as L
 from torch.optim import Optimizer
@@ -13,9 +13,9 @@ class GLS(LearningStrategyModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: list[type[Optimizer]] | type[Optimizer],
+                 optimizer_cls: list[Type[Optimizer]] | Type[Optimizer],
                  optimizer_args: list[dict] | dict,
-                 scheduler_cls: list[type[LRScheduler]] | type[LRScheduler],
+                 scheduler_cls: list[Type[LRScheduler]] | Type[LRScheduler],
                  scheduler_args: list[dict] | dict,
                  warmup_epochs: int,
                  smooth_rate: float,

@@ -1,6 +1,5 @@
-from aim.pytorch_lightning import AimLogger
+from pytorch_lightning.loggers import CSVLogger
 
-import torch
 from torch.optim import Adam
 from torch.optim.lr_scheduler import LambdaLR
 from torchvision.transforms import ToTensor
@@ -72,7 +71,7 @@ class co_teaching_reprod(MethodConfig):
     trainer_args = dict(
         max_epochs=200,
         deterministic=True,
-        logger=AimLogger(experiment="CoTeaching")
+        logger=CSVLogger("../logs", name="CoTeaching")
     )
 
     seed = 1

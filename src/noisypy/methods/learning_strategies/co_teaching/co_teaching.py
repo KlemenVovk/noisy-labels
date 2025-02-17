@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Type
 
 import lightning as L
 import torch
@@ -10,16 +10,15 @@ from ..base import LearningStrategyModule
 from .utils import loss_coteaching, loss_coteaching_plus
 
 # NOTE: needs AddIndex dataset augmentation
-# TODO: figure out how to make CoTeachingPlus cleaner, since only loss calc is different
 
 class CoTeaching(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  forget_rate: float, exponent: float, num_gradual: int,
-                 num_epochs: int, # TODO: figure out how to remove num of epochs
+                 num_epochs: int,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args, 
@@ -32,6 +31,7 @@ class CoTeaching(LearningStrategyModule):
         self.model1 = classifier_cls(**classifier_args)
         self.model2 = classifier_cls(**classifier_args)
         self.criterion = loss_coteaching
+        self.val_criterion = torch.nn.CrossEntropyLoss()
         
         # metrics
         self.train_acc = torchmetrics.Accuracy(num_classes=self.num_classes, top_k=1, task='multiclass', average="micro")
@@ -82,12 +82,16 @@ class CoTeaching(LearningStrategyModule):
         x, y_true = batch
         logits1 = self.model1(x)
         logits2 = self.model2(x)
-        self.log("val_acc1", self.val_acc(logits1, y_true))
-        self.log("val_acc2", self.val_acc(logits2, y_true))
+        logits = (logits1 + logits2) / 2
+        loss = self.val_criterion(logits, y_true)
+        self.log("val_loss", loss)
+        self.log("val_acc", self.val_acc(logits, y_true))
     
     def test_step(self, batch: Any, batch_idx: int):
         x, y = batch
-        y_pred = self.model1(x) #TODO maybe both? idk
+        y_pred1 = self.model1(x) 
+        y_pred2 = self.model2(x)
+        y_pred = (y_pred1 + y_pred2) / 2
         self.test_acc(y_pred, y)
         self.log("test_acc", self.test_acc, on_epoch=True)
     

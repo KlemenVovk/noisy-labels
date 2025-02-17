@@ -23,7 +23,6 @@ def loss_coteaching(y_1, y_2, t, forget_rate, ind):
 
     return torch.sum(loss_1_update)/num_remember, torch.sum(loss_2_update)/num_remember
 
-# TODO: cleanup this mess
 def loss_coteaching_plus(logits, logits2, labels, forget_rate, ind, step):
     outputs = F.softmax(logits, dim=1)
     outputs2 = F.softmax(logits2, dim=1)

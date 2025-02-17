@@ -1,8 +1,9 @@
-from typing import Any
+from typing import Any, Type
 
 from lightning.pytorch.utilities.types import STEP_OUTPUT
 from lightning.pytorch.utilities import move_data_to_device
 import lightning as L
+import numpy as np
 from tqdm import tqdm
 import torch
 from torch.nn import Module
@@ -20,12 +21,12 @@ from .utils import update_train_data_and_criterion, update_dataloaders, linear_r
 class PES_semi(LearningStrategyModule):
 
     def __init__(self, datamodule: L.LightningDataModule,
-                 classifier_cls: type[Module], classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 classifier_cls: Type[Module], classifier_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  PES_lr: float, warmup_epochs: int, T2: int, lambda_u: float, 
                  temperature: float, alpha: float,
-                 optimizer_refine_cls: type[Optimizer],
+                 optimizer_refine_cls: Type[Optimizer],
                  model_type: str = 'pytorch_resnet',
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
@@ -61,16 +62,19 @@ class PES_semi(LearningStrategyModule):
         self.automatic_optimization = False
 
     def on_train_epoch_start(self) -> None:
-        self.model.train() # TODO: I don't think this is necessary
+        self.model.train()
         # save training data, noisy labels and train transform for noisy refinement and dataset updating
         if self.current_epoch == 0:
             train_dataset = self.trainer.datamodule.train_datasets[0]
-            self.train_data = train_dataset.data
+            self.train_data = []
             self.train_labels = []
-            for i in tqdm(range(len(train_dataset)), desc=f'Saving Training Data', leave=False):
+            for i in tqdm(range(len(train_dataset)), desc='Saving Training Data', leave=False):
                 _, y, *_ = train_dataset[i]
+                x = train_dataset.data[i]
                 self.train_labels.append(y)
+                self.train_data.append(x)
             self.train_labels = torch.LongTensor(self.train_labels)
+            self.train_data = np.stack(self.train_data)
             self.train_transform = train_dataset.transform
             
     def noisy_refine(self, model: Module, num_layer: int, refine_times: int) -> Module:

@@ -8,11 +8,6 @@ import torchmetrics
 from .utils import loss_cores
 from ..base import LearningStrategyModule
 
-# TODO: LR scheduling should be more flexible (current model works only for exactly 100 epochs like the authors proposed).
-# TODO: implement cores2* - the second phase from the paper (consistency training).
-# TODO: log the warmup!
-# TODO: maybe it would be good to log the accuracy with the noisy labels as a sanity check to see if the loss is working and making a difference (because it can happen that a NN is just powerful enough to work even with a bad/baseline loss)
-
 # First phase from the paper: https://arxiv.org/abs/2010.02347
 # Uses resnet34 as the backbone (not pretrained). Trained with CORES loss.
 # Basically works on priors of the label noise and iteratively updates the priors after each epoch.
@@ -21,8 +16,8 @@ class SampleSieve(LearningStrategyModule):
     
     def __init__(self, datamodule: L.LightningDataModule,
                  classifier_cls: type, classifier_args: dict,
-                 optimizer_cls: type[Optimizer], optimizer_args: dict,
-                 scheduler_cls: type[LRScheduler], scheduler_args: dict,
+                 optimizer_cls: Type[Optimizer], optimizer_args: dict,
+                 scheduler_cls: Type[LRScheduler], scheduler_args: dict,
                  *args: Any, **kwargs: Any) -> None:
         super().__init__(
             datamodule, classifier_cls, classifier_args,

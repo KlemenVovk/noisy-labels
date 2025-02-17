@@ -1,4 +1,4 @@
-from aim.pytorch_lightning import AimLogger
+from lightning.pytorch.loggers import CSVLogger
 
 from torch.optim import SGD
 from torch.optim.lr_scheduler import LambdaLR
@@ -33,7 +33,7 @@ class cores_cifar10_clean(MethodConfig):
     trainer_args = dict(
         max_epochs=100,
         deterministic=True,
-        logger=AimLogger(experiment="cores2")
+        logger=CSVLogger("../logs", name="cores2")
     )
 
     seed = 1337

@@ -58,6 +58,7 @@ class SemiLoss(object):
 
 class NegEntropy(object):
     def __call__(self,outputs):
+        outputs = outputs.clamp(min=1e-12) # for numerical stability (https://github.com/Justherozen/ProMix/blob/40d8378193f1a098473479ebcb56dbafa89dfacb/Train_promix.py#L460)
         probs = torch.softmax(outputs, dim=1)
         return torch.mean(torch.sum(probs.log()*probs, dim=1))
     

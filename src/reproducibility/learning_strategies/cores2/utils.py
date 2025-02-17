@@ -23,7 +23,7 @@ def noisify_instance(x, y, noise_rate):
     return y_noise, torch.mean((y != y_noise).float())
 
 
-# TODO DELETE: this is from the authors just to test, below is our implementation
+# NOTE: this is from the authors just to test, below is our implementation
 def noisify_instance_original(train_data,train_labels,noise_rate):
     if max(train_labels)>10:
         num_class = 100

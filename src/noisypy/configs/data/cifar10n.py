@@ -71,3 +71,29 @@ class cifar10n_random3_config(cifar10n_clean_config):
         noise_dir="../data/noisylabels",
         cifar_dir="../data/cifar"
     )
+
+
+# Configs used for the benchmark (with validation set)
+class cifar10n_clean_benchmark_config(cifar10n_clean_config):
+
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)
+
+class cifar10n_aggre_benchmark_config(cifar10n_aggre_config):
+
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)
+
+class cifar10n_worse_benchmark_config(cifar10n_worse_config):
+    
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)
+
+class cifar10n_random1_benchmark_config(cifar10n_random1_config):
+    
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)
+
+class cifar10n_random2_benchmark_config(cifar10n_random2_config):
+    
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)
+
+class cifar10n_random3_benchmark_config(cifar10n_random3_config):
+    
+    dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR10N)

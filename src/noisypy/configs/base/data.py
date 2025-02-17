@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any, Callable, Type
 
 from lightning import LightningDataModule
 
@@ -13,7 +13,7 @@ class DataConfig(Config):
     To configure a new data pipeline, inherit from this class and change the needed class variables.
 
     Class vars:
-        dataset_cls (type[DatasetFW]):  Class of dataset. 
+        dataset_cls (Type[DatasetFW]):  Class of dataset. 
         dataset_args: (dict) :          Dict of keyword args to initialise the dataset_cls. Can be incomplete and will be updated by dataset_{train/val/test}_args class var.
 
         dataset_train_augmentation (AugmentationPipeline | list[AugmentationPipeline]): Augmentation pipeline to transform dataset_cls for train. If list is provided, multiple samples will be returned at each step.
@@ -28,14 +28,14 @@ class DataConfig(Config):
         dataset_val_args (dict | list[dict]): Dict or list of dicts of keyword arguments to be added to dataset_args class var. If list is provided, must be broadcastable with number of samples.
         dataset_test_args (dict | list[dict]): Dict or list of dicts of keyword arguments to be added to dataset_args class var. If list is provided, must be broadcastable with number of samples.
 
-        datamodule_cls (type[MultiSampleDataModule]): Class of datamodule.
+        datamodule_cls (Type[MultiSampleDataModule]): Class of datamodule.
         datamodule_args (dict): Dict of remaining keyword arguments to initialise datamodule_cls, that are not train {train/val/test}_dataset_{cls/args}.
     """
 
     # classes
-    dataset_train_cls: type[DatasetFW] = None
-    dataset_val_cls:   type[DatasetFW] | None = None
-    dataset_test_cls:  type[DatasetFW] | None = None
+    dataset_train_cls: Type[DatasetFW] = None
+    dataset_val_cls:   Type[DatasetFW] | None = None
+    dataset_test_cls:  Type[DatasetFW] | None = None
     
     # common arguments
     dataset_args: dict = dict()
@@ -107,9 +107,9 @@ def broadcast_init(classes: Callable[[Any], object] | list[Callable[[Any], objec
     return [class_(**kwss[0]) for class_ in classes] # 1, n 
 
 def apply_augmentations(
-        dataset_cls: type[DatasetFW], 
+        dataset_cls: Type[DatasetFW], 
         augmentations: AugmentationPipeline | list[AugmentationPipeline]
-        ) -> list[type[DatasetFW]]:
+        ) -> list[Type[DatasetFW]]:
     augmentations = ensure_list(augmentations)
     return [aug(dataset_cls) for aug in augmentations]
 
