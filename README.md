@@ -8,14 +8,14 @@ We implement and test the following experiments:
 
 1) Noise hypothesis testing (section 4.2. in the original publication). With this experiment, the authors claim that real-world noisy labels differ significantly from their synthetic counterparts. We confirm their claim, albeit with slightly different results.
 
-![human-cluster](rescience/figures/human_cluster.svg)
-![synthetic-cluster](rescience/figures/synthetic_cluster.svg)
+![human-cluster](figures/human_cluster.svg)
+![synthetic-cluster](figures/synthetic_cluster.svg)
 
 <p style="text-align: center;">Transition vectors within real-world (top) and synthetic (bottom) clusters for <i>Random1</i> label</p>
 
 2) Noise memorization effects (section 5.2. in the original publication). The authors claim that models start to overfit on the real-world noisy labels faster than on their synthetic counterparts, indicating a harder learning task. We confirm their claim.
 
-![memo](rescience/figures/memorisation.svg)
+![memo](figures/memorization.svg)
 <p style="text-align: center;">Noise memorisation effects.</p>
 
 3) Benchmark of LNL approaches (section 5.1. in the original publication). The authors claim that LNL approaches perform worse on real-world noisy labels than on their synthetic counterparts. We confirm their claim, but not with their supposed hyperparameter setup.
@@ -42,21 +42,22 @@ conda create -n noisylables python=3.10
 conda activate noisylabels
 pip install .
 ```
-
+```bash
+pip install .[reproducibility] # for optional reproducibility dependencies
+```
 ## How to run?
 
 To rerun our experiments, refer to `src/reproducibility` folder:
 * To rerun the hypothesis testing experiment, run the `hypothesis_testing.ipynb` notebook within the `noise_hypothesis_testing` folder.
-* To rerun noise memorisation experiment, run either the `memorization.ipynb` notebook or `memo.py` script within `memorization_effects` folder.
+* To rerun noise memorisation experiment, run the `memo.py` script and `memorization.ipynb` notebook within `memorization_effects` folder.
 * To rerun the benchmark experiments, run `main_paper.py`(authors' claimed hyperparameter setup with CIFAR-10) `main.py`(original hyperparameter setup with CIFAR-10) `main_cifar100n.py`(original hyperparameters with CIFAR-100)
+* To run our version of the benchmark run `benchmark.py` \ `benchmark_cifar100.py` scripts.
 
 
 ## Repository structure
 
-The repository is more or less following the [Data Science Cookie Cutter project structure](https://drivendata.github.io/cookiecutter-data-science/)
 
-Briefly:
-- `article` - Article and figures.
+- `figures` - Figures of the main experiments.
 - `src` - Everything code
   - `noisypy` - Python package for working with LNL methods.
   - `reproducibility` - Experiments for reproducibility challenge submission.
@@ -64,5 +65,5 @@ Briefly:
     - `logs` - Results of our experiments.
     - `memorization_effects` - Memorization effects experiment - see `memorization.ipynb` and `memo.py`.
     - `noise_hypothesis_testing` - Noise clustering hypothesis testing experiment - see `hypothesis_testing.ipynb`.
-    - `noisy_labels` - Benchmark reproduction. `main.py` is for normal CIFAR-10N human and synthetic runs (`--synthetic` switch to run synthetic versions). `main_cifar100n.py` same thing for CIFAR-100N. `main_paper.py` runs CIFAR-10N authors claimed configs (with fixed learning rate, schedulers and optimizers).
+    - `noisy_labels` - Benchmark reproduction. `main.py` is for normal CIFAR-10N human and synthetic runs (`--synthetic` switch to run synthetic versions). `main_cifar100n.py` same thing for CIFAR-100N. `main_paper.py` runs CIFAR-10N authors claimed configs (with fixed learning rate, schedulers and optimizers) and `benchmark.py` for our version of the benchmark.
 - `tests` - Unit tests for some of the package modules.
