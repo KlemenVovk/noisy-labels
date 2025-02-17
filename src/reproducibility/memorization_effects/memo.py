@@ -65,7 +65,9 @@ def train_and_record_memorization(clean_labels, noisy_labels, num_epochs):
         model.parameters(), 
         lr=1,
         weight_decay=1e-4)
-    lambda_lr = lambda epoch:  0.1 ** (epoch / 50)
+    # Xiu et al. 2021 use epoch//100 and train for 300 epochs
+    # We need a smooth schedule and train for 150 epochs hence:
+    lambda_lr = lambda epoch:  0.1 ** (epoch / 50) 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda_lr)
     
     loader = torch.utils.data.DataLoader(
