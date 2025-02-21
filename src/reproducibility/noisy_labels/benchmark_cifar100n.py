@@ -36,7 +36,7 @@ if __name__ == "__main__":
     )
 
     config = update_config(
-        method_configs[args.method_config], data_configs[args.data_config], args.seed
+        method_configs[args.method_config], data_configs[args.data_config], args.seed, logdir="../logs/benchmark"
     )
     model, datamodule, trainer = config.build_modules()
 

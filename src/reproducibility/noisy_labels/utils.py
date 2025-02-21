@@ -3,13 +3,13 @@ import lightning as L
 from lightning.pytorch.loggers import CSVLogger
 
 
-def update_config(base_config, new_data_config, new_seed):
+def update_config(base_config, new_data_config, new_seed, logdir="../logs"):
     class UpdatedConfig(base_config):
         data_config = new_data_config if base_config._data_config_wrapper is None else base_config._data_config_wrapper(new_data_config)
         seed = new_seed
         trainer_args = {
             **base_config.trainer_args,
-            "logger": CSVLogger(f"../logs/{new_data_config.__name__}", name=f"{base_config.__name__}_{new_seed}"),
+            "logger": CSVLogger(f"{logdir}/{new_data_config.__name__}", name=f"{base_config.__name__}_{new_seed}"),
         }
     return UpdatedConfig
 
