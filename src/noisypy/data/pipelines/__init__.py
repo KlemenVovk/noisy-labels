@@ -1,5 +1,6 @@
 from .base import *
 from .divide_mix import *
+from .pro_mix import *
 from .double_augmentation import *
 from .index import AddIndex
 from .shuffle import ShuffleImages

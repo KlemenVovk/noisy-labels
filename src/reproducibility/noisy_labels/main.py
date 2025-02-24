@@ -29,6 +29,7 @@ method_configs = {
     "SOP": SOP_config,
     "SOP_plus": SOP_plus_config,
     "volminnet": volminnet_config,
+    "pro_mix": pro_mix_config,
 }
 
 data_configs = {

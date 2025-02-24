@@ -1,5 +1,5 @@
 from noisypy.configs.base.data import DataConfig
-from noisypy.data.pipelines import AddIndex, DivideMixify, Identity, ShuffleImages, Compose, DoubleAugmentation
+from noisypy.data.pipelines import AddIndex, DivideMixify, Identity, ShuffleImages, Compose, DoubleAugmentation, ProMixify
 from noisypy.data.datasets.cifar10 import cifar10_train_transform, cifar10_test_transform
 from noisypy.methods.learning_strategies.SOPplus.utils import autoaug_paper_cifar10
 
@@ -39,4 +39,17 @@ def double_aug_wrapper(data_config: DataConfig) -> DataConfig:
             [AddIndex(), DoubleAugmentation(transform1=cifar10_train_transform, transform2=autoaug_paper_cifar10)]
         )
     
+    return new_data_config
+
+def promixify_wrapper(data_config: DataConfig) -> DataConfig:
+    class new_data_config(data_config):
+        dataset_train_args = [
+            dict(mode="all", transform=cifar10_train_transform),
+            dict(mode="all", transform=cifar10_train_transform),
+        ]
+        datamodule_args = dict(
+            batch_size=256,
+            num_workers=2,
+        )
+        dataset_train_augmentation = ProMixify()
     return new_data_config

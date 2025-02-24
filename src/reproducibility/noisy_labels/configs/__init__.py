@@ -18,6 +18,7 @@ from .SOP import SOP_config
 from .SOP_plus import SOP_plus_config
 from .T_revision import TRevision_config
 from .volminnet import volminnet_config
+from .pro_mix import pro_mix_config
 
 __all__ = [
     "CAL_config",
@@ -40,4 +41,5 @@ __all__ = [
     "SOP_plus_config",
     "TRevision_config",
     "volminnet_config",
+    "pro_mix_config",
 ]
