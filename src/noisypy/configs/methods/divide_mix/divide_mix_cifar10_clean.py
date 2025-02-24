@@ -6,7 +6,7 @@ from noisypy.methods.classifiers.resnet import resnet34
 from noisypy.methods.learning_strategies.divide_mix.divide_mix import DivideMix
 from noisypy.data.pipelines.divide_mix import DivideMixify
 from noisypy.configs.base.method import MethodConfig
-from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_transform
+from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_transform, cifar10_test_transform
 
 
 class cifar10_clean_divide_mix_config(cifar10_base_config):
@@ -16,7 +16,7 @@ class cifar10_clean_divide_mix_config(cifar10_base_config):
         dict(mode="all",        transform=cifar10_train_transform),
         dict(mode="unlabeled",  transform=cifar10_train_transform),
         dict(mode="unlabeled",  transform=cifar10_train_transform),
-        dict(mode="all",        transform=cifar10_train_transform),
+        dict(mode="all",        transform=cifar10_test_transform),
     ]
 
     dataset_train_augmentation = DivideMixify()
