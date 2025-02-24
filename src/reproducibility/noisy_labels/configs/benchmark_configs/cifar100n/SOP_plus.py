@@ -7,7 +7,6 @@ from ...base.wrappers import double_aug_wrapper
 
 
 class SOP_plus_config(BenchmarkConfigCIFAR100N):
-
     _data_config_wrapper = double_aug_wrapper
 
     learning_strategy_cls = SOPplus

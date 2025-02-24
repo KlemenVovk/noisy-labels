@@ -11,21 +11,19 @@ from ..common import cifar10_base_config
 
 
 class cifar10_index_config(cifar10_base_config):
-
-    dataset_train_augmentation = AddIndex()    
+    dataset_train_augmentation = AddIndex()
 
 
 class elr_cifar10_clean(MethodConfig):
-
     data_config = cifar10_index_config
 
     classifier = resnet34
-    classifier_args = dict(
-        num_classes=10
-    )
+    classifier_args = dict(num_classes=10)
 
     learning_strategy_cls = ELR
-    learning_strategy_args = dict(beta = 0.99, lmbd=1)  # β ∈ {0.5, 0.7, 0.9, 0.99}, λ ∈ {1, 3, 5, 7, 10}
+    learning_strategy_args = dict(
+        beta=0.99, lmbd=1
+    )  # β ∈ {0.5, 0.7, 0.9, 0.99}, λ ∈ {1, 3, 5, 7, 10}
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.001)
@@ -35,7 +33,7 @@ class elr_cifar10_clean(MethodConfig):
     trainer_args = dict(
         max_epochs=120,
         deterministic=True,
-        logger=CSVLogger("../logs", name="elr_clean")
+        logger=CSVLogger("../logs", name="elr_clean"),
     )
 
     seed = 1337

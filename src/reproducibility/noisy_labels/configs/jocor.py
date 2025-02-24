@@ -6,7 +6,6 @@ from .base.config import NoisyLabelsMethod
 
 
 class jocor_config(NoisyLabelsMethod):
-
     learning_strategy_cls = JoCoR
     learning_strategy_args = dict(
         forget_rate=0.2,

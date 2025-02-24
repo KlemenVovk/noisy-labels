@@ -11,7 +11,6 @@ from .utils import SigT
 
 
 class VolMinNet(LearningStrategyModule):
-
     def __init__(
         self,
         datamodule: L.LightningDataModule,

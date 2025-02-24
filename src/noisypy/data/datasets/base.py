@@ -10,18 +10,18 @@ class DatasetFW(DatasetPT, ABC):
     Extends the pytorch dataset.
     Besides implementing the __getitem__ and __len__ required by the
     pytorch dataset, the framework requires also implementation of:
-    
+
     - num_classes property: Number of classification label classes.
     """
 
     @abstractmethod
     def __getitem__(self, index: int) -> tuple[Tensor, int, Any]:
         raise NotImplementedError
-    
+
     @abstractmethod
     def __len__(self) -> int:
         raise NotImplementedError
-      
+
     @property
     @abstractmethod
     def num_classes(self) -> int:

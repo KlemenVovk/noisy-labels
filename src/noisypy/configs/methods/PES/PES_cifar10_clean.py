@@ -9,7 +9,6 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class PES_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
@@ -24,7 +23,7 @@ class PES_cifar10_clean_config(MethodConfig):
         warmup_epochs=25,
         T2=7,
         T3=5,
-        optimizer_refine_cls= Adam,
+        optimizer_refine_cls=Adam,
     )
 
     optimizer_cls = SGD
@@ -36,7 +35,7 @@ class PES_cifar10_clean_config(MethodConfig):
         reload_dataloaders_every_n_epochs=1,
         max_epochs=200,
         deterministic=True,
-        logger=CSVLogger("../logs", name="PES_cifar10_clean")
+        logger=CSVLogger("../logs", name="PES_cifar10_clean"),
     )
 
     seed = 1337

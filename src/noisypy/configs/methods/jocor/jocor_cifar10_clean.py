@@ -10,7 +10,6 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class jocor_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
@@ -32,7 +31,7 @@ class jocor_cifar10_clean_config(MethodConfig):
     optimizer_args = dict(
         lr=0.001,
     )
-    
+
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
 

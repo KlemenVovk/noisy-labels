@@ -6,7 +6,6 @@ from ..base.config import CIFAR100NoisyLabelsMethod
 
 
 class volminnet_config(CIFAR100NoisyLabelsMethod):
-
     learning_strategy_cls = VolMinNet
     learning_strategy_args = dict(lam=1e-4, init_t=4.5)
 

@@ -6,7 +6,6 @@ from ..base import BenchmarkConfigCIFAR100N
 
 
 class PES_semi_config(BenchmarkConfigCIFAR100N):
-
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
         PES_lr=1e-4,

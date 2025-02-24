@@ -6,7 +6,6 @@ from ..base import BenchmarkConfigCIFAR10N
 
 
 class volminnet_config(BenchmarkConfigCIFAR10N):
-
     learning_strategy_cls = VolMinNet
     learning_strategy_args = dict(lam=1e-4, init_t=2)
 

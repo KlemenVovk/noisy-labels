@@ -7,20 +7,18 @@ from ..base import BenchmarkConfigCIFAR10N
 
 stages = [20, 30, 30]
 
-class TRevision_config(BenchmarkConfigCIFAR10N):
 
+class TRevision_config(BenchmarkConfigCIFAR10N):
     learning_strategy_cls = TRevision
-    learning_strategy_args = dict(
-        stage_epochs=stages
-    )
+    learning_strategy_args = dict(stage_epochs=stages)
 
     optimizer_cls = [SGD, SGD, Adam]
     optimizer_args = [
         dict(lr=0.01, weight_decay=1e-4),
         dict(lr=0.01, weight_decay=1e-4, momentum=0.9),
-        dict(lr=5e-7, weight_decay=1e-4)
+        dict(lr=5e-7, weight_decay=1e-4),
     ]
-    
+
     scheduler_cls = [LambdaLR, MultiStepLR, LambdaLR]
     scheduler_args = [
         dict(lr_lambda=lambda _: 1),
@@ -30,6 +28,6 @@ class TRevision_config(BenchmarkConfigCIFAR10N):
 
     trainer_args = {
         **BenchmarkConfigCIFAR10N.trainer_args,
-        "max_epochs": sum(stages)+1,
+        "max_epochs": sum(stages) + 1,
         "num_sanity_val_steps": 0,
     }

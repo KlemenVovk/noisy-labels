@@ -7,24 +7,23 @@ from ...base.wrappers import dividemixify_wrapper
 
 
 class divide_mix_config(BenchmarkConfigCIFAR10N):
-
     _data_config_wrapper = dividemixify_wrapper
 
     learning_strategy_cls = DivideMix
     learning_strategy_args = dict(
-        warmup_epochs=10, 
-        noise_type = "asymmetric", 
-        noise_rate = 0.5,
-        p_thresh = 0.5, 
-        temperature = 0.5, 
-        alpha = 4,
-        lambda_u = 25
+        warmup_epochs=10,
+        noise_type="asymmetric",
+        noise_rate=0.5,
+        p_thresh=0.5,
+        temperature=0.5,
+        alpha=4,
+        lambda_u=25,
     )
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=5e-4)
     scheduler_cls = LambdaLR
-    scheduler_args = dict(lr_lambda = lambda epoch: 0.1 if epoch >= 150 else 1)
+    scheduler_args = dict(lr_lambda=lambda epoch: 0.1 if epoch >= 150 else 1)
 
     trainer_args = {
         **BenchmarkConfigCIFAR10N.trainer_args,

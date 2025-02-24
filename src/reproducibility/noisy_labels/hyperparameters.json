@@ -1,5 +1,5 @@
 {
-"CIFAR10N":    {   
+"CIFAR10N":    {
         "CAL": {
             "classifier": "ResNet34",
             "optimizer": "SGD",
@@ -16,7 +16,7 @@
             "milestones_warmup": [10, 40],
             "alpha_list": [0.0, 1.0, 1.0],
             "milestones": [10, 40, 80]
-    
+
         },
         "CE": {
             "classifier": "ResNet34",
@@ -106,7 +106,7 @@
             "momentum": 0.9,
             "scheduler": "CosineAnnealing",
             "epochs": 300,
-            
+
             "PES_lr": 1e-4,
             "warmup_epochs": 20,
             "T2": 5,
@@ -195,7 +195,7 @@
             "weight_decay": 0,
             "scheduler": "alpha_schedule",
             "epochs": 200,
-            
+
             "forget_rate": 0.2,
             "exponent": 1,
             "num_gradual": 10,
@@ -267,7 +267,7 @@
             "momentum": 0.9,
             "scheduler": "CosineAnnealing",
             "epochs": 300,
-            
+
             "PES_lr": 1e-4,
             "warmup_epochs": 35,
             "T2": 5,

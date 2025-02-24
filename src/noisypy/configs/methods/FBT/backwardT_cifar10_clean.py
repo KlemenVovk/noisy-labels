@@ -9,7 +9,6 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class backwardT_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34

@@ -28,7 +28,7 @@ dependencies = [
 [project.optional-dependencies]
 reproducibility=[
   "matplotlib",
-  "ipykernel"
+  "ipykernel",
   "pandas",
 ]
 

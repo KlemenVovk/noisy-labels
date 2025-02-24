@@ -7,7 +7,6 @@ from ..base import BenchmarkConfigCIFAR10N
 
 
 class jocor_config(BenchmarkConfigCIFAR10N):
-
     learning_strategy_cls = JoCoR
     learning_strategy_args = dict(
         forget_rate=0.2,

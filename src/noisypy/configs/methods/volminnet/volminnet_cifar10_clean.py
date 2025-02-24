@@ -9,7 +9,6 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class volminnet_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
@@ -19,16 +18,14 @@ class volminnet_cifar10_clean_config(MethodConfig):
     )
 
     learning_strategy_cls = VolMinNet
-    learning_strategy_args = dict(
-        lam=1e-4
-    )
+    learning_strategy_args = dict(lam=1e-4)
 
     optimizer_cls = [SGD, SGD]
     optimizer_args = [
         dict(lr=0.01, momentum=0.9, weight_decay=1e-4),
-        dict(lr=0.01, momentum=0.9)
+        dict(lr=0.01, momentum=0.9),
     ]
-    
+
     scheduler_cls = [MultiStepLR, MultiStepLR]
     scheduler_args = [
         dict(milestones=[30, 60], gamma=0.1),
@@ -38,7 +35,7 @@ class volminnet_cifar10_clean_config(MethodConfig):
     trainer_args = dict(
         max_epochs=80,
         deterministic=True,
-        logger=CSVLogger("../logs", name="volminnet_cifar10_clean")
+        logger=CSVLogger("../logs", name="volminnet_cifar10_clean"),
     )
 
     seed = 1337

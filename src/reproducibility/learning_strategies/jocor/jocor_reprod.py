@@ -15,35 +15,21 @@ from ..common import cifar10_base_config
 
 # reproduces the original implementation, with their noise and all
 
-class cifar10_noise(cifar10_base_config):
 
+class cifar10_noise(cifar10_base_config):
     dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.2))
 
-    dataset_train_args = dict(
-        transform=ToTensor()
-    )
-    dataset_val_args = dict(
-        train=False,
-        transform=ToTensor()
-    )
-    dataset_test_args = dict(
-        train=False,
-        transform=ToTensor()
-    )
-    datamodule_args = dict(
-        batch_size=128,
-        num_workers=2
-    )
+    dataset_train_args = dict(transform=ToTensor())
+    dataset_val_args = dict(train=False, transform=ToTensor())
+    dataset_test_args = dict(train=False, transform=ToTensor())
+    datamodule_args = dict(batch_size=128, num_workers=2)
+
 
 class jocor_reprod(MethodConfig):
-
     data_config = cifar10_noise
 
     classifier = CNN
-    classifier_args = dict(
-        input_channel=3,
-        n_outputs=10
-    )
+    classifier_args = dict(input_channel=3, n_outputs=10)
 
     learning_strategy_cls = JoCoR
     learning_strategy_args = dict(
@@ -58,7 +44,7 @@ class jocor_reprod(MethodConfig):
     optimizer_args = dict(
         lr=0.001,
     )
-    
+
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
 

@@ -10,14 +10,10 @@ from ..common import cifar10_base_config
 
 
 class forwardT_cifar10_clean(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
-    classifier_args = dict(
-        weights=None,
-        num_classes=10
-    )
+    classifier_args = dict(weights=None, num_classes=10)
 
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(

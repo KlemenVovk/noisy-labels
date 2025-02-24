@@ -9,14 +9,10 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class CE_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
-    classifier_args = dict(
-        weights=None,
-        num_classes=10
-    )
+    classifier_args = dict(weights=None, num_classes=10)
 
     learning_strategy_cls = CE
 

@@ -24,19 +24,19 @@ class MethodConfig(Config):
 
         trainer_args (dict): Dict of keyword arguments to initialise trainer.
     """
-    
+
     # data pipeline configuration used for generating datamodule
     data_config: DataConfig = DataConfig()
 
     # function or class and needed args to initalize a classifier
-    classifier: Callable  = None
+    classifier: Callable = None
     classifier_args: dict = dict()
 
     # module of the strategy and additional parameters that are not classifier, or datamodule
     learning_strategy_cls: Type[LightningModule] = None
     learning_strategy_args: dict = dict()
 
-    # this is handled entirely in method's lightning 
+    # this is handled entirely in method's lightning
     # module so anything really can be passed in here
     optimizer_cls: Type[Optimizer] | list[Type[Optimizer]] = None
     optimizer_args: dict | list[dict] = dict()
@@ -61,10 +61,13 @@ class MethodConfig(Config):
         # lightning module
         model = cls.learning_strategy_cls(
             datamodule=datamodule,
-            classifier_cls=cls.classifier, classifier_args=cls.classifier_args,
-            optimizer_cls=cls.optimizer_cls, optimizer_args=cls.optimizer_args,
-            scheduler_cls=cls.scheduler_cls, scheduler_args=cls.scheduler_args,
-            **cls.learning_strategy_args
+            classifier_cls=cls.classifier,
+            classifier_args=cls.classifier_args,
+            optimizer_cls=cls.optimizer_cls,
+            optimizer_args=cls.optimizer_args,
+            scheduler_cls=cls.scheduler_cls,
+            scheduler_args=cls.scheduler_args,
+            **cls.learning_strategy_args,
         )
 
         # trainer - needs to be initialised here because seed active needs to be run beforehand

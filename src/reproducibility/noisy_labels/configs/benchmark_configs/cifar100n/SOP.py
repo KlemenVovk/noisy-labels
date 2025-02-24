@@ -7,7 +7,6 @@ from ...base.wrappers import add_index_wrapper
 
 
 class SOP_config(BenchmarkConfigCIFAR100N):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = SOP

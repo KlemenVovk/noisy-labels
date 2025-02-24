@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from configs.benchmark_configs.cifar10n import *
+from configs.benchmark_configs.cifar10n import method_configs
 from utils import update_config, TestCallback
 from noisypy.configs.data.cifar10n import (
     cifar10n_clean_benchmark_config,
@@ -11,24 +11,6 @@ from noisypy.configs.data.cifar10n import (
     cifar10n_random3_benchmark_config,
 )
 
-method_configs = {
-    "CAL": CAL_config,
-    "CE": CE_config,
-    "co_teaching": co_teaching_config,
-    "co_teaching_plus": co_teaching_plus_config,
-    "cores2": cores2_config,
-    "divide_mix": divide_mix_config,
-    "divide_mix_clean": divide_mix_clean_config,
-    "ELR": ELR_config,
-    "ELR_plus": ELR_plus_config,
-    "GCE": GCE_config,
-    "jocor": jocor_config,
-    "PES": PES_config,
-    "PES_semi": PES_semi_config,
-    "SOP": SOP_config,
-    "SOP_plus": SOP_plus_config,
-    "volminnet": volminnet_config,
-}
 
 data_configs = {
     "clean": cifar10n_clean_benchmark_config,
@@ -51,7 +33,10 @@ if __name__ == "__main__":
     )
 
     config = update_config(
-        method_configs[args.method_config], data_configs[args.data_config], args.seed, logdir="../logs/benchmark"
+        method_configs[args.method_config],
+        data_configs[args.data_config],
+        args.seed,
+        logdir="../logs/benchmark",
     )
     model, datamodule, trainer = config.build_modules()
 

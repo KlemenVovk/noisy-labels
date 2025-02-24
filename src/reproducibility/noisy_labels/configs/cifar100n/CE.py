@@ -6,7 +6,6 @@ from ..base.config import CIFAR100NoisyLabelsMethod
 
 
 class CE_config(CIFAR100NoisyLabelsMethod):
-
     learning_strategy_cls = CE
 
     optimizer_cls = SGD

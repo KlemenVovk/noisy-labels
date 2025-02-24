@@ -1,5 +1,5 @@
 from .base import (
-    LearningStrategyModule, 
+    LearningStrategyModule,
     LearningStrategyWithWarmupModule,
     MultiStageLearningStrategyModule,
 )
@@ -18,3 +18,28 @@ from .PESsemi.pes_semi import PES_semi
 from .SOP.sop import SOP
 from .t_revision.t_revision import TRevision
 from .volminnet.volminnet import VolMinNet
+from .pro_mix.pro_mix import ProMix
+
+__all__ = [
+    "LearningStrategyModule",
+    "LearningStrategyWithWarmupModule",
+    "MultiStageLearningStrategyModule",
+    "CAL",
+    "CE",
+    "CoTeaching",
+    "CoTeachingPlus",
+    "SampleSieve",
+    "DivideMix",
+    "ELR",
+    "ELR_plus",
+    "ForwardT",
+    "BackwardT",
+    "GCE",
+    "JoCoR",
+    "PES",
+    "PES_semi",
+    "SOP",
+    "TRevision",
+    "VolMinNet",
+    "ProMix",
+]

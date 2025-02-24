@@ -9,11 +9,9 @@ from noisypy.data.pipelines.index import AddIndex
 
 from .common import CIFAR10, CIFAR10WithExtras, args
 
+
 def test_compose():
-    pipe = Compose([
-        AddIndex(),
-        AddNoise(InstanceNoise(torch.arange(1, 50001)))
-    ])
+    pipe = Compose([AddIndex(), AddNoise(InstanceNoise(torch.arange(1, 50001)))])
     dataset_cls = pipe(CIFAR10WithExtras)
     dataset = dataset_cls(**args)
     sample = dataset[0]
@@ -33,7 +31,8 @@ def test_compose():
 
     # check noise
     for i in range(3):
-        assert dataset[i][1] == i+1
+        assert dataset[i][1] == i + 1
+
 
 def test_identity():
     pipe = Identity()

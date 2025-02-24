@@ -10,29 +10,25 @@ from noisypy.data.pipelines.index import AddIndex
 
 
 class cifar10_clean_index_config(cifar10_base_config):
-
     dataset_train_augmentation = AddIndex()
 
 
 class ELRplus_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_clean_index_config
 
     classifier = PreActResNet18
-    classifier_args = dict(
-        num_classes=10
-    )
+    classifier_args = dict(num_classes=10)
 
     learning_strategy_cls = ELR_plus
     learning_strategy_args = dict(
-        beta = 0.99, # β ∈ {0.5, 0.7, 0.9, 0.99}
-        lmbd=1,      # λ ∈ {1, 3, 5, 7, 10}
-        gamma=0.997, # γ ∈ [0, 1] 
-        alpha=1,     # α ∈ {0, 0.1, 1, 2, 5}
-        ema_update=True, # True or False
+        beta=0.99,  # β ∈ {0.5, 0.7, 0.9, 0.99}
+        lmbd=1,  # λ ∈ {1, 3, 5, 7, 10}
+        gamma=0.997,  # γ ∈ [0, 1]
+        alpha=1,  # α ∈ {0, 0.1, 1, 2, 5}
+        ema_update=True,  # True or False
         ema_step=40000,  # EMA step (in iterations)
         coef_step=0,
-    ) 
+    )
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.0005)
@@ -42,7 +38,7 @@ class ELRplus_cifar10_clean_config(MethodConfig):
     trainer_args = dict(
         max_epochs=200 * 2,
         deterministic=True,
-        logger=CSVLogger("../logs", name="ELRplus_cifar10_clean")
+        logger=CSVLogger("../logs", name="ELRplus_cifar10_clean"),
     )
 
     seed = 1337

@@ -6,7 +6,6 @@ from ..base import BenchmarkConfigCIFAR100N
 
 
 class CE_config(BenchmarkConfigCIFAR100N):
-
     learning_strategy_cls = CE
 
     optimizer_cls = SGD

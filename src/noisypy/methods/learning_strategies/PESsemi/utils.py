@@ -12,50 +12,101 @@ from lightning import LightningDataModule
 from lightning.pytorch.utilities.types import TRAIN_DATALOADERS
 
 
-def linear_rampup(current: float, warm_up: int=20, rampup_length: int=16, lambda_u: float=5):
+def linear_rampup(
+    current: float, warm_up: int = 20, rampup_length: int = 16, lambda_u: float = 5
+):
     current = torch.clip(torch.tensor((current - warm_up) / rampup_length), 0.0, 1.0)
     return lambda_u * current.item()
 
 
-def update_dataloaders(datamodule: LightningDataModule, labeled_dataloader: DataLoader, unlabeled_dataloader: DataLoader):
+def update_dataloaders(
+    datamodule: LightningDataModule,
+    labeled_dataloader: DataLoader,
+    unlabeled_dataloader: DataLoader,
+):
     # This function is used to change the dataloaders of the datamodule.
     # While it might not be the prettiest solution, it is simple and works.
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         return [labeled_dataloader, unlabeled_dataloader]
+
     datamodule.train_dataloader = types.MethodType(train_dataloader, datamodule)
 
 
-def update_train_data_and_criterion(model: Module, train_data: ndarray, noisy_targets: torch.LongTensor, 
-                                    transform_train: transforms.Compose, batch_size: int=128, device: torch.device=torch.device('cuda')):
+def update_train_data_and_criterion(
+    model: Module,
+    train_data: ndarray,
+    noisy_targets: torch.LongTensor,
+    transform_train: transforms.Compose,
+    batch_size: int = 128,
+    device: torch.device = torch.device("cuda"),
+):
     predict_dataset = Semi_Unlabeled_Dataset(train_data, transform_train)
-    predict_loader = DataLoader(dataset=predict_dataset, batch_size=batch_size * 2, 
-                                shuffle=False, num_workers=8, pin_memory=True, drop_last=False)
+    predict_loader = DataLoader(
+        dataset=predict_dataset,
+        batch_size=batch_size * 2,
+        shuffle=False,
+        num_workers=8,
+        pin_memory=True,
+        drop_last=False,
+    )
     soft_outs = predict_softmax(predict_loader, model, device=device)
 
     confident_indexs, unconfident_indexs = split_confident(soft_outs, noisy_targets)
-    confident_dataset = Semi_Labeled_Dataset(train_data[confident_indexs], noisy_targets[confident_indexs], transform_train)
-    unconfident_dataset = Semi_Unlabeled_Dataset(train_data[unconfident_indexs], transform_train)
+    confident_dataset = Semi_Labeled_Dataset(
+        train_data[confident_indexs], noisy_targets[confident_indexs], transform_train
+    )
+    unconfident_dataset = Semi_Unlabeled_Dataset(
+        train_data[unconfident_indexs], transform_train
+    )
 
-    uncon_batch = int(batch_size / 2) if len(unconfident_indexs) > len(confident_indexs) else int(len(unconfident_indexs) / (len(confident_indexs) + len(unconfident_indexs)) * batch_size)
+    uncon_batch = (
+        int(batch_size / 2)
+        if len(unconfident_indexs) > len(confident_indexs)
+        else int(
+            len(unconfident_indexs)
+            / (len(confident_indexs) + len(unconfident_indexs))
+            * batch_size
+        )
+    )
     con_batch = batch_size - uncon_batch
 
-    labeled_trainloader = DataLoader(dataset=confident_dataset, batch_size=con_batch, shuffle=True, num_workers=8, pin_memory=True, drop_last=True)
-    unlabeled_trainloader = DataLoader(dataset=unconfident_dataset, batch_size=uncon_batch, shuffle=True, num_workers=8, pin_memory=True, drop_last=True)
+    labeled_trainloader = DataLoader(
+        dataset=confident_dataset,
+        batch_size=con_batch,
+        shuffle=True,
+        num_workers=8,
+        pin_memory=True,
+        drop_last=True,
+    )
+    unlabeled_trainloader = DataLoader(
+        dataset=unconfident_dataset,
+        batch_size=uncon_batch,
+        shuffle=True,
+        num_workers=8,
+        pin_memory=True,
+        drop_last=True,
+    )
 
     # compute class weights
     bin_counts = torch.bincount(noisy_targets[confident_indexs], minlength=10)
     class_weights = torch.zeros_like(bin_counts, dtype=torch.float32)
-    class_weights[bin_counts != 0] = bin_counts[bin_counts != 0].float().mean() / bin_counts[bin_counts != 0]
-    class_weights[class_weights > 3] = 3.
+    class_weights[bin_counts != 0] = (
+        bin_counts[bin_counts != 0].float().mean() / bin_counts[bin_counts != 0]
+    )
+    class_weights[class_weights > 3] = 3.0
     return labeled_trainloader, unlabeled_trainloader, class_weights.to(device)
 
 
-def predict_softmax(predict_loader: DataLoader, model: Module, device: torch.device = torch.device('cuda')):
+def predict_softmax(
+    predict_loader: DataLoader,
+    model: Module,
+    device: torch.device = torch.device("cuda"),
+):
     model.eval()
     softmax_outs = []
     with torch.no_grad():
-        for images1, images2 in tqdm(predict_loader, desc='Predicting', leave=False):
-            logits1 = model(images1.to(device)) 
+        for images1, images2 in tqdm(predict_loader, desc="Predicting", leave=False):
+            logits1 = model(images1.to(device))
             logits2 = model(images2.to(device))
             outputs = (F.softmax(logits1, dim=1) + F.softmax(logits2, dim=1)) / 2
             softmax_outs.append(outputs)
@@ -101,7 +152,7 @@ class Train_Dataset(Dataset):
 
     def getData(self):
         return self.train_data, self.train_labels
-    
+
 
 class Semi_Labeled_Dataset(Dataset):
     def __init__(self, data, labels, transform=None, target_transform=None):

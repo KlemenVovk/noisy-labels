@@ -20,8 +20,7 @@ class AddNoise(AugmentationPipeline):
         keep_ = self.keep_original
 
         class NoisyDataset(dataset_cls):
-
-            def __init__ (self, *dataset_args, **dataset_kwargs):
+            def __init__(self, *dataset_args, **dataset_kwargs):
                 super().__init__(*dataset_args, **dataset_kwargs)
                 self.noise = noise_
 
@@ -33,7 +32,7 @@ class AddNoise(AugmentationPipeline):
                 # add noise to targets
                 (x, y, *other) = super().__getitem__(index)
                 if keep_:
-                    return x, self.noise(x, y, index), y, *other    
+                    return x, self.noise(x, y, index), y, *other
                 return x, self.noise(x, y, index), *other
 
         return NoisyDataset

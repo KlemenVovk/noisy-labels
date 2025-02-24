@@ -1,7 +1,7 @@
 from typing import Any
 
-class ConfigMeta(type):
 
+class ConfigMeta(type):
     def __new__(cls, clsname, bases, attrs):
         base_attrs = {}
         for base in bases:
@@ -10,7 +10,6 @@ class ConfigMeta(type):
 
 
 class Config(metaclass=ConfigMeta):
-
     @classmethod
     def build_modules(cls) -> Any:
         raise NotImplementedError
@@ -19,5 +18,6 @@ class Config(metaclass=ConfigMeta):
     def update_field(cls, field_name, new_value) -> "Config":
         class UpdatedConfig(cls):
             pass
+
         setattr(UpdatedConfig, field_name, new_value)
         return UpdatedConfig

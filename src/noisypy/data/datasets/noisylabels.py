@@ -25,13 +25,19 @@ class NoisyLabelsLoader:
     }
 
     cifar10_label_names = [
-        "clean_label", "aggre_label", "worse_label",
-        "random_label1", "random_label2", "random_label3"
+        "clean_label",
+        "aggre_label",
+        "worse_label",
+        "random_label1",
+        "random_label2",
+        "random_label3",
     ]
 
     cifar100_label_names = [
-        "clean_label", "noisy_label",
-        "noisy_coarse_label", "clean_coarse_label"
+        "clean_label",
+        "noisy_label",
+        "noisy_coarse_label",
+        "clean_coarse_label",
     ]
 
     @classmethod
@@ -42,10 +48,13 @@ class NoisyLabelsLoader:
     def get_url(cls, dataset: Literal["cifar10", "cifar100"]) -> str:
         return f"https://github.com/UCSC-REAL/cifar-10-100n/raw/main/data/{cls.get_filename(dataset)}"
 
-    def __init__(self, dataset: Literal["cifar10", "cifar100"], dir: str, download: bool) -> None:
+    def __init__(
+        self, dataset: Literal["cifar10", "cifar100"], dir: str, download: bool
+    ) -> None:
         self.dataset = dataset
         self.save_path = Path(dir) / self.get_filename(dataset)
-        if download: self.download()
+        if download:
+            self.download()
 
     def load_all(self) -> Dict[str, Tensor]:
         if self.save_path.exists():
@@ -54,14 +63,21 @@ class NoisyLabelsLoader:
             return noise_dict
         else:
             raise ValueError(f"Cannot find label file at {self.save_path}.")
-    
+
     def load_label(
-            self, 
-            label_name = Literal["clean_label", "aggre_label", "worse_label",
-                                 "random_label1", "random_label2", "random_label3"] # if cifar-10
-                        | Literal["clean_label", "noisy_label",
-                                  "noisy_coarse_label", "clean_coarse_label"] # if cifar-100
-            ) -> Tensor:
+        self,
+        label_name=Literal[
+            "clean_label",
+            "aggre_label",
+            "worse_label",
+            "random_label1",
+            "random_label2",
+            "random_label3",
+        ]  # if cifar-10
+        | Literal[
+            "clean_label", "noisy_label", "noisy_coarse_label", "clean_coarse_label"
+        ],  # if cifar-100
+    ) -> Tensor:
         noise_dict = self.load_all()
         return noise_dict[label_name]
 

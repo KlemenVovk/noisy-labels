@@ -8,7 +8,6 @@ from ..base.wrappers import add_index_wrapper
 
 
 class CAL_config(CIFAR100NoisyLabelsMethod):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = CAL

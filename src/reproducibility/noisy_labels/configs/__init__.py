@@ -20,6 +20,26 @@ from .T_revision import TRevision_config
 from .volminnet import volminnet_config
 from .pro_mix import pro_mix_config
 
+method_configs = {
+    "CAL": CAL_config,
+    "CE": CE_config,
+    "co_teaching": co_teaching_config,
+    "co_teaching_plus": co_teaching_plus_config,
+    "cores2": cores2_config,
+    "divide_mix": divide_mix_config,
+    "divide_mix_clean": divide_mix_clean_config,
+    "ELR": ELR_config,
+    "ELR_plus": ELR_plus_config,
+    "GCE": GCE_config,
+    "jocor": jocor_config,
+    "PES": PES_config,
+    "PES_semi": PES_semi_config,
+    "SOP": SOP_config,
+    "SOP_plus": SOP_plus_config,
+    "volminnet": volminnet_config,
+    "pro_mix": pro_mix_config,
+}
+
 __all__ = [
     "CAL_config",
     "CE_config",
@@ -42,4 +62,5 @@ __all__ = [
     "TRevision_config",
     "volminnet_config",
     "pro_mix_config",
+    "method_configs",
 ]

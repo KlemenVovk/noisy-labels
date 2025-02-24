@@ -6,7 +6,6 @@ from .base.config import NoisyLabelsMethod
 
 
 class PES_semi_config(NoisyLabelsMethod):
-
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
         PES_lr=1e-4,

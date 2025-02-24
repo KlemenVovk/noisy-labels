@@ -3,6 +3,7 @@ from noisypy.data.pipelines.index import AddIndex
 
 from .common import CIFAR10, CIFAR10WithExtras, args
 
+
 def test_simple():
     pipe = AddIndex()
     dataset_cls = pipe(CIFAR10)
@@ -13,9 +14,9 @@ def test_simple():
     assert isinstance(sample[1], int)
     assert isinstance(sample[2], int)
 
-
     assert dataset[0][2] == 0
     assert dataset[1337][2] == 1337
+
 
 def test_extras():
     pipe = AddIndex()

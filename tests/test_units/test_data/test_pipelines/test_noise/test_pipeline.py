@@ -19,7 +19,8 @@ def test_simple():
 
     # check noise
     for i in range(3):
-        assert dataset[i][1] == i+1
+        assert dataset[i][1] == i + 1
+
 
 def test_extras():
     pipe = AddNoise(InstanceNoise(torch.arange(1, 50001)))
@@ -37,7 +38,8 @@ def test_extras():
 
     # check noise
     for i in range(3):
-        assert dataset[i][1] == i+1
+        assert dataset[i][1] == i + 1
+
 
 def test_persistance():
     pipe = AddNoise(InstanceNoise(torch.arange(1, 50001)))
@@ -46,6 +48,6 @@ def test_persistance():
 
     dataset1 = dataset_cls1(**args)
     dataset2 = dataset_cls2(**args)
-    
+
     for i in range(3):
-        assert dataset1[i][1] == dataset2[i][1] == i+1
+        assert dataset1[i][1] == dataset2[i][1] == i + 1

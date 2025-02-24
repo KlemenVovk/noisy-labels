@@ -9,7 +9,6 @@ from ...base.wrappers import add_index_wrapper
 
 
 class co_teaching_config(BenchmarkConfigCIFAR100N):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = CoTeaching

@@ -5,17 +5,20 @@ import torch
 import numpy as np
 from scipy.stats import beta
 
+
 class FMixBase:
-    """ FMix augmentation
-        Args:
-            decay_power (float): Decay power for frequency decay prop 1/f**d
-            alpha (float): Alpha value for beta distribution from which to sample mean of mask
-            size ([int] | [int, int] | [int, int, int]): Shape of desired mask, list up to 3 dims
-            max_soft (float): Softening value between 0 and 0.5 which smooths hard edges in the mask.
-            reformulate (bool): If True, uses the reformulation of [1].
+    """FMix augmentation
+    Args:
+        decay_power (float): Decay power for frequency decay prop 1/f**d
+        alpha (float): Alpha value for beta distribution from which to sample mean of mask
+        size ([int] | [int, int] | [int, int, int]): Shape of desired mask, list up to 3 dims
+        max_soft (float): Softening value between 0 and 0.5 which smooths hard edges in the mask.
+        reformulate (bool): If True, uses the reformulation of [1].
     """
 
-    def __init__(self, decay_power=3, alpha=1, size=(32, 32), max_soft=0.0, reformulate=False):
+    def __init__(
+        self, decay_power=3, alpha=1, size=(32, 32), max_soft=0.0, reformulate=False
+    ):
         super().__init__()
         self.decay_power = decay_power
         self.reformulate = reformulate
@@ -30,6 +33,7 @@ class FMixBase:
 
     def loss(self, *args, **kwargs):
         raise NotImplementedError
+
 
 def fmix_loss(input, y1, index, lam, train=True, reformulate=False):
     r"""Criterion for fmix
@@ -51,35 +55,40 @@ def fmix_loss(input, y1, index, lam, train=True, reformulate=False):
 
 
 class FMix(FMixBase):
-    r""" FMix augmentation
-        Args:
-            decay_power (float): Decay power for frequency decay prop 1/f**d
-            alpha (float): Alpha value for beta distribution from which to sample mean of mask
-            size ([int] | [int, int] | [int, int, int]): Shape of desired mask, list up to 3 dims
-            max_soft (float): Softening value between 0 and 0.5 which smooths hard edges in the mask.
-            reformulate (bool): If True, uses the reformulation of [1].
-        Example
-        -------
-        .. code-block:: python
-            class FMixExp(pl.LightningModule):
-                def __init__(*args, **kwargs):
-                    self.fmix = Fmix(...)
-                    # ...
-                def training_step(self, batch, batch_idx):
-                    x, y = batch
-                    x = self.fmix(x)
-                    feature_maps = self.forward(x)
-                    logits = self.classifier(feature_maps)
-                    loss = self.fmix.loss(logits, y)
-                    # ...
-                    return loss
+    r"""FMix augmentation
+    Args:
+        decay_power (float): Decay power for frequency decay prop 1/f**d
+        alpha (float): Alpha value for beta distribution from which to sample mean of mask
+        size ([int] | [int, int] | [int, int, int]): Shape of desired mask, list up to 3 dims
+        max_soft (float): Softening value between 0 and 0.5 which smooths hard edges in the mask.
+        reformulate (bool): If True, uses the reformulation of [1].
+    Example
+    -------
+    .. code-block:: python
+        class FMixExp(pl.LightningModule):
+            def __init__(*args, **kwargs):
+                self.fmix = Fmix(...)
+                # ...
+            def training_step(self, batch, batch_idx):
+                x, y = batch
+                x = self.fmix(x)
+                feature_maps = self.forward(x)
+                logits = self.classifier(feature_maps)
+                loss = self.fmix.loss(logits, y)
+                # ...
+                return loss
     """
-    def __init__(self, decay_power=3, alpha=1, size=(32, 32), max_soft=0.0, reformulate=False):
+
+    def __init__(
+        self, decay_power=3, alpha=1, size=(32, 32), max_soft=0.0, reformulate=False
+    ):
         super().__init__(decay_power, alpha, size, max_soft, reformulate)
 
     def __call__(self, x):
         # Sample mask and generate random permutation
-        lam, mask = sample_mask(self.alpha, self.decay_power, self.size, self.max_soft, self.reformulate)
+        lam, mask = sample_mask(
+            self.alpha, self.decay_power, self.size, self.max_soft, self.reformulate
+        )
         index = torch.randperm(x.size(0)).to(x.device)
         mask = torch.from_numpy(mask).float().to(x.device)
 
@@ -88,13 +97,14 @@ class FMix(FMixBase):
         x2 = (1 - mask) * x[index]
         self.index = index
         self.lam = lam
-        return x1+x2
+        return x1 + x2
 
     def loss(self, y_pred, y, train=True):
         return fmix_loss(y_pred, y, self.index, self.lam, train, self.reformulate)
-        
+
+
 def fftfreqnd(h, w=None, z=None):
-    """ Get bin values for discrete fourier transform of size (h, w, z)
+    """Get bin values for discrete fourier transform of size (h, w, z)
     :param h: Required, first dimension size
     :param w: Optional, second dimension size
     :param z: Optional, third dimension size
@@ -121,7 +131,7 @@ def fftfreqnd(h, w=None, z=None):
 
 
 def get_spectrum(freqs, decay_power, ch, h, w=0, z=0):
-    """ Samples a fourier image with given size and frequencies decayed by decay power
+    """Samples a fourier image with given size and frequencies decayed by decay power
     :param freqs: Bin values for the discrete fourier transform
     :param decay_power: Decay power for frequency decay prop 1/f**d
     :param ch: Number of channels for the resulting mask
@@ -129,7 +139,9 @@ def get_spectrum(freqs, decay_power, ch, h, w=0, z=0):
     :param w: Optional, second dimension size
     :param z: Optional, third dimension size
     """
-    scale = np.ones(1) / (np.maximum(freqs, np.array([1. / max(w, h, z)])) ** decay_power)
+    scale = np.ones(1) / (
+        np.maximum(freqs, np.array([1.0 / max(w, h, z)])) ** decay_power
+    )
 
     param_size = [ch] + list(freqs.shape) + [2]
     param = np.random.randn(*param_size)
@@ -140,36 +152,36 @@ def get_spectrum(freqs, decay_power, ch, h, w=0, z=0):
 
 
 def make_low_freq_image(decay, shape, ch=1):
-    """ Sample a low frequency image from fourier space
+    """Sample a low frequency image from fourier space
     :param decay_power: Decay power for frequency decay prop 1/f**d
     :param shape: Shape of desired mask, list up to 3 dims
     :param ch: Number of channels for desired mask
     """
     freqs = fftfreqnd(*shape)
-    spectrum = get_spectrum(freqs, decay, ch, *shape)#.reshape((1, *shape[:-1], -1))
+    spectrum = get_spectrum(freqs, decay, ch, *shape)  # .reshape((1, *shape[:-1], -1))
     spectrum = spectrum[:, 0] + 1j * spectrum[:, 1]
     mask = np.real(np.fft.irfftn(spectrum, shape))
 
     if len(shape) == 1:
-        mask = mask[:1, :shape[0]]
+        mask = mask[:1, : shape[0]]
     if len(shape) == 2:
-        mask = mask[:1, :shape[0], :shape[1]]
+        mask = mask[:1, : shape[0], : shape[1]]
     if len(shape) == 3:
-        mask = mask[:1, :shape[0], :shape[1], :shape[2]]
+        mask = mask[:1, : shape[0], : shape[1], : shape[2]]
 
     mask = mask
-    mask = (mask - mask.min())
+    mask = mask - mask.min()
     mask = mask / mask.max()
     return mask
 
 
 def sample_lam(alpha, reformulate=False):
-    """ Sample a lambda from symmetric beta distribution with given alpha
+    """Sample a lambda from symmetric beta distribution with given alpha
     :param alpha: Alpha value for beta distribution
     :param reformulate: If True, uses the reformulation of [1].
     """
     if reformulate:
-        lam = beta.rvs(alpha+1, alpha)
+        lam = beta.rvs(alpha + 1, alpha)
     else:
         lam = beta.rvs(alpha, alpha)
 
@@ -177,7 +189,7 @@ def sample_lam(alpha, reformulate=False):
 
 
 def binarise_mask(mask, lam, in_shape, max_soft=0.0):
-    """ Binarises a given low frequency image such that it has mean lambda.
+    """Binarises a given low frequency image such that it has mean lambda.
     :param mask: Low frequency image, usually the result of `make_low_freq_image`
     :param lam: Mean value of final mask
     :param in_shape: Shape of inputs
@@ -186,11 +198,15 @@ def binarise_mask(mask, lam, in_shape, max_soft=0.0):
     """
     idx = mask.reshape(-1).argsort()[::-1]
     mask = mask.reshape(-1)
-    num = math.ceil(lam * mask.size) if random.random() > 0.5 else math.floor(lam * mask.size)
+    num = (
+        math.ceil(lam * mask.size)
+        if random.random() > 0.5
+        else math.floor(lam * mask.size)
+    )
 
     eff_soft = max_soft
-    if max_soft > lam or max_soft > (1-lam):
-        eff_soft = min(lam, 1-lam)
+    if max_soft > lam or max_soft > (1 - lam):
+        eff_soft = min(lam, 1 - lam)
 
     soft = int(mask.size * eff_soft)
     num_low = num - soft
@@ -205,7 +221,7 @@ def binarise_mask(mask, lam, in_shape, max_soft=0.0):
 
 
 def sample_mask(alpha, decay_power, shape, max_soft=0.0, reformulate=False):
-    """ Samples a mean lambda from beta distribution parametrised by alpha, creates a low frequency image and binarises
+    """Samples a mean lambda from beta distribution parametrised by alpha, creates a low frequency image and binarises
     it based on this lambda
     :param alpha: Alpha value for beta distribution from which to sample mean of mask
     :param decay_power: Decay power for frequency decay prop 1/f**d
@@ -239,7 +255,5 @@ def sample_and_apply(x, alpha, decay_power, shape, max_soft=0.0, reformulate=Fal
     lam, mask = sample_mask(alpha, decay_power, shape, max_soft, reformulate)
     index = np.random.permutation(x.shape[0])
 
-    x1, x2 = x * mask, x[index] * (1-mask)
-    return x1+x2, index, lam
-
-
+    x1, x2 = x * mask, x[index] * (1 - mask)
+    return x1 + x2, index, lam

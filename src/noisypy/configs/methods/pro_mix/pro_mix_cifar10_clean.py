@@ -10,47 +10,39 @@ from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_tran
 
 
 class cifar10_clean_pro_mix_config(cifar10_base_config):
-
     dataset_train_args = [
         dict(mode="all", transform=cifar10_train_transform),
         dict(mode="all", transform=cifar10_train_transform),
     ]
 
-    datamodule_args = dict(
-        batch_size=256,
-        num_workers=2
-    )
+    datamodule_args = dict(batch_size=256, num_workers=2)
 
     dataset_train_augmentation = ProMixify()
 
-    
-class pro_mix_cifar10_clean_config(MethodConfig):
 
+class pro_mix_cifar10_clean_config(MethodConfig):
     data_config = cifar10_clean_pro_mix_config
 
     classifier = resnet34
-    classifier_args = dict(
-        num_classes=10
-    )
+    classifier_args = dict(num_classes=10)
 
     learning_strategy_cls = ProMix
     learning_strategy_args = dict(
-        warmup_epochs=10, 
-        rampup_epochs = 50,
-        noise_type = "clean", 
-        rho_start = 0.2,
-        rho_end = 0.6,
-        debias_beta_pl = 0.8,
-        alpha_output = 0.8,
-        tau = 0.99,
-        start_expand = 250,
-        threshold = 0.9,
-        bias_m = 0.9999,
-        temperature = 0.5, 
-        model_type = "pytorch_resnet",
-        feat_dim = 128,
+        warmup_epochs=10,
+        rampup_epochs=50,
+        noise_type="clean",
+        rho_start=0.2,
+        rho_end=0.6,
+        debias_beta_pl=0.8,
+        alpha_output=0.8,
+        tau=0.99,
+        start_expand=250,
+        threshold=0.9,
+        bias_m=0.9999,
+        temperature=0.5,
+        model_type="pytorch_resnet",
+        feat_dim=128,
     )
-
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.05, momentum=0.9, weight_decay=5e-4)
@@ -60,7 +52,7 @@ class pro_mix_cifar10_clean_config(MethodConfig):
     trainer_args = dict(
         max_epochs=600,
         deterministic=True,
-        logger=CSVLogger("../logs", name="pro_mix_cifar10_clean")
+        logger=CSVLogger("../logs", name="pro_mix_cifar10_clean"),
     )
 
     seed = 1337

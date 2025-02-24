@@ -7,14 +7,10 @@ from ...base.wrappers import add_index_wrapper
 
 
 class ELR_config(BenchmarkConfigCIFAR10N):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = ELR
-    learning_strategy_args = dict(
-        beta=0.7,
-        lmbd=3
-    )
+    learning_strategy_args = dict(beta=0.7, lmbd=3)
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.001)

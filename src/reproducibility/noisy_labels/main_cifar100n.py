@@ -5,24 +5,9 @@ from noisypy.configs.data.cifar100n import (
     cifar100n_noisy_config,
 )
 
-from configs.cifar100n import *
+from configs.cifar100n import method_configs
 from utils import update_config, TestCallback
 
-
-method_configs = {
-    "CAL": CAL_config,
-    "CE": CE_config,
-    "co_teaching": co_teaching_config,
-    "co_teaching_plus": co_teaching_plus_config,
-    "divide_mix": divide_mix_config,
-    "divide_mix_clean": divide_mix_clean_config,
-    "ELR": ELR_config,
-    "ELR_plus": ELR_plus_config,
-    "PES_semi": PES_semi_config,
-    "SOP": SOP_config,
-    "SOP_plus": SOP_plus_config,
-    "volminnet": volminnet_config,
-}
 
 data_configs = {"clean": cifar100n_clean_config, "noisy": cifar100n_noisy_config}
 

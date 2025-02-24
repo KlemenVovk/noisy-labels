@@ -6,7 +6,6 @@ from .base.config import NoisyLabelsMethod
 
 
 class backwardT_config(NoisyLabelsMethod):
-
     learning_strategy_cls = BackwardT
     learning_strategy_args = dict(
         warmup_epochs=0,
