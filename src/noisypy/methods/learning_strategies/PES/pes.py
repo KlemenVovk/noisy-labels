@@ -147,7 +147,9 @@ class PES(LearningStrategyModule):
         for epoch in range(refine_times):
             model.train()
             for batch in tqdm(
-                train_loader, desc=f"Noisy Refine {epoch+1}/{refine_times}", leave=False
+                train_loader,
+                desc=f"Noisy Refine {epoch + 1}/{refine_times}",
+                leave=False,
             ):
                 self.train_step(
                     move_data_to_device(batch, device), model, optimizer_refine

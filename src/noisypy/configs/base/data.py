@@ -113,9 +113,9 @@ def broadcast_init(
     classes: Callable[[Any], object] | list[Callable[[Any], object]],
     kwss: dict | list[dict],
 ) -> list[object]:
-    assert is_broadcastable(
-        classes, kwss
-    ), f"Classes {classes} and kwargs {kwss} are not broadcastable."
+    assert is_broadcastable(classes, kwss), (
+        f"Classes {classes} and kwargs {kwss} are not broadcastable."
+    )
     classes, kwss = ensure_list(classes), ensure_list(kwss)
     if len(classes) == 1:
         if len(kwss) == 1:

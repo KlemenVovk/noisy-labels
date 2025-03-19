@@ -21,9 +21,9 @@ def test_reprod_perf(
 
     for targets in target_dict.values():
         for target in targets:
-            assert (
-                target.hit
-            ), f"{target} @ epoch {target.epoch} was hit with {target.hit_value}"
+            assert target.hit, (
+                f"{target} @ epoch {target.epoch} was hit with {target.hit_value}"
+            )
 
 
 @pytest.mark.parametrize("config, target_dict", [(k, v) for k, v in fw_targets.items()])
@@ -40,6 +40,6 @@ def test_framework_perf(
 
     for targets in target_dict.values():
         for target in targets:
-            assert (
-                target.hit
-            ), f"{target} @ epoch {target.epoch} was hit with {target.hit_value}"
+            assert target.hit, (
+                f"{target} @ epoch {target.epoch} was hit with {target.hit_value}"
+            )

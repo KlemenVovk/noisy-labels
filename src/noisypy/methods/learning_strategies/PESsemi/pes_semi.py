@@ -134,7 +134,9 @@ class PES_semi(LearningStrategyModule):
         model.train()
         for epoch in range(refine_times):
             for batch in tqdm(
-                train_loader, desc=f"Noisy Refine {epoch+1}/{refine_times}", leave=False
+                train_loader,
+                desc=f"Noisy Refine {epoch + 1}/{refine_times}",
+                leave=False,
             ):
                 loss = self.train_step(model, move_data_to_device(batch, device))
                 optimizer_refine.zero_grad()
