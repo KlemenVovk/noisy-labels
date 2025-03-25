@@ -10,6 +10,7 @@ from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_tran
 
 
 class cifar10_clean_pro_mix_config(cifar10_base_config):
+    # NOTE: original codebase uses a different normalization in augmentations
     dataset_train_args = [
         dict(mode="all", transform=cifar10_train_transform),
         dict(mode="all", transform=cifar10_train_transform),
