@@ -2,11 +2,11 @@ from noisypy.methods.learning_strategies.DISC.DISC import DISC
 from torch.optim import SGD
 from torch.optim.lr_scheduler import MultiStepLR
 
-from ..base import BenchmarkConfigCIFAR10N
+from ..base import BenchmarkConfigCIFAR100N
 from ...base.wrappers import disc_aug_wrapper
 
 
-class DISC_config(BenchmarkConfigCIFAR10N):
+class DISC_config(BenchmarkConfigCIFAR100N):
 
     _data_config_wrapper = disc_aug_wrapper
 
@@ -17,7 +17,7 @@ class DISC_config(BenchmarkConfigCIFAR10N):
         sigma=0.5,
         momentum=0.99,
         lambd_ce=1.0,
-        lambd_h=1.0, # 0.2 for larger noise ratios
+        lambd_h=1.0, # 0.2 for larger noise ratios ( > 0.6)
     )
 
     optimizer_cls = SGD
@@ -26,7 +26,7 @@ class DISC_config(BenchmarkConfigCIFAR10N):
     scheduler_args = dict(milestones=[80, 160])
     
     trainer_args = {
-        **BenchmarkConfigCIFAR10N.trainer_args,
+        **BenchmarkConfigCIFAR100N.trainer_args,
         "reload_dataloaders_every_n_epochs": 1,
         "max_epochs": 200,
     }
