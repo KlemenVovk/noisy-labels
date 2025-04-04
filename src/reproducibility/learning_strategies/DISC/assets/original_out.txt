@@ -1,0 +1,1247 @@
+loading config from ./configs/DISC_CIFAR.py ...
+---------- params info: ----------
+algorithm  :  DISC
+dataset  :  cifar-10
+input_channel  :  3
+num_classes  :  10
+root  :  /home/joze/Documents/prog/sala/noisy-labels-everything/2025_ICLR_IES/cifar-10
+noise_type  :  sym
+percent  :  0.2
+seed  :  1
+loss_type  :  ce
+model1_type  :  resnet18
+model2_type  :  none
+gpu  :  0
+batch_size  :  128
+lr  :  0.01
+epochs  :  200
+num_workers  :  4
+adjust_lr  :  1
+epoch_decay_start  :  120
+alpha  :  5.0
+save_result  :  True
+momentum  :  0.99
+---------------------------------
+/home/joze/miniconda3/envs/noisy-env/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:62: UserWarning: The verbose parameter is deprecated. Please use get_last_lr() to access the learning rate.
+  warnings.warn(
+Files already downloaded and verified
+Files already downloaded and verified
+Evaluating ...
+Epoch [0/200] Test Accuracy on the 10000 test images: 9.9860
+Loading labels......
+100%|████████████████████████████████████████████████████████████████████████████████| 391/391 [00:09<00:00, 41.35it/s]
+The labels are loaded!
+The labels are loaded!!!
+Training ...
+Epoch [1/200], loss_sup: 3.6404: 100%|███████████████████████████████████████████████| 391/391 [01:09<00:00,  5.61it/s]
+Clean ratio is 0.8206, clean num is 49831
+Hard ratio is 0.7333, hard num is 30
+Weak selection ratio is 0.5833, weak selection num is 12
+Strong selection ratio is 0.8333, strong selection num is 18
+Selection ratio is 0.8205, selection num is 49861
+Correction ratio is 0.0000, correction num is 48
+Weak ratio is 0.8197, weak num is 49909
+Total ratio is 0.3162
+Evaluating ...
+Epoch [1/200] Test Accuracy on the 10000 test images: 40.9756 %
+Training ...
+Epoch [2/200], loss_sup: 3.3095: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.37it/s]
+Clean ratio is 0.8217, clean num is 49933
+Hard ratio is 0.0000, hard num is 53
+Weak selection ratio is 0.0000, weak selection num is 15
+Strong selection ratio is 0.0000, strong selection num is 38
+Selection ratio is 0.8208, selection num is 49986
+Correction ratio is 0.8333, correction num is 12
+Weak ratio is 0.8208, weak num is 49998
+Total ratio is 0.4846
+Evaluating ...
+Epoch [2/200] Test Accuracy on the 10000 test images: 51.3722 %
+Training ...
+Epoch [3/200], loss_sup: 3.0651: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.36it/s]
+Clean ratio is 0.8312, clean num is 49343
+Hard ratio is 0.0295, hard num is 440
+Weak selection ratio is 0.0808, weak selection num is 99
+Strong selection ratio is 0.0147, strong selection num is 341
+Selection ratio is 0.8241, selection num is 49783
+Correction ratio is 0.9187, correction num is 209
+Weak ratio is 0.8245, weak num is 49992
+Total ratio is 0.5854
+Evaluating ...
+Epoch [3/200] Test Accuracy on the 10000 test images: 58.6739 %
+Training ...
+Epoch [4/200], loss_sup: 2.9588: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.36it/s]
+Clean ratio is 0.8476, clean num is 48333
+Hard ratio is 0.0555, hard num is 973
+Weak selection ratio is 0.1087, weak selection num is 230
+Strong selection ratio is 0.0390, strong selection num is 743
+Selection ratio is 0.8320, selection num is 49306
+Correction ratio is 0.9396, correction num is 646
+Weak ratio is 0.8334, weak num is 49952
+Total ratio is 0.6589
+Evaluating ...
+Epoch [4/200] Test Accuracy on the 10000 test images: 62.7905 %
+Training ...
+Epoch [5/200], loss_sup: 2.8237: 100%|███████████████████████████████████████████████| 391/391 [01:03<00:00,  6.19it/s]
+Clean ratio is 0.8709, clean num is 46972
+Hard ratio is 0.0699, hard num is 1516
+Weak selection ratio is 0.1357, weak selection num is 420
+Strong selection ratio is 0.0447, strong selection num is 1096
+Selection ratio is 0.8458, selection num is 48488
+Correction ratio is 0.9417, correction num is 1355
+Weak ratio is 0.8484, weak num is 49843
+Total ratio is 0.7136
+Evaluating ...
+Epoch [5/200] Test Accuracy on the 10000 test images: 61.0777 %
+Training ...
+Epoch [6/200], loss_sup: 2.7877: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.39it/s]
+Clean ratio is 0.8927, clean num is 45723
+Hard ratio is 0.0987, hard num is 1784
+Weak selection ratio is 0.1904, weak selection num is 541
+Strong selection ratio is 0.0587, strong selection num is 1243
+Selection ratio is 0.8629, selection num is 47507
+Correction ratio is 0.9349, correction num is 2167
+Weak ratio is 0.8660, weak num is 49674
+Total ratio is 0.7501
+Evaluating ...
+Epoch [6/200] Test Accuracy on the 10000 test images: 73.4175 %
+Training ...
+Epoch [7/200], loss_sup: 2.3976: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.39it/s]
+Clean ratio is 0.9124, clean num is 44612
+Hard ratio is 0.1325, hard num is 1977
+Weak selection ratio is 0.2251, weak selection num is 693
+Strong selection ratio is 0.0826, strong selection num is 1284
+Selection ratio is 0.8793, selection num is 46589
+Correction ratio is 0.9375, correction num is 2897
+Weak ratio is 0.8827, weak num is 49486
+Total ratio is 0.7750
+Evaluating ...
+Epoch [7/200] Test Accuracy on the 10000 test images: 71.3341 %
+Training ...
+Epoch [8/200], loss_sup: 2.4796: 100%|███████████████████████████████████████████████| 391/391 [01:01<00:00,  6.39it/s]
+Clean ratio is 0.9297, clean num is 43634
+Hard ratio is 0.1779, hard num is 2018
+Weak selection ratio is 0.3060, weak selection num is 732
+Strong selection ratio is 0.1050, strong selection num is 1286
+Selection ratio is 0.8964, selection num is 45652
+Correction ratio is 0.9327, correction num is 3535
+Weak ratio is 0.8990, weak num is 49187
+Total ratio is 0.7925
+Evaluating ...
+Epoch [8/200] Test Accuracy on the 10000 test images: 76.0116 %
+Training ...
+Epoch [9/200], loss_sup: 2.3519:  37%|█████████████████▌                             | 146/391 [00:24<00:38,  6.34it/s]Backend tkagg is interactive backend. Turning interactive mode on.
+Epoch [9/200], loss_sup: 2.3147: 100%|███████████████████████████████████████████████| 391/391 [02:14<00:00,  2.90it/s]
+Clean ratio is 0.9418, clean num is 42918
+Hard ratio is 0.2397, hard num is 2023
+Weak selection ratio is 0.4032, weak selection num is 811
+Strong selection ratio is 0.1304, strong selection num is 1212
+Selection ratio is 0.9102, selection num is 44941
+Correction ratio is 0.9312, correction num is 4056
+Weak ratio is 0.9120, weak num is 48997
+Total ratio is 0.8097
+Evaluating ...
+Epoch [9/200] Test Accuracy on the 10000 test images: 77.5140 %
+Training ...
+Epoch [10/200], loss_sup: 2.7034: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.39it/s]
+Clean ratio is 0.9518, clean num is 42330
+Hard ratio is 0.2897, hard num is 1988
+Weak selection ratio is 0.4369, weak selection num is 879
+Strong selection ratio is 0.1731, strong selection num is 1109
+Selection ratio is 0.9221, selection num is 44318
+Correction ratio is 0.9305, correction num is 4546
+Weak ratio is 0.9229, weak num is 48864
+Total ratio is 0.8236
+Evaluating ...
+Epoch [10/200] Test Accuracy on the 10000 test images: 77.1234 %
+Training ...
+Epoch [11/200], loss_sup: 2.3941: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.39it/s]
+Clean ratio is 0.9592, clean num is 41826
+Hard ratio is 0.3516, hard num is 1988
+Weak selection ratio is 0.5413, weak selection num is 920
+Strong selection ratio is 0.1882, strong selection num is 1068
+Selection ratio is 0.9316, selection num is 43814
+Correction ratio is 0.9301, correction num is 4824
+Weak ratio is 0.9315, weak num is 48638
+Total ratio is 0.8328
+Evaluating ...
+Epoch [11/200] Test Accuracy on the 10000 test images: 75.4307 %
+Training ...
+Epoch [12/200], loss_sup: 2.5336: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.38it/s]
+Clean ratio is 0.9652, clean num is 41413
+Hard ratio is 0.4143, hard num is 1989
+Weak selection ratio is 0.6056, weak selection num is 961
+Strong selection ratio is 0.2354, strong selection num is 1028
+Selection ratio is 0.9400, selection num is 43402
+Correction ratio is 0.9274, correction num is 5094
+Weak ratio is 0.9387, weak num is 48496
+Total ratio is 0.8454
+Evaluating ...
+Epoch [12/200] Test Accuracy on the 10000 test images: 81.3301 %
+Training ...
+Epoch [13/200], loss_sup: 2.3922: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.38it/s]
+Clean ratio is 0.9693, clean num is 41161
+Hard ratio is 0.4630, hard num is 1853
+Weak selection ratio is 0.6454, weak selection num is 939
+Strong selection ratio is 0.2757, strong selection num is 914
+Selection ratio is 0.9475, selection num is 43014
+Correction ratio is 0.9287, correction num is 5383
+Weak ratio is 0.9454, weak num is 48397
+Total ratio is 0.8529
+Evaluating ...
+Epoch [13/200] Test Accuracy on the 10000 test images: 78.9864 %
+Training ...
+Epoch [14/200], loss_sup: 2.4396: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.37it/s]
+Clean ratio is 0.9728, clean num is 40756
+Hard ratio is 0.5089, hard num is 2075
+Weak selection ratio is 0.6760, weak selection num is 1145
+Strong selection ratio is 0.3032, strong selection num is 930
+Selection ratio is 0.9503, selection num is 42831
+Correction ratio is 0.9235, correction num is 5461
+Weak ratio is 0.9473, weak num is 48292
+Total ratio is 0.8605
+Evaluating ...
+Epoch [14/200] Test Accuracy on the 10000 test images: 79.0865 %
+Training ...
+Epoch [15/200], loss_sup: 2.4978: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.37it/s]
+Clean ratio is 0.9761, clean num is 40592
+Hard ratio is 0.5365, hard num is 2011
+Weak selection ratio is 0.6999, weak selection num is 1103
+Strong selection ratio is 0.3381, strong selection num is 908
+Selection ratio is 0.9554, selection num is 42603
+Correction ratio is 0.9293, correction num is 5602
+Weak ratio is 0.9523, weak num is 48205
+Total ratio is 0.8673
+Evaluating ...
+Epoch [15/200] Test Accuracy on the 10000 test images: 82.5821 %
+Training ...
+Epoch [16/200], loss_sup: 1.8810: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.37it/s]
+Clean ratio is 0.9783, clean num is 40319
+Hard ratio is 0.5811, hard num is 2091
+Weak selection ratio is 0.7293, weak selection num is 1193
+Strong selection ratio is 0.3842, strong selection num is 898
+Selection ratio is 0.9587, selection num is 42410
+Correction ratio is 0.9260, correction num is 5715
+Weak ratio is 0.9548, weak num is 48125
+Total ratio is 0.8734
+Evaluating ...
+Epoch [16/200] Test Accuracy on the 10000 test images: 84.2348 %
+Training ...
+Epoch [17/200], loss_sup: 2.2983: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.38it/s]
+Clean ratio is 0.9796, clean num is 40180
+Hard ratio is 0.6076, hard num is 2123
+Weak selection ratio is 0.7540, weak selection num is 1264
+Strong selection ratio is 0.3923, strong selection num is 859
+Selection ratio is 0.9609, selection num is 42303
+Correction ratio is 0.9319, correction num is 5745
+Weak ratio is 0.9575, weak num is 48048
+Total ratio is 0.8796
+Evaluating ...
+Epoch [17/200] Test Accuracy on the 10000 test images: 82.6222 %
+Training ...
+Epoch [18/200], loss_sup: 2.3629: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.38it/s]
+Clean ratio is 0.9805, clean num is 40001
+Hard ratio is 0.6274, hard num is 2190
+Weak selection ratio is 0.7553, weak selection num is 1328
+Strong selection ratio is 0.4304, strong selection num is 862
+Selection ratio is 0.9621, selection num is 42191
+Correction ratio is 0.9232, correction num is 5822
+Weak ratio is 0.9574, weak num is 48013
+Total ratio is 0.8820
+Evaluating ...
+Epoch [18/200] Test Accuracy on the 10000 test images: 84.5052 %
+Training ...
+Epoch [19/200], loss_sup: 2.1816: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.37it/s]
+Clean ratio is 0.9826, clean num is 39849
+Hard ratio is 0.6581, hard num is 2255
+Weak selection ratio is 0.7866, weak selection num is 1429
+Strong selection ratio is 0.4358, strong selection num is 826
+Selection ratio is 0.9653, selection num is 42104
+Correction ratio is 0.9327, correction num is 5914
+Weak ratio is 0.9612, weak num is 48018
+Total ratio is 0.8886
+Evaluating ...
+Epoch [19/200] Test Accuracy on the 10000 test images: 85.0160 %
+Training ...
+Epoch [20/200], loss_sup: 2.3685: 100%|██████████████████████████████████████████████| 391/391 [01:01<00:00,  6.38it/s]
+Clean ratio is 0.9826, clean num is 39699
+Hard ratio is 0.6803, hard num is 2327
+Weak selection ratio is 0.8009, weak selection num is 1532
+Strong selection ratio is 0.4478, strong selection num is 795
+Selection ratio is 0.9658, selection num is 42026
+Correction ratio is 0.9295, correction num is 5929
+Weak ratio is 0.9613, weak num is 47955
+Total ratio is 0.8904
+Evaluating ...
+Epoch [20/200] Test Accuracy on the 10000 test images: 83.9042 %
+Training ...
+Epoch [21/200], loss_sup: 3.6378: 100%|██████████████████████████████████████████████| 391/391 [02:34<00:00,  2.53it/s]
+Clean ratio is 0.9848, clean num is 39603
+Hard ratio is 0.6926, hard num is 2189
+Weak selection ratio is 0.8245, weak selection num is 1402
+Strong selection ratio is 0.4574, strong selection num is 787
+Selection ratio is 0.9695, selection num is 41792
+Correction ratio is 0.9209, correction num is 6260
+Weak ratio is 0.9632, weak num is 48052
+Total ratio is 0.8873
+Evaluating ...
+Epoch [21/200] Test Accuracy on the 10000 test images: 79.8778 %
+Training ...
+Epoch [22/200], loss_sup: 4.2680: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.21it/s]
+Clean ratio is 0.9882, clean num is 39210
+Hard ratio is 0.7505, hard num is 2188
+Weak selection ratio is 0.8541, weak selection num is 1460
+Strong selection ratio is 0.5426, strong selection num is 728
+Selection ratio is 0.9757, selection num is 41398
+Correction ratio is 0.9013, correction num is 7004
+Weak ratio is 0.9649, weak num is 48402
+Total ratio is 0.8965
+Evaluating ...
+Epoch [22/200] Test Accuracy on the 10000 test images: 85.8474 %
+Training ...
+Epoch [23/200], loss_sup: 2.7969: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.20it/s]
+Clean ratio is 0.9901, clean num is 38977
+Hard ratio is 0.7768, hard num is 2240
+Weak selection ratio is 0.8663, weak selection num is 1481
+Strong selection ratio is 0.6021, strong selection num is 759
+Selection ratio is 0.9785, selection num is 41217
+Correction ratio is 0.8909, correction num is 7390
+Weak ratio is 0.9652, weak num is 48607
+Total ratio is 0.9013
+Evaluating ...
+Epoch [23/200] Test Accuracy on the 10000 test images: 86.7788 %
+Training ...
+Epoch [24/200], loss_sup: 3.0963: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9914, clean num is 38800
+Hard ratio is 0.8040, hard num is 2270
+Weak selection ratio is 0.8942, weak selection num is 1513
+Strong selection ratio is 0.6235, strong selection num is 757
+Selection ratio is 0.9811, selection num is 41070
+Correction ratio is 0.8845, correction num is 7748
+Weak ratio is 0.9658, weak num is 48818
+Total ratio is 0.9071
+Evaluating ...
+Epoch [24/200] Test Accuracy on the 10000 test images: 86.8790 %
+Training ...
+Epoch [25/200], loss_sup: 3.4879: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.18it/s]
+Clean ratio is 0.9927, clean num is 38628
+Hard ratio is 0.8215, hard num is 2241
+Weak selection ratio is 0.9028, weak selection num is 1544
+Strong selection ratio is 0.6413, strong selection num is 697
+Selection ratio is 0.9833, selection num is 40869
+Correction ratio is 0.8826, correction num is 7872
+Weak ratio is 0.9671, weak num is 48741
+Total ratio is 0.9123
+Evaluating ...
+Epoch [25/200] Test Accuracy on the 10000 test images: 81.0897 %
+Training ...
+Epoch [26/200], loss_sup: 3.3606: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.19it/s]
+Clean ratio is 0.9931, clean num is 38700
+Hard ratio is 0.8227, hard num is 2200
+Weak selection ratio is 0.8988, weak selection num is 1541
+Strong selection ratio is 0.6449, strong selection num is 659
+Selection ratio is 0.9840, selection num is 40900
+Correction ratio is 0.8895, correction num is 7927
+Weak ratio is 0.9686, weak num is 48827
+Total ratio is 0.9193
+Evaluating ...
+Epoch [26/200] Test Accuracy on the 10000 test images: 88.6018 %
+Training ...
+Epoch [27/200], loss_sup: 2.9644: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9929, clean num is 38638
+Hard ratio is 0.8513, hard num is 2212
+Weak selection ratio is 0.9090, weak selection num is 1571
+Strong selection ratio is 0.7098, strong selection num is 641
+Selection ratio is 0.9853, selection num is 40850
+Correction ratio is 0.8871, correction num is 8027
+Weak ratio is 0.9691, weak num is 48877
+Total ratio is 0.9212
+Evaluating ...
+Epoch [27/200] Test Accuracy on the 10000 test images: 89.8237 %
+Training ...
+Epoch [28/200], loss_sup: 3.6117: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9938, clean num is 38632
+Hard ratio is 0.8438, hard num is 2208
+Weak selection ratio is 0.9132, weak selection num is 1533
+Strong selection ratio is 0.6859, strong selection num is 675
+Selection ratio is 0.9857, selection num is 40840
+Correction ratio is 0.8933, correction num is 7991
+Weak ratio is 0.9706, weak num is 48831
+Total ratio is 0.9250
+Evaluating ...
+Epoch [28/200] Test Accuracy on the 10000 test images: 88.1310 %
+Training ...
+Epoch [29/200], loss_sup: 3.2436: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9939, clean num is 38679
+Hard ratio is 0.8588, hard num is 2097
+Weak selection ratio is 0.9269, weak selection num is 1519
+Strong selection ratio is 0.6799, strong selection num is 578
+Selection ratio is 0.9870, selection num is 40776
+Correction ratio is 0.8862, correction num is 8135
+Weak ratio is 0.9702, weak num is 48911
+Total ratio is 0.9285
+Evaluating ...
+Epoch [29/200] Test Accuracy on the 10000 test images: 85.4367 %
+Training ...
+Epoch [30/200], loss_sup: 4.6825: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9937, clean num is 38698
+Hard ratio is 0.8578, hard num is 2089
+Weak selection ratio is 0.9179, weak selection num is 1510
+Strong selection ratio is 0.7012, strong selection num is 579
+Selection ratio is 0.9867, selection num is 40787
+Correction ratio is 0.8951, correction num is 8019
+Weak ratio is 0.9717, weak num is 48806
+Total ratio is 0.9314
+Evaluating ...
+Epoch [30/200] Test Accuracy on the 10000 test images: 68.3994 %
+Training ...
+Epoch [31/200], loss_sup: 3.4837: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9939, clean num is 38584
+Hard ratio is 0.8711, hard num is 2188
+Weak selection ratio is 0.9353, weak selection num is 1607
+Strong selection ratio is 0.6936, strong selection num is 581
+Selection ratio is 0.9873, selection num is 40772
+Correction ratio is 0.8979, correction num is 8035
+Weak ratio is 0.9726, weak num is 48807
+Total ratio is 0.9333
+Evaluating ...
+Epoch [31/200] Test Accuracy on the 10000 test images: 89.7035 %
+Training ...
+Epoch [32/200], loss_sup: 3.2194: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9938, clean num is 38713
+Hard ratio is 0.8762, hard num is 2027
+Weak selection ratio is 0.9380, weak selection num is 1499
+Strong selection ratio is 0.7008, strong selection num is 528
+Selection ratio is 0.9880, selection num is 40740
+Correction ratio is 0.8967, correction num is 8070
+Weak ratio is 0.9729, weak num is 48810
+Total ratio is 0.9359
+Evaluating ...
+Epoch [32/200] Test Accuracy on the 10000 test images: 89.2829 %
+Training ...
+Epoch [33/200], loss_sup: 3.3682: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9955, clean num is 38591
+Hard ratio is 0.8733, hard num is 2123
+Weak selection ratio is 0.9325, weak selection num is 1555
+Strong selection ratio is 0.7113, strong selection num is 568
+Selection ratio is 0.9891, selection num is 40714
+Correction ratio is 0.8988, correction num is 8188
+Weak ratio is 0.9740, weak num is 48902
+Total ratio is 0.9380
+Evaluating ...
+Epoch [33/200] Test Accuracy on the 10000 test images: 88.3313 %
+Training ...
+Epoch [34/200], loss_sup: 2.7232: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9951, clean num is 38658
+Hard ratio is 0.8716, hard num is 2087
+Weak selection ratio is 0.9292, weak selection num is 1539
+Strong selection ratio is 0.7099, strong selection num is 548
+Selection ratio is 0.9888, selection num is 40745
+Correction ratio is 0.9041, correction num is 8043
+Weak ratio is 0.9749, weak num is 48788
+Total ratio is 0.9402
+Evaluating ...
+Epoch [34/200] Test Accuracy on the 10000 test images: 89.1727 %
+Training ...
+Epoch [35/200], loss_sup: 3.1262: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9950, clean num is 38666
+Hard ratio is 0.8885, hard num is 2062
+Weak selection ratio is 0.9364, weak selection num is 1556
+Strong selection ratio is 0.7411, strong selection num is 506
+Selection ratio is 0.9896, selection num is 40728
+Correction ratio is 0.9030, correction num is 8043
+Weak ratio is 0.9753, weak num is 48771
+Total ratio is 0.9414
+Evaluating ...
+Epoch [35/200] Test Accuracy on the 10000 test images: 90.8854 %
+Training ...
+Epoch [36/200], loss_sup: 3.2108: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9952, clean num is 38619
+Hard ratio is 0.8853, hard num is 2093
+Weak selection ratio is 0.9316, weak selection num is 1564
+Strong selection ratio is 0.7486, strong selection num is 529
+Selection ratio is 0.9896, selection num is 40712
+Correction ratio is 0.9055, correction num is 8096
+Weak ratio is 0.9756, weak num is 48808
+Total ratio is 0.9430
+Evaluating ...
+Epoch [36/200] Test Accuracy on the 10000 test images: 86.2981 %
+Training ...
+Epoch [37/200], loss_sup: 2.7873: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.18it/s]
+Clean ratio is 0.9951, clean num is 38662
+Hard ratio is 0.8910, hard num is 2074
+Weak selection ratio is 0.9425, weak selection num is 1565
+Strong selection ratio is 0.7328, strong selection num is 509
+Selection ratio is 0.9898, selection num is 40736
+Correction ratio is 0.9092, correction num is 8053
+Weak ratio is 0.9765, weak num is 48789
+Total ratio is 0.9449
+Evaluating ...
+Epoch [37/200] Test Accuracy on the 10000 test images: 87.1995 %
+Training ...
+Epoch [38/200], loss_sup: 2.6720: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9957, clean num is 38654
+Hard ratio is 0.8928, hard num is 2042
+Weak selection ratio is 0.9389, weak selection num is 1538
+Strong selection ratio is 0.7520, strong selection num is 504
+Selection ratio is 0.9905, selection num is 40696
+Correction ratio is 0.9074, correction num is 8102
+Weak ratio is 0.9767, weak num is 48798
+Total ratio is 0.9458
+Evaluating ...
+Epoch [38/200] Test Accuracy on the 10000 test images: 90.9455 %
+Training ...
+Epoch [39/200], loss_sup: 2.8458: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9955, clean num is 38628
+Hard ratio is 0.8937, hard num is 2079
+Weak selection ratio is 0.9335, weak selection num is 1579
+Strong selection ratio is 0.7680, strong selection num is 500
+Selection ratio is 0.9903, selection num is 40707
+Correction ratio is 0.9069, correction num is 8045
+Weak ratio is 0.9765, weak num is 48752
+Total ratio is 0.9470
+Evaluating ...
+Epoch [39/200] Test Accuracy on the 10000 test images: 91.8369 %
+Training ...
+Epoch [40/200], loss_sup: 2.2842: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.23it/s]
+Clean ratio is 0.9957, clean num is 38710
+Hard ratio is 0.8934, hard num is 2026
+Weak selection ratio is 0.9424, weak selection num is 1510
+Strong selection ratio is 0.7500, strong selection num is 516
+Selection ratio is 0.9906, selection num is 40736
+Correction ratio is 0.9149, correction num is 8027
+Weak ratio is 0.9781, weak num is 48763
+Total ratio is 0.9491
+Evaluating ...
+Epoch [40/200] Test Accuracy on the 10000 test images: 91.1158 %
+Training ...
+Epoch [41/200], loss_sup: 2.9712: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.23it/s]
+Clean ratio is 0.9957, clean num is 38630
+Hard ratio is 0.8966, hard num is 2069
+Weak selection ratio is 0.9379, weak selection num is 1579
+Strong selection ratio is 0.7633, strong selection num is 490
+Selection ratio is 0.9906, selection num is 40699
+Correction ratio is 0.9155, correction num is 7964
+Weak ratio is 0.9783, weak num is 48663
+Total ratio is 0.9481
+Evaluating ...
+Epoch [41/200] Test Accuracy on the 10000 test images: 87.8105 %
+Training ...
+Epoch [42/200], loss_sup: 2.9697: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9956, clean num is 38674
+Hard ratio is 0.9057, hard num is 2025
+Weak selection ratio is 0.9490, weak selection num is 1550
+Strong selection ratio is 0.7642, strong selection num is 475
+Selection ratio is 0.9911, selection num is 40699
+Correction ratio is 0.9144, correction num is 8077
+Weak ratio is 0.9784, weak num is 48776
+Total ratio is 0.9506
+Evaluating ...
+Epoch [42/200] Test Accuracy on the 10000 test images: 88.5417 %
+Training ...
+Epoch [43/200], loss_sup: 3.0818: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.23it/s]
+Clean ratio is 0.9960, clean num is 38599
+Hard ratio is 0.8996, hard num is 2091
+Weak selection ratio is 0.9419, weak selection num is 1601
+Strong selection ratio is 0.7612, strong selection num is 490
+Selection ratio is 0.9911, selection num is 40690
+Correction ratio is 0.9156, correction num is 7999
+Weak ratio is 0.9787, weak num is 48689
+Total ratio is 0.9501
+Evaluating ...
+Epoch [43/200] Test Accuracy on the 10000 test images: 88.7119 %
+Training ...
+Epoch [44/200], loss_sup: 3.5634: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9959, clean num is 38597
+Hard ratio is 0.9133, hard num is 2042
+Weak selection ratio is 0.9493, weak selection num is 1578
+Strong selection ratio is 0.7909, strong selection num is 464
+Selection ratio is 0.9918, selection num is 40639
+Correction ratio is 0.9198, correction num is 7991
+Weak ratio is 0.9800, weak num is 48630
+Total ratio is 0.9515
+Evaluating ...
+Epoch [44/200] Test Accuracy on the 10000 test images: 90.9155 %
+Training ...
+Epoch [45/200], loss_sup: 2.3674: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9958, clean num is 38594
+Hard ratio is 0.9128, hard num is 2086
+Weak selection ratio is 0.9570, weak selection num is 1606
+Strong selection ratio is 0.7646, strong selection num is 480
+Selection ratio is 0.9915, selection num is 40680
+Correction ratio is 0.9162, correction num is 7980
+Weak ratio is 0.9791, weak num is 48660
+Total ratio is 0.9513
+Evaluating ...
+Epoch [45/200] Test Accuracy on the 10000 test images: 86.2079 %
+Training ...
+Epoch [46/200], loss_sup: 2.7121: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.23it/s]
+Clean ratio is 0.9954, clean num is 38652
+Hard ratio is 0.9106, hard num is 2024
+Weak selection ratio is 0.9519, weak selection num is 1558
+Strong selection ratio is 0.7725, strong selection num is 466
+Selection ratio is 0.9912, selection num is 40676
+Correction ratio is 0.9209, correction num is 7960
+Weak ratio is 0.9797, weak num is 48636
+Total ratio is 0.9536
+Evaluating ...
+Epoch [46/200] Test Accuracy on the 10000 test images: 90.4748 %
+Training ...
+Epoch [47/200], loss_sup: 2.9891: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9957, clean num is 38606
+Hard ratio is 0.9191, hard num is 2053
+Weak selection ratio is 0.9552, weak selection num is 1584
+Strong selection ratio is 0.7974, strong selection num is 469
+Selection ratio is 0.9918, selection num is 40659
+Correction ratio is 0.9228, correction num is 7924
+Weak ratio is 0.9806, weak num is 48583
+Total ratio is 0.9530
+Evaluating ...
+Epoch [47/200] Test Accuracy on the 10000 test images: 90.3145 %
+Training ...
+Epoch [48/200], loss_sup: 2.6452: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9959, clean num is 38596
+Hard ratio is 0.9098, hard num is 2095
+Weak selection ratio is 0.9483, weak selection num is 1624
+Strong selection ratio is 0.7771, strong selection num is 471
+Selection ratio is 0.9915, selection num is 40691
+Correction ratio is 0.9238, correction num is 7953
+Weak ratio is 0.9804, weak num is 48644
+Total ratio is 0.9547
+Evaluating ...
+Epoch [48/200] Test Accuracy on the 10000 test images: 84.6655 %
+Training ...
+Epoch [49/200], loss_sup: 2.9388: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9958, clean num is 38636
+Hard ratio is 0.9167, hard num is 2041
+Weak selection ratio is 0.9555, weak selection num is 1618
+Strong selection ratio is 0.7683, strong selection num is 423
+Selection ratio is 0.9918, selection num is 40677
+Correction ratio is 0.9244, correction num is 7832
+Weak ratio is 0.9810, weak num is 48509
+Total ratio is 0.9551
+Evaluating ...
+Epoch [49/200] Test Accuracy on the 10000 test images: 89.2829 %
+Training ...
+Epoch [50/200], loss_sup: 2.9085: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9961, clean num is 38575
+Hard ratio is 0.9166, hard num is 2099
+Weak selection ratio is 0.9506, weak selection num is 1620
+Strong selection ratio is 0.8017, strong selection num is 479
+Selection ratio is 0.9920, selection num is 40674
+Correction ratio is 0.9271, correction num is 7874
+Weak ratio is 0.9815, weak num is 48548
+Total ratio is 0.9543
+Evaluating ...
+Epoch [50/200] Test Accuracy on the 10000 test images: 90.8554 %
+Training ...
+Epoch [51/200], loss_sup: 2.7066: 100%|██████████████████████████████████████████████| 391/391 [02:04<00:00,  3.15it/s]
+Clean ratio is 0.9961, clean num is 38493
+Hard ratio is 0.9203, hard num is 2158
+Weak selection ratio is 0.9549, weak selection num is 1684
+Strong selection ratio is 0.7975, strong selection num is 474
+Selection ratio is 0.9920, selection num is 40651
+Correction ratio is 0.9260, correction num is 7779
+Weak ratio is 0.9814, weak num is 48430
+Total ratio is 0.9551
+Evaluating ...
+Epoch [51/200] Test Accuracy on the 10000 test images: 92.2977 %
+Training ...
+Epoch [52/200], loss_sup: 2.9972: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9958, clean num is 38571
+Hard ratio is 0.9308, hard num is 2053
+Weak selection ratio is 0.9620, weak selection num is 1606
+Strong selection ratio is 0.8188, strong selection num is 447
+Selection ratio is 0.9925, selection num is 40624
+Correction ratio is 0.9248, correction num is 7882
+Weak ratio is 0.9815, weak num is 48506
+Total ratio is 0.9565
+Evaluating ...
+Epoch [52/200] Test Accuracy on the 10000 test images: 88.3413 %
+Training ...
+Epoch [53/200], loss_sup: 2.3411: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9960, clean num is 38617
+Hard ratio is 0.9249, hard num is 2023
+Weak selection ratio is 0.9591, weak selection num is 1565
+Strong selection ratio is 0.8079, strong selection num is 458
+Selection ratio is 0.9925, selection num is 40640
+Correction ratio is 0.9270, correction num is 7742
+Weak ratio is 0.9820, weak num is 48382
+Total ratio is 0.9556
+Evaluating ...
+Epoch [53/200] Test Accuracy on the 10000 test images: 87.8205 %
+Training ...
+Epoch [54/200], loss_sup: 2.7879: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9960, clean num is 38600
+Hard ratio is 0.9259, hard num is 2078
+Weak selection ratio is 0.9615, weak selection num is 1662
+Strong selection ratio is 0.7837, strong selection num is 416
+Selection ratio is 0.9924, selection num is 40678
+Correction ratio is 0.9323, correction num is 7757
+Weak ratio is 0.9828, weak num is 48435
+Total ratio is 0.9581
+Evaluating ...
+Epoch [54/200] Test Accuracy on the 10000 test images: 90.2845 %
+Training ...
+Epoch [55/200], loss_sup: 2.8125: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9961, clean num is 38597
+Hard ratio is 0.9272, hard num is 2075
+Weak selection ratio is 0.9591, weak selection num is 1638
+Strong selection ratio is 0.8078, strong selection num is 437
+Selection ratio is 0.9926, selection num is 40672
+Correction ratio is 0.9347, correction num is 7821
+Weak ratio is 0.9833, weak num is 48493
+Total ratio is 0.9584
+Evaluating ...
+Epoch [55/200] Test Accuracy on the 10000 test images: 88.0509 %
+Training ...
+Epoch [56/200], loss_sup: 2.7758: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9959, clean num is 38551
+Hard ratio is 0.9270, hard num is 2095
+Weak selection ratio is 0.9597, weak selection num is 1613
+Strong selection ratio is 0.8174, strong selection num is 482
+Selection ratio is 0.9924, selection num is 40646
+Correction ratio is 0.9305, correction num is 7703
+Weak ratio is 0.9825, weak num is 48349
+Total ratio is 0.9572
+Evaluating ...
+Epoch [56/200] Test Accuracy on the 10000 test images: 91.8770 %
+Training ...
+Epoch [57/200], loss_sup: 2.9718: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9961, clean num is 38531
+Hard ratio is 0.9303, hard num is 2138
+Weak selection ratio is 0.9579, weak selection num is 1687
+Strong selection ratio is 0.8271, strong selection num is 451
+Selection ratio is 0.9926, selection num is 40669
+Correction ratio is 0.9386, correction num is 7490
+Weak ratio is 0.9842, weak num is 48159
+Total ratio is 0.9576
+Evaluating ...
+Epoch [57/200] Test Accuracy on the 10000 test images: 91.5465 %
+Training ...
+Epoch [58/200], loss_sup: 2.5970: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9961, clean num is 38570
+Hard ratio is 0.9309, hard num is 2085
+Weak selection ratio is 0.9605, weak selection num is 1644
+Strong selection ratio is 0.8209, strong selection num is 441
+Selection ratio is 0.9928, selection num is 40655
+Correction ratio is 0.9327, correction num is 7625
+Weak ratio is 0.9833, weak num is 48280
+Total ratio is 0.9592
+Evaluating ...
+Epoch [58/200] Test Accuracy on the 10000 test images: 90.6450 %
+Training ...
+Epoch [59/200], loss_sup: 2.8807: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9957, clean num is 38609
+Hard ratio is 0.9323, hard num is 2054
+Weak selection ratio is 0.9606, weak selection num is 1623
+Strong selection ratio is 0.8260, strong selection num is 431
+Selection ratio is 0.9925, selection num is 40663
+Correction ratio is 0.9367, correction num is 7616
+Weak ratio is 0.9837, weak num is 48279
+Total ratio is 0.9586
+Evaluating ...
+Epoch [59/200] Test Accuracy on the 10000 test images: 91.6667 %
+Training ...
+Epoch [60/200], loss_sup: 2.8487: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9963, clean num is 38539
+Hard ratio is 0.9270, hard num is 2122
+Weak selection ratio is 0.9536, weak selection num is 1680
+Strong selection ratio is 0.8258, strong selection num is 442
+Selection ratio is 0.9926, selection num is 40661
+Correction ratio is 0.9350, correction num is 7726
+Weak ratio is 0.9834, weak num is 48387
+Total ratio is 0.9582
+Evaluating ...
+Epoch [60/200] Test Accuracy on the 10000 test images: 93.1290 %
+Training ...
+Epoch [61/200], loss_sup: 2.7383: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9966, clean num is 38612
+Hard ratio is 0.9199, hard num is 2036
+Weak selection ratio is 0.9494, weak selection num is 1602
+Strong selection ratio is 0.8111, strong selection num is 434
+Selection ratio is 0.9927, selection num is 40648
+Correction ratio is 0.9372, correction num is 7542
+Weak ratio is 0.9840, weak num is 48190
+Total ratio is 0.9603
+Evaluating ...
+Epoch [61/200] Test Accuracy on the 10000 test images: 92.3678 %
+Training ...
+Epoch [62/200], loss_sup: 2.9146: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9963, clean num is 38556
+Hard ratio is 0.9247, hard num is 2045
+Weak selection ratio is 0.9539, weak selection num is 1604
+Strong selection ratio is 0.8186, strong selection num is 441
+Selection ratio is 0.9927, selection num is 40601
+Correction ratio is 0.9377, correction num is 7652
+Weak ratio is 0.9840, weak num is 48253
+Total ratio is 0.9599
+Evaluating ...
+Epoch [62/200] Test Accuracy on the 10000 test images: 90.1843 %
+Training ...
+Epoch [63/200], loss_sup: 3.3841: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9963, clean num is 38504
+Hard ratio is 0.9356, hard num is 2128
+Weak selection ratio is 0.9670, weak selection num is 1695
+Strong selection ratio is 0.8129, strong selection num is 433
+Selection ratio is 0.9932, selection num is 40632
+Correction ratio is 0.9443, correction num is 7562
+Weak ratio is 0.9855, weak num is 48194
+Total ratio is 0.9611
+Evaluating ...
+Epoch [63/200] Test Accuracy on the 10000 test images: 88.5317 %
+Training ...
+Epoch [64/200], loss_sup: 2.7377: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.19it/s]
+Clean ratio is 0.9960, clean num is 38545
+Hard ratio is 0.9393, hard num is 2092
+Weak selection ratio is 0.9683, weak selection num is 1670
+Strong selection ratio is 0.8246, strong selection num is 422
+Selection ratio is 0.9930, selection num is 40637
+Correction ratio is 0.9431, correction num is 7504
+Weak ratio is 0.9853, weak num is 48141
+Total ratio is 0.9603
+Evaluating ...
+Epoch [64/200] Test Accuracy on the 10000 test images: 91.2961 %
+Training ...
+Epoch [65/200], loss_sup: 2.2572: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.20it/s]
+Clean ratio is 0.9962, clean num is 38536
+Hard ratio is 0.9394, hard num is 2094
+Weak selection ratio is 0.9692, weak selection num is 1658
+Strong selection ratio is 0.8257, strong selection num is 436
+Selection ratio is 0.9933, selection num is 40630
+Correction ratio is 0.9439, correction num is 7464
+Weak ratio is 0.9856, weak num is 48094
+Total ratio is 0.9611
+Evaluating ...
+Epoch [65/200] Test Accuracy on the 10000 test images: 90.3746 %
+Training ...
+Epoch [66/200], loss_sup: 2.6820: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9962, clean num is 38581
+Hard ratio is 0.9334, hard num is 2088
+Weak selection ratio is 0.9589, weak selection num is 1653
+Strong selection ratio is 0.8368, strong selection num is 435
+Selection ratio is 0.9930, selection num is 40669
+Correction ratio is 0.9433, correction num is 7441
+Weak ratio is 0.9853, weak num is 48110
+Total ratio is 0.9622
+Evaluating ...
+Epoch [66/200] Test Accuracy on the 10000 test images: 90.7352 %
+Training ...
+Epoch [67/200], loss_sup: 3.2097: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.19it/s]
+Clean ratio is 0.9965, clean num is 38449
+Hard ratio is 0.9320, hard num is 2219
+Weak selection ratio is 0.9596, weak selection num is 1758
+Strong selection ratio is 0.8265, strong selection num is 461
+Selection ratio is 0.9930, selection num is 40668
+Correction ratio is 0.9476, correction num is 7571
+Weak ratio is 0.9858, weak num is 48239
+Total ratio is 0.9613
+Evaluating ...
+Epoch [67/200] Test Accuracy on the 10000 test images: 90.5950 %
+Training ...
+Epoch [68/200], loss_sup: 2.6368: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9965, clean num is 38473
+Hard ratio is 0.9331, hard num is 2181
+Weak selection ratio is 0.9589, weak selection num is 1727
+Strong selection ratio is 0.8348, strong selection num is 454
+Selection ratio is 0.9931, selection num is 40654
+Correction ratio is 0.9481, correction num is 7444
+Weak ratio is 0.9862, weak num is 48098
+Total ratio is 0.9612
+Evaluating ...
+Epoch [68/200] Test Accuracy on the 10000 test images: 91.6166 %
+Training ...
+Epoch [69/200], loss_sup: 3.0352: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9962, clean num is 38562
+Hard ratio is 0.9321, hard num is 2090
+Weak selection ratio is 0.9541, weak selection num is 1676
+Strong selection ratio is 0.8430, strong selection num is 414
+Selection ratio is 0.9929, selection num is 40652
+Correction ratio is 0.9474, correction num is 7134
+Weak ratio is 0.9861, weak num is 47786
+Total ratio is 0.9634
+Evaluating ...
+Epoch [69/200] Test Accuracy on the 10000 test images: 91.2260 %
+Training ...
+Epoch [70/200], loss_sup: 2.4546: 100%|██████████████████████████████████████████████| 391/391 [01:59<00:00,  3.26it/s]
+Clean ratio is 0.9962, clean num is 38445
+Hard ratio is 0.9386, hard num is 2198
+Weak selection ratio is 0.9621, weak selection num is 1770
+Strong selection ratio is 0.8411, strong selection num is 428
+Selection ratio is 0.9930, selection num is 40643
+Correction ratio is 0.9474, correction num is 7397
+Weak ratio is 0.9860, weak num is 48040
+Total ratio is 0.9621
+Evaluating ...
+Epoch [70/200] Test Accuracy on the 10000 test images: 92.9487 %
+Training ...
+Epoch [71/200], loss_sup: 2.6177: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.25it/s]
+Clean ratio is 0.9963, clean num is 38410
+Hard ratio is 0.9401, hard num is 2238
+Weak selection ratio is 0.9634, weak selection num is 1803
+Strong selection ratio is 0.8437, strong selection num is 435
+Selection ratio is 0.9932, selection num is 40648
+Correction ratio is 0.9487, correction num is 6901
+Weak ratio is 0.9868, weak num is 47549
+Total ratio is 0.9630
+Evaluating ...
+Epoch [71/200] Test Accuracy on the 10000 test images: 92.7183 %
+Training ...
+Epoch [72/200], loss_sup: 2.6723: 100%|██████████████████████████████████████████████| 391/391 [01:59<00:00,  3.27it/s]
+Clean ratio is 0.9961, clean num is 38553
+Hard ratio is 0.9373, hard num is 2121
+Weak selection ratio is 0.9588, weak selection num is 1701
+Strong selection ratio is 0.8500, strong selection num is 420
+Selection ratio is 0.9930, selection num is 40674
+Correction ratio is 0.9536, correction num is 7311
+Weak ratio is 0.9870, weak num is 47985
+Total ratio is 0.9637
+Evaluating ...
+Epoch [72/200] Test Accuracy on the 10000 test images: 90.1142 %
+Training ...
+Epoch [73/200], loss_sup: 2.5259: 100%|██████████████████████████████████████████████| 391/391 [02:00<00:00,  3.24it/s]
+Clean ratio is 0.9962, clean num is 38320
+Hard ratio is 0.9484, hard num is 2268
+Weak selection ratio is 0.9667, weak selection num is 1800
+Strong selection ratio is 0.8782, strong selection num is 468
+Selection ratio is 0.9936, selection num is 40588
+Correction ratio is 0.9512, correction num is 6757
+Weak ratio is 0.9875, weak num is 47345
+Total ratio is 0.9617
+Evaluating ...
+Epoch [73/200] Test Accuracy on the 10000 test images: 88.5617 %
+Training ...
+Epoch [74/200], loss_sup: 2.8709: 100%|██████████████████████████████████████████████| 391/391 [02:04<00:00,  3.15it/s]
+Clean ratio is 0.9963, clean num is 38324
+Hard ratio is 0.9483, hard num is 2261
+Weak selection ratio is 0.9647, weak selection num is 1812
+Strong selection ratio is 0.8820, strong selection num is 449
+Selection ratio is 0.9936, selection num is 40585
+Correction ratio is 0.9526, correction num is 6647
+Weak ratio is 0.9878, weak num is 47232
+Total ratio is 0.9615
+Evaluating ...
+Epoch [74/200] Test Accuracy on the 10000 test images: 91.0657 %
+Training ...
+Epoch [75/200], loss_sup: 3.1073: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.19it/s]
+Clean ratio is 0.9965, clean num is 38431
+Hard ratio is 0.9448, hard num is 2209
+Weak selection ratio is 0.9697, weak selection num is 1752
+Strong selection ratio is 0.8490, strong selection num is 457
+Selection ratio is 0.9937, selection num is 40640
+Correction ratio is 0.9546, correction num is 7012
+Weak ratio is 0.9879, weak num is 47652
+Total ratio is 0.9635
+Evaluating ...
+Epoch [75/200] Test Accuracy on the 10000 test images: 89.0325 %
+Training ...
+Epoch [76/200], loss_sup: 2.5843: 100%|██████████████████████████████████████████████| 391/391 [02:01<00:00,  3.21it/s]
+Clean ratio is 0.9963, clean num is 38529
+Hard ratio is 0.9394, hard num is 2095
+Weak selection ratio is 0.9634, weak selection num is 1665
+Strong selection ratio is 0.8465, strong selection num is 430
+Selection ratio is 0.9934, selection num is 40624
+Correction ratio is 0.9535, correction num is 6950
+Weak ratio is 0.9875, weak num is 47574
+Total ratio is 0.9629
+Evaluating ...
+Epoch [76/200] Test Accuracy on the 10000 test images: 92.4079 %
+Training ...
+Epoch [77/200], loss_sup: 2.5183: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.18it/s]
+Clean ratio is 0.9963, clean num is 38498
+Hard ratio is 0.9442, hard num is 2131
+Weak selection ratio is 0.9631, weak selection num is 1733
+Strong selection ratio is 0.8618, strong selection num is 398
+Selection ratio is 0.9936, selection num is 40629
+Correction ratio is 0.9546, correction num is 6612
+Weak ratio is 0.9881, weak num is 47241
+Total ratio is 0.9641
+Evaluating ...
+Epoch [77/200] Test Accuracy on the 10000 test images: 92.0172 %
+Training ...
+Epoch [78/200], loss_sup: 2.6499: 100%|██████████████████████████████████████████████| 391/391 [02:02<00:00,  3.19it/s]
+Clean ratio is 0.9966, clean num is 38461
+Hard ratio is 0.9406, hard num is 2138
+Weak selection ratio is 0.9528, weak selection num is 1757
+Strong selection ratio is 0.8845, strong selection num is 381
+Selection ratio is 0.9937, selection num is 40599
+Correction ratio is 0.9563, correction num is 6527
+Weak ratio is 0.9885, weak num is 47126
+Total ratio is 0.9645
+Evaluating ...
+Epoch [78/200] Test Accuracy on the 10000 test images: 90.6651 %
+Training ...
+Epoch [79/200], loss_sup: 2.1032: 100%|██████████████████████████████████████████████| 391/391 [02:06<00:00,  3.09it/s]
+Clean ratio is 0.9964, clean num is 38391
+Hard ratio is 0.9450, hard num is 2219
+Weak selection ratio is 0.9650, weak selection num is 1799
+Strong selection ratio is 0.8595, strong selection num is 420
+Selection ratio is 0.9936, selection num is 40610
+Correction ratio is 0.9577, correction num is 6495
+Weak ratio is 0.9886, weak num is 47105
+Total ratio is 0.9643
+Evaluating ...
+Epoch [79/200] Test Accuracy on the 10000 test images: 92.1474 %
+Training ...
+Epoch [80/200], loss_sup: 2.5675: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.16it/s]
+Clean ratio is 0.9966, clean num is 38425
+Hard ratio is 0.9451, hard num is 2186
+Weak selection ratio is 0.9667, weak selection num is 1744
+Strong selection ratio is 0.8597, strong selection num is 442
+Selection ratio is 0.9938, selection num is 40611
+Correction ratio is 0.9610, correction num is 6073
+Weak ratio is 0.9895, weak num is 46684
+Total ratio is 0.9651
+Evaluating ...
+Epoch [80/200] Test Accuracy on the 10000 test images: 91.7969 %
+Training ...
+Epoch [81/200], loss_sup: 2.5141: 100%|██████████████████████████████████████████████| 391/391 [02:04<00:00,  3.15it/s]
+Clean ratio is 0.9958, clean num is 39542
+Hard ratio is 0.9322, hard num is 1313
+Weak selection ratio is 0.9610, weak selection num is 1129
+Strong selection ratio is 0.7554, strong selection num is 184
+Selection ratio is 0.9937, selection num is 40855
+Correction ratio is 0.9668, correction num is 7191
+Weak ratio is 0.9897, weak num is 48046
+Total ratio is 0.9757
+Evaluating ...
+Epoch [81/200] Test Accuracy on the 10000 test images: 95.2023 %
+Training ...
+Epoch [82/200], loss_sup: 2.6245: 100%|██████████████████████████████████████████████| 391/391 [02:05<00:00,  3.11it/s]
+Clean ratio is 0.9955, clean num is 39807
+Hard ratio is 0.9227, hard num is 1100
+Weak selection ratio is 0.9455, weak selection num is 973
+Strong selection ratio is 0.7480, strong selection num is 127
+Selection ratio is 0.9935, selection num is 40907
+Correction ratio is 0.9645, correction num is 7404
+Weak ratio is 0.9891, weak num is 48311
+Total ratio is 0.9777
+Evaluating ...
+Epoch [82/200] Test Accuracy on the 10000 test images: 95.3826 %
+Training ...
+Epoch [83/200], loss_sup: 2.5909: 100%|██████████████████████████████████████████████| 391/391 [02:04<00:00,  3.15it/s]
+Clean ratio is 0.9953, clean num is 39907
+Hard ratio is 0.9162, hard num is 1038
+Weak selection ratio is 0.9516, weak selection num is 889
+Strong selection ratio is 0.7047, strong selection num is 149
+Selection ratio is 0.9933, selection num is 40945
+Correction ratio is 0.9692, correction num is 7424
+Weak ratio is 0.9896, weak num is 48369
+Total ratio is 0.9780
+Evaluating ...
+Epoch [83/200] Test Accuracy on the 10000 test images: 95.2724 %
+Training ...
+Epoch [84/200], loss_sup: 2.4306: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.16it/s]
+Clean ratio is 0.9954, clean num is 39916
+Hard ratio is 0.9195, hard num is 1019
+Weak selection ratio is 0.9552, weak selection num is 915
+Strong selection ratio is 0.6058, strong selection num is 104
+Selection ratio is 0.9935, selection num is 40935
+Correction ratio is 0.9695, correction num is 7477
+Weak ratio is 0.9898, weak num is 48412
+Total ratio is 0.9793
+Evaluating ...
+Epoch [84/200] Test Accuracy on the 10000 test images: 95.4227 %
+Training ...
+Epoch [85/200], loss_sup: 2.3190: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.16it/s]
+Clean ratio is 0.9951, clean num is 40032
+Hard ratio is 0.9210, hard num is 911
+Weak selection ratio is 0.9522, weak selection num is 816
+Strong selection ratio is 0.6526, strong selection num is 95
+Selection ratio is 0.9935, selection num is 40943
+Correction ratio is 0.9689, correction num is 7418
+Weak ratio is 0.9897, weak num is 48361
+Total ratio is 0.9794
+Evaluating ...
+Epoch [85/200] Test Accuracy on the 10000 test images: 95.5829 %
+Training ...
+Epoch [86/200], loss_sup: 2.2128: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.16it/s]
+Clean ratio is 0.9956, clean num is 40038
+Hard ratio is 0.9015, hard num is 904
+Weak selection ratio is 0.9316, weak selection num is 819
+Strong selection ratio is 0.6118, strong selection num is 85
+Selection ratio is 0.9935, selection num is 40942
+Correction ratio is 0.9684, correction num is 7459
+Weak ratio is 0.9896, weak num is 48401
+Total ratio is 0.9797
+Evaluating ...
+Epoch [86/200] Test Accuracy on the 10000 test images: 95.5028 %
+Training ...
+Epoch [87/200], loss_sup: 2.6301: 100%|██████████████████████████████████████████████| 391/391 [02:06<00:00,  3.09it/s]
+Clean ratio is 0.9953, clean num is 40034
+Hard ratio is 0.9026, hard num is 934
+Weak selection ratio is 0.9359, weak selection num is 843
+Strong selection ratio is 0.5934, strong selection num is 91
+Selection ratio is 0.9931, selection num is 40968
+Correction ratio is 0.9687, correction num is 7465
+Weak ratio is 0.9894, weak num is 48433
+Total ratio is 0.9800
+Evaluating ...
+Epoch [87/200] Test Accuracy on the 10000 test images: 95.5829 %
+Training ...
+Epoch [88/200], loss_sup: 2.5919: 100%|██████████████████████████████████████████████| 391/391 [02:03<00:00,  3.17it/s]
+Clean ratio is 0.9954, clean num is 40082
+Hard ratio is 0.9052, hard num is 897
+Weak selection ratio is 0.9364, weak selection num is 802
+Strong selection ratio is 0.6421, strong selection num is 95
+Selection ratio is 0.9934, selection num is 40979
+Correction ratio is 0.9729, correction num is 7336
+Weak ratio is 0.9903, weak num is 48315
+Total ratio is 0.9799
+Evaluating ...
+Epoch [88/200] Test Accuracy on the 10000 test images: 95.5429 %
+Training ...
+Epoch [89/200], loss_sup: 2.3996: 100%|██████████████████████████████████████████████| 391/391 [02:06<00:00,  3.10it/s]
+Clean ratio is 0.9950, clean num is 40109
+Hard ratio is 0.9126, hard num is 870
+Weak selection ratio is 0.9464, weak selection num is 784
+Strong selection ratio is 0.6047, strong selection num is 86
+Selection ratio is 0.9932, selection num is 40979
+Correction ratio is 0.9714, correction num is 7369
+Weak ratio is 0.9899, weak num is 48348
+Total ratio is 0.9804
+Evaluating ...
+Epoch [89/200] Test Accuracy on the 10000 test images: 95.7432 %
+Training ...
+Epoch [90/200], loss_sup: 2.3064: 100%|██████████████████████████████████████████████| 391/391 [02:15<00:00,  2.89it/s]
+Clean ratio is 0.9953, clean num is 40079
+Hard ratio is 0.8968, hard num is 911
+Weak selection ratio is 0.9315, weak selection num is 818
+Strong selection ratio is 0.5914, strong selection num is 93
+Selection ratio is 0.9931, selection num is 40990
+Correction ratio is 0.9720, correction num is 7357
+Weak ratio is 0.9899, weak num is 48347
+Total ratio is 0.9806
+Evaluating ...
+Epoch [90/200] Test Accuracy on the 10000 test images: 95.6430 %
+Training ...
+Epoch [91/200], loss_sup: 2.0686: 100%|██████████████████████████████████████████████| 391/391 [02:16<00:00,  2.87it/s]
+Clean ratio is 0.9949, clean num is 40102
+Hard ratio is 0.9117, hard num is 883
+Weak selection ratio is 0.9384, weak selection num is 796
+Strong selection ratio is 0.6667, strong selection num is 87
+Selection ratio is 0.9931, selection num is 40985
+Correction ratio is 0.9706, correction num is 7385
+Weak ratio is 0.9897, weak num is 48370
+Total ratio is 0.9800
+Evaluating ...
+Epoch [91/200] Test Accuracy on the 10000 test images: 95.6931 %
+Training ...
+Epoch [92/200], loss_sup: 2.0949: 100%|██████████████████████████████████████████████| 391/391 [02:16<00:00,  2.87it/s]
+Clean ratio is 0.9949, clean num is 40120
+Hard ratio is 0.9239, hard num is 867
+Weak selection ratio is 0.9459, weak selection num is 795
+Strong selection ratio is 0.6806, strong selection num is 72
+Selection ratio is 0.9934, selection num is 40987
+Correction ratio is 0.9734, correction num is 7300
+Weak ratio is 0.9904, weak num is 48287
+Total ratio is 0.9807
+Evaluating ...
+Epoch [92/200] Test Accuracy on the 10000 test images: 95.6931 %
+Training ...
+Epoch [93/200], loss_sup: 2.4587: 100%|██████████████████████████████████████████████| 391/391 [02:15<00:00,  2.89it/s]
+Clean ratio is 0.9952, clean num is 40141
+Hard ratio is 0.8986, hard num is 848
+Weak selection ratio is 0.9285, weak selection num is 783
+Strong selection ratio is 0.5385, strong selection num is 65
+Selection ratio is 0.9932, selection num is 40989
+Correction ratio is 0.9719, correction num is 7269
+Weak ratio is 0.9900, weak num is 48258
+Total ratio is 0.9808
+Evaluating ...
+Epoch [93/200] Test Accuracy on the 10000 test images: 95.6831 %
+Training ...
+Epoch [94/200], loss_sup: 2.4527: 100%|██████████████████████████████████████████████| 391/391 [02:15<00:00,  2.88it/s]
+Clean ratio is 0.9950, clean num is 40152
+Hard ratio is 0.9226, hard num is 840
+Weak selection ratio is 0.9353, weak selection num is 773
+Strong selection ratio is 0.7761, strong selection num is 67
+Selection ratio is 0.9935, selection num is 40992
+Correction ratio is 0.9750, correction num is 7289
+Weak ratio is 0.9907, weak num is 48281
+Total ratio is 0.9809
+Evaluating ...
+Epoch [94/200] Test Accuracy on the 10000 test images: 95.7332 %
+Training ...
+Epoch [95/200], loss_sup: 2.3854: 100%|██████████████████████████████████████████████| 391/391 [02:17<00:00,  2.84it/s]
+Clean ratio is 0.9951, clean num is 40147
+Hard ratio is 0.9033, hard num is 848
+Weak selection ratio is 0.9385, weak selection num is 781
+Strong selection ratio is 0.4925, strong selection num is 67
+Selection ratio is 0.9932, selection num is 40995
+Correction ratio is 0.9753, correction num is 7298
+Weak ratio is 0.9905, weak num is 48293
+Total ratio is 0.9815
+Evaluating ...
+Epoch [95/200] Test Accuracy on the 10000 test images: 95.8333 %
+Training ...
+Epoch [96/200], loss_sup: 2.2166: 100%|██████████████████████████████████████████████| 391/391 [02:17<00:00,  2.84it/s]
+Clean ratio is 0.9949, clean num is 40211
+Hard ratio is 0.9050, hard num is 800
+Weak selection ratio is 0.9317, weak selection num is 732
+Strong selection ratio is 0.6176, strong selection num is 68
+Selection ratio is 0.9931, selection num is 41011
+Correction ratio is 0.9786, correction num is 7299
+Weak ratio is 0.9910, weak num is 48310
+Total ratio is 0.9813
+Evaluating ...
+Epoch [96/200] Test Accuracy on the 10000 test images: 95.7131 %
+Training ...
+Epoch [97/200], loss_sup: 2.1629: 100%|██████████████████████████████████████████████| 391/391 [02:18<00:00,  2.83it/s]
+Clean ratio is 0.9946, clean num is 40129
+Hard ratio is 0.9261, hard num is 880
+Weak selection ratio is 0.9476, weak selection num is 802
+Strong selection ratio is 0.7051, strong selection num is 78
+Selection ratio is 0.9931, selection num is 41009
+Correction ratio is 0.9769, correction num is 7238
+Weak ratio is 0.9907, weak num is 48247
+Total ratio is 0.9809
+Evaluating ...
+Epoch [97/200] Test Accuracy on the 10000 test images: 95.7031 %
+Training ...
+Epoch [98/200], loss_sup: 2.3820: 100%|██████████████████████████████████████████████| 391/391 [02:18<00:00,  2.83it/s]
+Clean ratio is 0.9948, clean num is 40186
+Hard ratio is 0.9163, hard num is 824
+Weak selection ratio is 0.9436, weak selection num is 763
+Strong selection ratio is 0.5738, strong selection num is 61
+Selection ratio is 0.9932, selection num is 41010
+Correction ratio is 0.9778, correction num is 7236
+Weak ratio is 0.9909, weak num is 48246
+Total ratio is 0.9814
+Evaluating ...
+Epoch [98/200] Test Accuracy on the 10000 test images: 95.7732 %
+Training ...
+Epoch [99/200], loss_sup: 2.3807: 100%|██████████████████████████████████████████████| 391/391 [02:17<00:00,  2.84it/s]
+Clean ratio is 0.9946, clean num is 40177
+Hard ratio is 0.9257, hard num is 835
+Weak selection ratio is 0.9474, weak selection num is 780
+Strong selection ratio is 0.6182, strong selection num is 55
+Selection ratio is 0.9932, selection num is 41012
+Correction ratio is 0.9799, correction num is 7171
+Weak ratio is 0.9912, weak num is 48183
+Total ratio is 0.9813
+Evaluating ...
+Epoch [99/200] Test Accuracy on the 10000 test images: 95.7632 %
+Training ...
+Epoch [100/200], loss_sup: 2.5802: 100%|█████████████████████████████████████████████| 391/391 [02:17<00:00,  2.84it/s]
+Clean ratio is 0.9946, clean num is 40159
+Hard ratio is 0.9203, hard num is 853
+Weak selection ratio is 0.9447, weak selection num is 795
+Strong selection ratio is 0.5862, strong selection num is 58
+Selection ratio is 0.9931, selection num is 41012
+Correction ratio is 0.9783, correction num is 7184
+Weak ratio is 0.9909, weak num is 48196
+Total ratio is 0.9813
+Evaluating ...
+Epoch [100/200] Test Accuracy on the 10000 test images: 95.9535 %
+Training ...
+Epoch [101/200], loss_sup: 2.1771: 100%|█████████████████████████████████████████████| 391/391 [02:17<00:00,  2.84it/s]
+Clean ratio is 0.9945, clean num is 40214
+Hard ratio is 0.9149, hard num is 811
+Weak selection ratio is 0.9499, weak selection num is 739
+Strong selection ratio is 0.5556, strong selection num is 72
+Selection ratio is 0.9929, selection num is 41025
+Correction ratio is 0.9777, correction num is 7276
+Weak ratio is 0.9906, weak num is 48301
+Total ratio is 0.9816
+Evaluating ...
+Epoch [101/200] Test Accuracy on the 10000 test images: 95.7933 %

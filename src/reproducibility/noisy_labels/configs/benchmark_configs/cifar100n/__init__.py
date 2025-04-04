@@ -2,6 +2,7 @@ from .CAL import CAL_config
 from .CE import CE_config
 from .co_teaching import co_teaching_config
 from .co_teaching_plus import co_teaching_plus_config
+from .DISC import DISC_config
 from .divide_mix import divide_mix_config
 from .divide_mix_clean import divide_mix_clean_config
 from .ELR import ELR_config
@@ -16,6 +17,7 @@ method_configs = {
     "CE": CE_config,
     "co_teaching": co_teaching_config,
     "co_teaching_plus": co_teaching_plus_config,
+    "DISC": DISC_config,
     "divide_mix": divide_mix_config,
     "divide_mix_clean": divide_mix_clean_config,
     "ELR": ELR_config,
@@ -31,6 +33,7 @@ __all__ = [
     "CE_config",
     "co_teaching_config",
     "co_teaching_plus_config",
+    "DISC_config",
     "divide_mix_config",
     "divide_mix_clean_config",
     "ELR_config",
