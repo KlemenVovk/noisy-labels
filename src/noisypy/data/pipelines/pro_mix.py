@@ -28,7 +28,9 @@ class ProMixify(AugmentationPipeline):
                 # Use RandAugment with N=3, M=5
                 self.transform_s.transforms.insert(1, transforms.RandAugment(3, 5))
                 # Add cutout at the end
-                self.transform_s.transforms.append(transforms.RandomErasing(p=1, scale=(0.0, 0.25), ratio=(1, 1)))
+                self.transform_s.transforms.append(
+                    transforms.RandomErasing(p=1, scale=(0.0, 0.25), ratio=(1, 1))
+                )
 
                 assert hasattr(self, "data"), "Dataset must have data attribute"
 
