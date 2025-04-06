@@ -90,12 +90,8 @@ class DISC(LearningStrategyModule):
         self.get_labels(self.datamodule.train_dataloader()[0])
 
     def training_step(self, batch, batch_idx):
-        w_images, s_images, targets, indexes = batch[0]
-        device = w_images.device
-
-        w_imgs = torch.tensor(w_images).to(self.device)
-        s_imgs = torch.tensor(s_images).to(self.device)
-        targets = torch.tensor(targets).to(self.device)
+        w_imgs, s_imgs, targets, indexes = batch[0]
+        device = w_imgs.device
 
         all_inputs = torch.cat([w_imgs, s_imgs], dim=0)
         bs = w_imgs.shape[0]
