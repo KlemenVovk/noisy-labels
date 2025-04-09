@@ -15,6 +15,7 @@ from .jocor import jocor_config
 from .peer_loss import peer_loss_config
 from .PES import PES_config
 from .PES_semi import PES_semi_config
+from .pro_mix import pro_mix_config
 from .SOP import SOP_config
 from .SOP_plus import SOP_plus_config
 from .T_revision import TRevision_config
@@ -35,6 +36,7 @@ method_configs = {
     "jocor": jocor_config,
     "PES": PES_config,
     "PES_semi": PES_semi_config,
+    "pro_mix": pro_mix_config,
     "SOP": SOP_config,
     "SOP_plus": SOP_plus_config,
     "volminnet": volminnet_config,

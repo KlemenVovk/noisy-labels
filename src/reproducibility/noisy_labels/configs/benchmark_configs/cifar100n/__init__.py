@@ -8,6 +8,7 @@ from .divide_mix_clean import divide_mix_clean_config
 from .ELR import ELR_config
 from .ELR_plus import ELR_plus_config
 from .PES_semi import PES_semi_config
+from .pro_mix import pro_mix_config
 from .SOP import SOP_config
 from .SOP_plus import SOP_plus_config
 from .volminnet import volminnet_config
@@ -23,6 +24,7 @@ method_configs = {
     "ELR": ELR_config,
     "ELR_plus": ELR_plus_config,
     "PES_semi": PES_semi_config,
+    "pro_mix": pro_mix_config,
     "SOP": SOP_config,
     "SOP_plus": SOP_plus_config,
     "volminnet": volminnet_config,
