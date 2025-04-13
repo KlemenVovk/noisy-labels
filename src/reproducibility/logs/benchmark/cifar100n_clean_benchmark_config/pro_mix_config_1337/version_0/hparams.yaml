@@ -1,0 +1,14 @@
+alpha_output: 0.5
+bias_m: 0.9999
+debias_beta_pl: 0.5
+feat_dim: 128
+model_type: pytorch_resnet
+noise_type: symmetric
+rampup_epochs: 50
+rho_end: 0.5
+rho_start: 0.5
+start_expand: 250
+tau: 0.95
+temperature: 0.5
+threshold: 0.9
+warmup_epochs: 30
