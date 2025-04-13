@@ -5,6 +5,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from ..base import BenchmarkConfigCIFAR100N
 from ...base.wrappers import promixify_wrapper
 
+
 class pro_mix_config(BenchmarkConfigCIFAR100N):
     _data_config_wrapper = promixify_wrapper
 
