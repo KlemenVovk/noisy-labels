@@ -5,7 +5,6 @@ from .base.config import NoisyLabelsMethod
 
 
 class volminnet_config(NoisyLabelsMethod):
-
     learning_strategy_cls = VolMinNet
     learning_strategy_args = dict(lam=1e-4, init_t=2)
 

@@ -9,7 +9,6 @@ from ..base.data import DataConfig
 
 
 class cifar100n_clean_config(DataConfig):
-
     dataset_train_cls, dataset_val_cls = Split(1)(CIFAR100N)
     dataset_test_cls = CIFAR100N
 
@@ -27,7 +26,6 @@ class cifar100n_clean_config(DataConfig):
 
 
 class cifar100n_noisy_config(cifar100n_clean_config):
-
     dataset_args = dict(
         noise_type="noisy_label",
         noise_dir="../data/noisylabels",
@@ -38,9 +36,8 @@ class cifar100n_noisy_config(cifar100n_clean_config):
 
 # Configs used for the benchmark (with validation set)
 class cifar100n_clean_benchmark_config(cifar100n_clean_config):
-
     dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR100N)
 
-class cifar100n_noisy_benchmark_config(cifar100n_noisy_config):
 
+class cifar100n_noisy_benchmark_config(cifar100n_noisy_config):
     dataset_train_cls, dataset_val_cls = Split(0.9)(CIFAR100N)

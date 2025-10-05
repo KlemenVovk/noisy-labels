@@ -5,17 +5,16 @@ from .base import BasePaperMethod
 
 
 class PES_semi_config(BasePaperMethod):
-
     learning_strategy_cls = PES_semi
     learning_strategy_args = dict(
         PES_lr=1e-4,
         warmup_epochs=20,
         T2=5,
-        lambda_u = 5,
-        temperature = 0.5,
-        alpha = 4,
+        lambda_u=5,
+        temperature=0.5,
+        alpha=4,
         optimizer_refine_cls=Adam,
-        model_type='paper_resnet',
+        model_type="paper_resnet",
     )
 
     trainer_args = {

@@ -4,16 +4,13 @@ from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 from ..base.config import NoisyLabelsMethod
 from ..base.wrappers import add_index_wrapper
 
+
 # https://openreview.net/pdf?id=TBWA6PLJZQm says special treatment for this method using original config
 class ELR_config(NoisyLabelsMethod):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = ELR
-    learning_strategy_args = dict(
-        beta=0.7,
-        lmbd=3
-    )
+    learning_strategy_args = dict(beta=0.7, lmbd=3)
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.001)

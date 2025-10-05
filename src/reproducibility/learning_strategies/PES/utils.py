@@ -3,6 +3,7 @@ import torch.nn.functional as F
 
 # copied from: https://github.com/tmllab/2021_NeurIPS_PES/blob/main/networks/ResNet.py
 
+
 # ResNet in PyTorch.
 # BasicBlock and Bottleneck module is from the original ResNet paper:
 # [1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
@@ -11,7 +12,9 @@ import torch.nn.functional as F
 # [2] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
 #     Identity Mappings in Deep Residual Networks. arXiv:1603.05027
 def conv3x3(in_planes, out_planes, stride=1):
-    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride, padding=1, bias=False)
+    return nn.Conv2d(
+        in_planes, out_planes, kernel_size=3, stride=stride, padding=1, bias=False
+    )
 
 
 class BasicBlock(nn.Module):
@@ -27,8 +30,14 @@ class BasicBlock(nn.Module):
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(self.expansion * planes)
+                nn.Conv2d(
+                    in_planes,
+                    self.expansion * planes,
+                    kernel_size=1,
+                    stride=stride,
+                    bias=False,
+                ),
+                nn.BatchNorm2d(self.expansion * planes),
             )
 
     def forward(self, x):
@@ -40,7 +49,8 @@ class BasicBlock(nn.Module):
 
 
 class PreActBlock(nn.Module):
-    '''Pre-activation version of the BasicBlock.'''
+    """Pre-activation version of the BasicBlock."""
+
     expansion = 1
 
     def __init__(self, in_planes, planes, stride=1):
@@ -53,7 +63,13 @@ class PreActBlock(nn.Module):
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False)
+                nn.Conv2d(
+                    in_planes,
+                    self.expansion * planes,
+                    kernel_size=1,
+                    stride=stride,
+                    bias=False,
+                )
             )
 
     def forward(self, x):
@@ -72,16 +88,26 @@ class Bottleneck(nn.Module):
         super(Bottleneck, self).__init__()
         self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=1, bias=False)
         self.bn1 = nn.BatchNorm2d(planes)
-        self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(
+            planes, planes, kernel_size=3, stride=stride, padding=1, bias=False
+        )
         self.bn2 = nn.BatchNorm2d(planes)
-        self.conv3 = nn.Conv2d(planes, self.expansion * planes, kernel_size=1, bias=False)
+        self.conv3 = nn.Conv2d(
+            planes, self.expansion * planes, kernel_size=1, bias=False
+        )
         self.bn3 = nn.BatchNorm2d(self.expansion * planes)
 
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(self.expansion * planes)
+                nn.Conv2d(
+                    in_planes,
+                    self.expansion * planes,
+                    kernel_size=1,
+                    stride=stride,
+                    bias=False,
+                ),
+                nn.BatchNorm2d(self.expansion * planes),
             )
 
     def forward(self, x):
@@ -94,7 +120,8 @@ class Bottleneck(nn.Module):
 
 
 class PreActBottleneck(nn.Module):
-    '''Pre-activation version of the original Bottleneck module.'''
+    """Pre-activation version of the original Bottleneck module."""
+
     expansion = 4
 
     def __init__(self, in_planes, planes, stride=1):
@@ -102,14 +129,24 @@ class PreActBottleneck(nn.Module):
         self.bn1 = nn.BatchNorm2d(in_planes)
         self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=1, bias=False)
         self.bn2 = nn.BatchNorm2d(planes)
-        self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(
+            planes, planes, kernel_size=3, stride=stride, padding=1, bias=False
+        )
         self.bn3 = nn.BatchNorm2d(planes)
-        self.conv3 = nn.Conv2d(planes, self.expansion * planes, kernel_size=1, bias=False)
+        self.conv3 = nn.Conv2d(
+            planes, self.expansion * planes, kernel_size=1, bias=False
+        )
 
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != self.expansion * planes:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False)
+                nn.Conv2d(
+                    in_planes,
+                    self.expansion * planes,
+                    kernel_size=1,
+                    stride=stride,
+                    bias=False,
+                )
             )
 
     def forward(self, x):
@@ -170,17 +207,23 @@ class ResNet(nn.Module):
         if last_num_layers >= 3:
             print("re-initalize block 2")
             self.in_planes = 64  # reset input dimension to 1th block output
-            self.layer2 = self._make_layer(self.block, 128, self.num_blocks[1], stride=2)
+            self.layer2 = self._make_layer(
+                self.block, 128, self.num_blocks[1], stride=2
+            )
 
         if last_num_layers >= 2:
             print("re-initalize block 3")
             self.in_planes = 128  # reset input dimension to 2th block output
-            self.layer3 = self._make_layer(self.block, 256, self.num_blocks[2], stride=2)
+            self.layer3 = self._make_layer(
+                self.block, 256, self.num_blocks[2], stride=2
+            )
 
         if last_num_layers >= 1:
             print("re-initalize block 4")
             self.in_planes = 256  # reset input dimension to 3th block output
-            self.layer4 = self._make_layer(self.block, 512, self.num_blocks[3], stride=2)
+            self.layer4 = self._make_layer(
+                self.block, 512, self.num_blocks[3], stride=2
+            )
 
         print("re-initalize the final layer")
         self.linear = nn.Linear(512, self.num_classes)
@@ -192,8 +235,10 @@ class ResNet(nn.Module):
 def PreActResNet18(num_classes):
     return ResNet(PreActBlock, [2, 2, 2, 2], num_classes)
 
+
 def ResNet18(num_classes):
     return ResNet(BasicBlock, [2, 2, 2, 2], num_classes)
+
 
 def ResNet34(num_classes):
     return ResNet(BasicBlock, [3, 4, 6, 3], num_classes)

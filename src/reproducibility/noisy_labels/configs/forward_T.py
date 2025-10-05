@@ -6,7 +6,6 @@ from .base.config import NoisyLabelsMethod
 
 
 class forwardT_config(NoisyLabelsMethod):
-
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(
         warmup_epochs=120,

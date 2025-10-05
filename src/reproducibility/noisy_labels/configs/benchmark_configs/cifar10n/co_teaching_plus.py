@@ -8,7 +8,6 @@ from ...base.wrappers import add_index_wrapper
 
 
 class co_teaching_plus_config(BenchmarkConfigCIFAR10N):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = CoTeachingPlus
@@ -24,7 +23,7 @@ class co_teaching_plus_config(BenchmarkConfigCIFAR10N):
     optimizer_args = dict(
         lr=0.001,
     )
-    
+
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
 

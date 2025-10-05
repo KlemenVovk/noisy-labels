@@ -8,7 +8,6 @@ from ..base.wrappers import dividemixify_wrapper
 
 
 class divide_mix_clean_config(CIFAR100NoisyLabelsMethod):
-
     _data_config_wrapper = dividemixify_wrapper
     classifier = PreResNet18
 

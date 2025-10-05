@@ -23,7 +23,7 @@ class AugmentationPipeline(ABC):
     @abstractmethod
     def transform(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
         raise NotImplementedError
-    
+
 
 class Compose(AugmentationPipeline):
     """Composition of different dataset augmentation pipelines.
@@ -43,8 +43,8 @@ class Compose(AugmentationPipeline):
         for aug in self.augmentations:
             dataset_cls = aug(dataset_cls)
         return dataset_cls
-    
-    
+
+
 class Identity(AugmentationPipeline):
     """Identity transformation of a dataset class (no changes applied).
     Useful for placeholders in default configs.

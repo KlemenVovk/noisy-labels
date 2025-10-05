@@ -11,12 +11,10 @@ from noisypy.data.pipelines.index import AddIndex
 
 
 class cifar10_clean_index_config(cifar10_base_config):
-
     dataset_train_augmentation = AddIndex()
 
 
 class co_teaching_plus_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_clean_index_config
 
     classifier = resnet34
@@ -38,14 +36,14 @@ class co_teaching_plus_cifar10_clean_config(MethodConfig):
     optimizer_args = dict(
         lr=0.001,
     )
-    
+
     scheduler_cls = LambdaLR
     scheduler_args = dict(lr_lambda=alpha_schedule)
 
     trainer_args = dict(
         max_epochs=200,
         deterministic=True,
-        logger=CSVLogger("../logs", name="co_teaching_plus_cifar10_clean")
+        logger=CSVLogger("../logs", name="co_teaching_plus_cifar10_clean"),
     )
 
     seed = 1337

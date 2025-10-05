@@ -4,7 +4,6 @@ from .base import BasePaperMethod
 
 
 class backwardT_config(BasePaperMethod):
-
     learning_strategy_cls = BackwardT
     learning_strategy_args = dict(
         warmup_epochs=0,

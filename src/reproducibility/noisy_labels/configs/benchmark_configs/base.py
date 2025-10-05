@@ -4,7 +4,6 @@ from torchvision.models import resnet34
 
 
 class BenchmarkConfigCIFAR10N(MethodConfig):
-
     _data_config_wrapper = None
 
     classifier = resnet34

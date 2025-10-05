@@ -26,42 +26,52 @@ class ProbLossStable(nn.Module):
         return self._nllloss(self._softmax(outputs), labels)
 
 
-class Divergence():
+class Divergence:
     def __init__(self, name="Total-Variation"):
         self.name = name
         self._act_conj_func_assign(name)
 
-    def _act_conj_func_assign(self, name):        
+    def _act_conj_func_assign(self, name):
         match name:
             case "KL":
                 self.activation = lambda x: -torch.mean(x)
-                self.conjugate = lambda x: -torch.mean(torch.exp(x - 1.))
+                self.conjugate = lambda x: -torch.mean(torch.exp(x - 1.0))
             case "Reverse-KL":
                 self.activation = lambda x: -torch.mean(-torch.exp(x))
-                self.conjugate = lambda x: -torch.mean(-1. - x)  # remove log
+                self.conjugate = lambda x: -torch.mean(-1.0 - x)  # remove log
             case "Jeffrey":
                 self.activation = lambda x: -torch.mean(x)
-                self.conjugate = lambda x: -torch.mean(x + torch.mul(x, x) / 4. + torch.mul(torch.mul(x, x), x) / 16.)
+                self.conjugate = lambda x: -torch.mean(
+                    x + torch.mul(x, x) / 4.0 + torch.mul(torch.mul(x, x), x) / 16.0
+                )
             case "Squared-Hellinger":
-                self.activation = lambda x: -torch.mean(1. - torch.exp(x))
-                self.conjugate = lambda x: -torch.mean((1. - torch.exp(x)) / (torch.exp(x)))
+                self.activation = lambda x: -torch.mean(1.0 - torch.exp(x))
+                self.conjugate = lambda x: -torch.mean(
+                    (1.0 - torch.exp(x)) / (torch.exp(x))
+                )
             case "Pearson":
                 self.activation = lambda x: -torch.mean(x)
-                self.conjugate = lambda x: -torch.mean(torch.mul(x, x) / 4. + x)
+                self.conjugate = lambda x: -torch.mean(torch.mul(x, x) / 4.0 + x)
             case "Neyman":
-                self.activation = lambda x: -torch.mean(1. - torch.exp(x))
-                self.conjugate = lambda x: -torch.mean(2. - 2. * torch.sqrt(1. - x))
+                self.activation = lambda x: -torch.mean(1.0 - torch.exp(x))
+                self.conjugate = lambda x: -torch.mean(2.0 - 2.0 * torch.sqrt(1.0 - x))
             case "Jenson-Shannon":
-                self.activation = lambda x: -torch.mean(- torch.log(1. + torch.exp(-x))) - torch.log(torch.tensor(2.))
-                self.conjugate = lambda x:  -torch.mean(x + torch.log(1. + torch.exp(-x))) + torch.log(torch.tensor(2.))
+                self.activation = lambda x: -torch.mean(
+                    -torch.log(1.0 + torch.exp(-x))
+                ) - torch.log(torch.tensor(2.0))
+                self.conjugate = lambda x: -torch.mean(
+                    x + torch.log(1.0 + torch.exp(-x))
+                ) + torch.log(torch.tensor(2.0))
             case "Total-Variation":
-                self.activation = lambda x: -torch.mean(torch.tanh(x) / 2.)
-                self.conjugate = lambda x: -torch.mean(torch.tanh(x) / 2.)
+                self.activation = lambda x: -torch.mean(torch.tanh(x) / 2.0)
+                self.conjugate = lambda x: -torch.mean(torch.tanh(x) / 2.0)
             case _:
-                raise ValueError("Divergence name must be in ['KL', 'Reverse-KL', 'Jeffrey', 'Squared-Hellinger', 'Pearson', 'Neyman', 'Jenson-Shannon', 'Total-Variation'].\nProvided divergence '{name}' not implemented.")
-    
+                raise ValueError(
+                    "Divergence name must be in ['KL', 'Reverse-KL', 'Jeffrey', 'Squared-Hellinger', 'Pearson', 'Neyman', 'Jenson-Shannon', 'Total-Variation'].\nProvided divergence '{name}' not implemented."
+                )
+
     def activation(self, x):
         return self.activation(x)
-    
+
     def conjugate(self, x):
         return self.conjugate(x)

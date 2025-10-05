@@ -10,12 +10,10 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class cifar10_clean_index_config(cifar10_base_config):
-
     dataset_train_augmentation = AddIndex()
 
 
 class SOP_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_clean_index_config
 
     classifier = resnet34
@@ -26,15 +24,15 @@ class SOP_cifar10_clean_config(MethodConfig):
 
     learning_strategy_cls = SOP
     learning_strategy_args = dict(
-        ratio_consistency = 0,
-        ratio_balance = 0,
-        lr_u = 10,
-        lr_v = 10,
-        overparam_mean = 0.0,
-        overparam_std = 1e-8,
-        overparam_momentum = 0,
-        overparam_weight_decay = 0,
-        overparam_optimizer_cls = SGD
+        ratio_consistency=0,
+        ratio_balance=0,
+        lr_u=10,
+        lr_v=10,
+        overparam_mean=0.0,
+        overparam_std=1e-8,
+        overparam_momentum=0,
+        overparam_weight_decay=0,
+        overparam_optimizer_cls=SGD,
     )
 
     optimizer_cls = SGD

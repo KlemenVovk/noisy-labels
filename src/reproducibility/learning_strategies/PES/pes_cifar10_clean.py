@@ -10,13 +10,10 @@ from ..common import cifar10_base_config
 
 
 class pes_cifar10_clean(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = ResNet18
-    classifier_args = dict(
-        num_classes=10
-    )
+    classifier_args = dict(num_classes=10)
 
     learning_strategy_cls = PES
     learning_strategy_args = dict(
@@ -24,7 +21,7 @@ class pes_cifar10_clean(MethodConfig):
         warmup_epochs=25,
         T2=7,
         T3=5,
-        optimizer_refine_cls= Adam,
+        optimizer_refine_cls=Adam,
     )
 
     optimizer_cls = SGD
@@ -36,7 +33,7 @@ class pes_cifar10_clean(MethodConfig):
         reload_dataloaders_every_n_epochs=1,
         max_epochs=200,
         deterministic=True,
-        logger=CSVLogger("../logs", name="pes_clean")
+        logger=CSVLogger("../logs", name="pes_clean"),
     )
 
     seed = 1337

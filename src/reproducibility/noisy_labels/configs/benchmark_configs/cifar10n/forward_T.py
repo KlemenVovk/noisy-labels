@@ -6,7 +6,6 @@ from ..base import BenchmarkConfigCIFAR10N
 
 
 class forwardT_config(BenchmarkConfigCIFAR10N):
-
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(
         warmup_epochs=120,

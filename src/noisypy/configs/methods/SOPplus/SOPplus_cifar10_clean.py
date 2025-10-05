@@ -15,10 +15,9 @@ from noisypy.configs.data.cifar10 import cifar10_base_config, cifar10_train_tran
 transform1 = cifar10_train_transform
 transform2 = autoaug_paper_cifar10
 
+
 class cifar10_double_augmentation_index_config(cifar10_base_config):
-    dataset_train_args = dict(
-        transform=None
-    )
+    dataset_train_args = dict(transform=None)
 
     dataset_train_augmentation = Compose(
         [AddIndex(), DoubleAugmentation(transform1=transform1, transform2=transform2)]
@@ -26,7 +25,6 @@ class cifar10_double_augmentation_index_config(cifar10_base_config):
 
 
 class SOPplus_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_double_augmentation_index_config
 
     classifier = resnet34
@@ -37,15 +35,15 @@ class SOPplus_cifar10_clean_config(MethodConfig):
 
     learning_strategy_cls = SOPplus
     learning_strategy_args = dict(
-        ratio_consistency = 0.9,
-        ratio_balance = 0.1,
-        lr_u = 10,
-        lr_v = 10,
-        overparam_mean = 0.0,
-        overparam_std = 1e-8,
-        overparam_momentum = 0,
-        overparam_weight_decay = 0,
-        overparam_optimizer_cls = SGD
+        ratio_consistency=0.9,
+        ratio_balance=0.1,
+        lr_u=10,
+        lr_v=10,
+        overparam_mean=0.0,
+        overparam_std=1e-8,
+        overparam_momentum=0,
+        overparam_weight_decay=0,
+        overparam_optimizer_cls=SGD,
     )
 
     optimizer_cls = SGD
@@ -56,7 +54,7 @@ class SOPplus_cifar10_clean_config(MethodConfig):
     trainer_args = dict(
         max_epochs=300,
         deterministic=True,
-        logger=CSVLogger("../logs", name="sop_plus_cifar10_clean")
+        logger=CSVLogger("../logs", name="sop_plus_cifar10_clean"),
     )
 
     seed = 1337

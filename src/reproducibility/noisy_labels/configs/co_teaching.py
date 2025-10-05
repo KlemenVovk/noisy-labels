@@ -7,7 +7,6 @@ from .base.wrappers import add_index_wrapper
 
 
 class co_teaching_config(NoisyLabelsMethod):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = CoTeaching

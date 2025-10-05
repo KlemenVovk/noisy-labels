@@ -6,20 +6,16 @@ from ..base import BenchmarkConfigCIFAR10N
 
 
 class CE_config(BenchmarkConfigCIFAR10N):
-
     learning_strategy_cls = CE
 
-    optimizer_cls=SGD
-    optimizer_args=dict(
+    optimizer_cls = SGD
+    optimizer_args = dict(
         lr=0.1,
         momentum=0.9,
         weight_decay=5e-4,
     )
-    scheduler_cls=MultiStepLR
-    scheduler_args=dict(
-        milestones=[60],
-        gamma=0.1
-    )
+    scheduler_cls = MultiStepLR
+    scheduler_args = dict(milestones=[60], gamma=0.1)
 
     trainer_args = {
         **BenchmarkConfigCIFAR10N.trainer_args,

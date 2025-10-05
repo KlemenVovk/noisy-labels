@@ -4,7 +4,6 @@ from .base import BasePaperMethod
 
 
 class jocor_config(BasePaperMethod):
-
     learning_strategy_cls = JoCoR
     learning_strategy_args = dict(
         forget_rate=0.2,

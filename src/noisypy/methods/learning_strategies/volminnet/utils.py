@@ -4,7 +4,6 @@ from torch.nn import functional as F
 
 
 class SigT(nn.Module):
-
     def __init__(self, num_classes, init=2):
         super().__init__()
         self.w = nn.Parameter(-init * torch.ones(num_classes, num_classes))

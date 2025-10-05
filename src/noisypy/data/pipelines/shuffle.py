@@ -3,18 +3,18 @@ from typing import Type
 from .base import AugmentationPipeline
 from ..datasets.base import DatasetFW
 
+
 class ShuffleImages(AugmentationPipeline):
     # shuffles images within the dataset
 
     def __init__(self) -> None:
         super().__init__()
         self.shuffled_idxs = None
-   
+
     def transform(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
         self_ = self
 
         class ShuffledDataset(dataset_cls):
-
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 if self_.shuffled_idxs is None:

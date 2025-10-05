@@ -5,7 +5,6 @@ from .base import BasePaperMethod
 
 
 class PES_config(BasePaperMethod):
-
     learning_strategy_cls = PES
     learning_strategy_args = dict(
         PES_lr=1e-4,
@@ -13,5 +12,5 @@ class PES_config(BasePaperMethod):
         T2=7,
         T3=5,
         optimizer_refine_cls=Adam,
-        model_type='paper_resnet'
+        model_type="paper_resnet",
     )

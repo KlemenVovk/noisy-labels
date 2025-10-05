@@ -7,12 +7,12 @@ from torch.nn.functional import one_hot
 from ..SOP.sop import SOP
 
 
-class SOPplus(SOP):           
+class SOPplus(SOP):
     def training_step(self, batch: Any, batch_idx: int) -> STEP_OUTPUT:
         x1, x2, y_noise, index = batch[0]
         opt, opt_loss = self.optimizers()
         self.model.train()
-        
+
         y = one_hot(y_noise, self.num_classes).float()
         x_all = torch.cat([x1, x2])
 

@@ -10,21 +10,19 @@ from noisypy.configs.data.cifar10 import cifar10_base_config
 
 
 class cifar10_clean_index_config(cifar10_base_config):
-
     dataset_train_augmentation = AddIndex()
 
 
 class ELR_cifar10_clean_config(MethodConfig):
-
     data_config = cifar10_clean_index_config
 
     classifier = resnet34
-    classifier_args = dict(
-        num_classes=10
-    )
+    classifier_args = dict(num_classes=10)
 
     learning_strategy_cls = ELR
-    learning_strategy_args = dict(beta = 0.99, lmbd=1)  # β ∈ {0.5, 0.7, 0.9, 0.99}, λ ∈ {1, 3, 5, 7, 10}
+    learning_strategy_args = dict(
+        beta=0.99, lmbd=1
+    )  # β ∈ {0.5, 0.7, 0.9, 0.99}, λ ∈ {1, 3, 5, 7, 10}
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.02, momentum=0.9, weight_decay=0.001)
@@ -34,7 +32,7 @@ class ELR_cifar10_clean_config(MethodConfig):
     trainer_args = dict(
         max_epochs=120,
         deterministic=True,
-        logger=CSVLogger("../logs", name="ELR_cifar10_clean")
+        logger=CSVLogger("../logs", name="ELR_cifar10_clean"),
     )
 
     seed = 1337

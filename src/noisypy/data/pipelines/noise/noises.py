@@ -4,11 +4,13 @@ from abc import abstractmethod, ABC
 import torch
 from torch import Tensor
 
+
 class Noise(ABC):
     """Base class for noise functions.
     _generated dict instance variable holds cached noisy labels {index: noisy_label},
     so they can be shared among different dataset instances.
     """
+
     _generated: Dict[int, int]
 
     def __init__(self) -> None:
@@ -17,7 +19,9 @@ class Noise(ABC):
         # because it doesn't require knowing dataset size in advance
         self._generated = dict()
 
-    def __call__(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> Any:
+    def __call__(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> Any:
         # apply noise and save at index if
         # noise was not yet applied
         noisy_target = self._generated.get(index, None)
@@ -27,9 +31,11 @@ class Noise(ABC):
         return int(noisy_target)
 
     @abstractmethod
-    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+    def _noisify_target(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> int:
         raise NotImplementedError
-    
+
     # NOTE: saving only _generated does not work as you need to save fcn as well for LambdaNoise for example
     def save_state(self, fpath: str) -> "Noise":
         torch.save(self, fpath)
@@ -40,31 +46,33 @@ class Noise(ABC):
 
 
 class InstanceNoise(Noise):
-    """Generates noisy targets from a precomputed vector of noisy targets.
-    """
+    """Generates noisy targets from a precomputed vector of noisy targets."""
 
     def __init__(self, noisy_targets: Tensor) -> None:
         super().__init__()
-        self.noisy_targets = noisy_targets # vector of noisy labels
+        self.noisy_targets = noisy_targets  # vector of noisy labels
 
-    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+    def _noisify_target(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> int:
         return self.noisy_targets[index]
 
 
 class AsymmetricNoise(Noise):
-    """Generates noisy labels with an arbitrary noise transtion matrix.
-    """
+    """Generates noisy labels with an arbitrary noise transtion matrix."""
+
     def __init__(self, transition_matrix: Tensor) -> None:
         super().__init__()
         self.transition_matrix = transition_matrix
 
-    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+    def _noisify_target(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> int:
         return torch.multinomial(self.transition_matrix[target], num_samples=1).item()
-    
+
 
 class SymmetricNoise(AsymmetricNoise):
-    """Generates noisy targets with a symmetric noise transition matrix.
-    """
+    """Generates noisy targets with a symmetric noise transition matrix."""
 
     def __init__(self, num_classes: int, noise_rate: float) -> None:
         transition_matrix = self.generate_transition_matrix(num_classes, noise_rate)
@@ -78,12 +86,13 @@ class SymmetricNoise(AsymmetricNoise):
         T = eps * torch.ones(num_classes, num_classes)
         T += (1 - eps - noise_rate) * torch.eye(num_classes)
         return T
-    
+
 
 class LambdaNoise(Noise):
     """Generates noisy targets using a custom function.
     The custom function must accept feature, target, index and return a noisy target.
     """
+
     def __init__(self, fcn: Callable[[Tensor, int, int], int]) -> None:
         """Initialises LambdaNoise object.
 
@@ -93,24 +102,28 @@ class LambdaNoise(Noise):
         super().__init__()
         self.fcn = fcn
 
-    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+    def _noisify_target(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> int:
         return self.fcn(feature, target, index)
 
 
 class BiasedSymmetricNoise(Noise):
     """
-        Symmetric noise implementation based on 
-        https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/dataloader_cifar.py#L58-L78
-        This is different from our implementation where the expected noise rate is noise_rate,
-        whereas here the expected noise rate is noise_rate - 1/num_classes * noise_rate.
+    Symmetric noise implementation based on
+    https://github.com/LiJunnan1992/DivideMix/blob/d9d3058fa69a952463b896f84730378cdee6ec39/dataloader_cifar.py#L58-L78
+    This is different from our implementation where the expected noise rate is noise_rate,
+    whereas here the expected noise rate is noise_rate - 1/num_classes * noise_rate.
     """
+
     def __init__(self, noise_rate, num_classes) -> None:
         super().__init__()
         self.noise_rate = noise_rate
         self.num_classes = num_classes
 
-    def _noisify_target(self, feature: Tensor, target: int | Tensor, index: int | Tensor) -> int:
+    def _noisify_target(
+        self, feature: Tensor, target: int | Tensor, index: int | Tensor
+    ) -> int:
         if torch.rand(1).item() < self.noise_rate:
             return torch.randint(0, self.num_classes, (1,)).item()
         return target
-    

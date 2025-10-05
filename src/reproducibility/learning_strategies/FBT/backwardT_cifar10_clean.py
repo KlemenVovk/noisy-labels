@@ -10,14 +10,10 @@ from ..common import cifar10_base_config
 
 
 class backwardT_cifar10_clean(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
-    classifier_args = dict(
-        weights=None,
-        num_classes=10
-    )
+    classifier_args = dict(weights=None, num_classes=10)
 
     learning_strategy_cls = BackwardT
     learning_strategy_args = dict(
@@ -34,7 +30,7 @@ class backwardT_cifar10_clean(MethodConfig):
         max_epochs=240,
         deterministic=True,
         num_sanity_val_steps=0,
-        logger=CSVLogger("../logs", name="backwardT_clean")
+        logger=CSVLogger("../logs", name="backwardT_clean"),
     )
 
     seed = 1337

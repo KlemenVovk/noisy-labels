@@ -12,10 +12,11 @@ class DoubleAugmentation(AugmentationPipeline):
     def transform(self, dataset_cls: Type[DatasetFW]) -> Type[DatasetFW]:
         transform1 = self.transform1
         transform2 = self.transform2
+
         class DoubleAugmentationDataset(dataset_cls):
             # NOTE: transforms should be none for the original dataset
             # currently done in data config, but could be ensured here?
-            def __init__ (self, *dataset_args, **dataset_kwargs):
+            def __init__(self, *dataset_args, **dataset_kwargs):
                 self.initialized = False
                 super().__init__(*dataset_args, **dataset_kwargs)
                 self.transform1 = transform1

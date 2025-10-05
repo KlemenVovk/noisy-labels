@@ -8,7 +8,6 @@ from ..base.wrappers import double_aug_wrapper
 
 
 class SOP_plus_config(CIFAR100NoisyLabelsMethod):
-
     _data_config_wrapper = double_aug_wrapper
     classifier = PreResNet18
 

@@ -10,12 +10,12 @@ DATA_CONFIGS=(
 )
 METHOD_CONFIGS=(
     CAL
-    CE 
-    co_teaching 
-    co_teaching_plus 
-    cores2 
-    divide_mix 
-    ELR 
+    CE
+    co_teaching
+    co_teaching_plus
+    cores2
+    divide_mix
+    ELR
     ELR_plus
     GCE
     jocor

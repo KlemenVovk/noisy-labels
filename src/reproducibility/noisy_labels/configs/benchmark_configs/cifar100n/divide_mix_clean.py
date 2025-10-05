@@ -7,7 +7,6 @@ from ...base.wrappers import dividemixify_wrapper
 
 
 class divide_mix_clean_config(BenchmarkConfigCIFAR100N):
-
     _data_config_wrapper = dividemixify_wrapper
 
     learning_strategy_cls = DivideMix

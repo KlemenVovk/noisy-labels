@@ -1,6 +1,7 @@
 from typing import Any, Tuple
 from noisypy.data.datasets.cifar10 import CIFAR10
 
+
 class CIFAR10WithExtras(CIFAR10):
     """Adds 2 extra outputs in getitem.
     "something" and "something_else" are appended to each sample.

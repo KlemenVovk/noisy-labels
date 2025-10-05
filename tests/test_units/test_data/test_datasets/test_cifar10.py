@@ -8,6 +8,7 @@ def test_getitem(shared_tmp_path):
     assert isinstance(sample[0], Image.Image)
     assert isinstance(sample[1], int)
 
+
 def test_num_classes(shared_tmp_path):
     dataset = CIFAR10(shared_tmp_path, download=True)
     assert dataset.num_classes == 10

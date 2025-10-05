@@ -15,17 +15,21 @@ from lightning.pytorch.utilities.types import TRAIN_DATALOADERS
 def reset_resnet_layer_parameters(resnet_layer: nn.Module):
     for block in resnet_layer.children():
         for layer in block.children():
-            if hasattr(layer, 'reset_parameters'):
+            if hasattr(layer, "reset_parameters"):
                 layer.reset_parameters()
-    
+
     # set requires_grad to True
     for param in resnet_layer.parameters():
         param.requires_grad = True
 
 
-
-def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pytorch_resnet', num_classes=10):
-    if model_class == 'pytorch_resnet':
+def renew_layers(
+    model: nn.Module,
+    last_num_layers: int,
+    model_class: str = "pytorch_resnet",
+    num_classes=10,
+):
+    if model_class == "pytorch_resnet":
         if last_num_layers >= 3:
             print("re-initalize block 2")
             reset_resnet_layer_parameters(model.layer2)
@@ -37,10 +41,10 @@ def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pyto
         if last_num_layers >= 1:
             print("re-initalize block 4")
             reset_resnet_layer_parameters(model.layer4)
-        
+
         print("re-initalize the final layer")
         model.fc = nn.Linear(512, num_classes)
-    elif model_class == 'paper_resnet':
+    elif model_class == "paper_resnet":
         if last_num_layers >= 3:
             print("re-initalize block 2")
             reset_resnet_layer_parameters(model.layer2)
@@ -52,45 +56,74 @@ def renew_layers(model: nn.Module, last_num_layers: int, model_class: str ='pyto
         if last_num_layers >= 1:
             print("re-initalize block 4")
             reset_resnet_layer_parameters(model.layer4)
-        
+
         print("re-initalize the final layer")
         model.linear = nn.Linear(512, num_classes)
     else:
         raise NotImplementedError(f"model class {model_class} is not implemented yet.")
-    
+
     return model
 
 
 def update_dataloader(datamodule: LightningDataModule, dataset: Dataset):
     def train_dataloader(self) -> TRAIN_DATALOADERS:
-        return [DataLoader(dataset, self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)]
+        return [
+            DataLoader(
+                dataset,
+                self.batch_size,
+                shuffle=True,
+                num_workers=self.num_workers,
+                drop_last=True,
+            )
+        ]
+
     datamodule.train_dataloader = types.MethodType(train_dataloader, datamodule)
 
 
-def update_train_data_and_criterion(model: nn.Module, train_data: ndarray, noisy_targets: torch.LongTensor, 
-                                    transform_train: transforms.Compose, batch_size: int = 128, device: torch.device=torch.device('cuda')):
+def update_train_data_and_criterion(
+    model: nn.Module,
+    train_data: ndarray,
+    noisy_targets: torch.LongTensor,
+    transform_train: transforms.Compose,
+    batch_size: int = 128,
+    device: torch.device = torch.device("cuda"),
+):
     predict_dataset = Semi_Unlabeled_Dataset(train_data, transform_train)
-    predict_loader = DataLoader(dataset=predict_dataset, batch_size=batch_size * 2, 
-                                shuffle=False, num_workers=8, pin_memory=True, drop_last=False)
+    predict_loader = DataLoader(
+        dataset=predict_dataset,
+        batch_size=batch_size * 2,
+        shuffle=False,
+        num_workers=8,
+        pin_memory=True,
+        drop_last=False,
+    )
     soft_outs = predict_softmax(predict_loader, model, device=device)
     confident_indexs = split_confident(soft_outs, noisy_targets)
-    confident_dataset = Train_Dataset(train_data[confident_indexs], noisy_targets[confident_indexs], transform_train)
-    
+    confident_dataset = Train_Dataset(
+        train_data[confident_indexs], noisy_targets[confident_indexs], transform_train
+    )
+
     # compute class weights
     bin_counts = torch.bincount(noisy_targets[confident_indexs], minlength=10)
     class_weights = torch.zeros_like(bin_counts, dtype=torch.float32)
-    class_weights[bin_counts != 0] = bin_counts[bin_counts != 0].float().mean() / bin_counts[bin_counts != 0]
+    class_weights[bin_counts != 0] = (
+        bin_counts[bin_counts != 0].float().mean() / bin_counts[bin_counts != 0]
+    )
     # initialize weighted cross entropy loss
     criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)
     return confident_dataset, criterion
 
 
-def predict_softmax(predict_loader: DataLoader, model: nn.Module, device: torch.device=torch.device('cuda')):
+def predict_softmax(
+    predict_loader: DataLoader,
+    model: nn.Module,
+    device: torch.device = torch.device("cuda"),
+):
     model.eval()
     softmax_outs = []
     with torch.no_grad():
-        for images1, images2 in tqdm(predict_loader, desc='Predicting', leave=False):
-            logits1 = model(images1.to(device)) 
+        for images1, images2 in tqdm(predict_loader, desc="Predicting", leave=False):
+            logits1 = model(images1.to(device))
             logits2 = model(images2.to(device))
             outputs = (F.softmax(logits1, dim=1) + F.softmax(logits2, dim=1)) / 2
             softmax_outs.append(outputs)
@@ -98,7 +131,7 @@ def predict_softmax(predict_loader: DataLoader, model: nn.Module, device: torch.
     return torch.cat(softmax_outs, dim=0).cpu()
 
 
-def split_confident(outs: torch.Tensor, noisy_targets:torch.Tensor):
+def split_confident(outs: torch.Tensor, noisy_targets: torch.Tensor):
     _, preds = torch.max(outs.data, 1)
     confident_idx = torch.where(noisy_targets == preds)[0]
     return confident_idx.tolist()

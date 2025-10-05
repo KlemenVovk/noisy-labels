@@ -13,21 +13,20 @@ from ..common import cifar10_base_config, CIFAR10
 
 
 class cifar10_noise(cifar10_base_config):
-
-    dataset_train_cls, dataset_val_cls, dataset_test_cls = (*Split(0.8)(CIFAR10), CIFAR10)
+    dataset_train_cls, dataset_val_cls, dataset_test_cls = (
+        *Split(0.8)(CIFAR10),
+        CIFAR10,
+    )
     dataset_train_augmentation = AddNoise(SymmetricNoise(10, 0.2))
     dataset_val_augmentation = AddNoise(SymmetricNoise(10, 0.2))
-    dataset_val_args = {**cifar10_base_config.dataset_val_args, "train":True}
+    dataset_val_args = {**cifar10_base_config.dataset_val_args, "train": True}
+
 
 class forwardT_cifar10_noise(MethodConfig):
-
     data_config = cifar10_base_config
 
     classifier = resnet34
-    classifier_args = dict(
-        weights=None,
-        num_classes=10
-    )
+    classifier_args = dict(weights=None, num_classes=10)
 
     learning_strategy_cls = ForwardT
     learning_strategy_args = dict(

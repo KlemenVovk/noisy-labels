@@ -6,14 +6,10 @@ from .base.wrappers import add_index_wrapper
 
 
 class GCE_config(NoisyLabelsMethod):
-
     _data_config_wrapper = add_index_wrapper
 
     learning_strategy_cls = GCE
-    learning_strategy_args = dict(
-        prune_start_epoch=40,
-        prune_freq=10
-    )
+    learning_strategy_args = dict(prune_start_epoch=40, prune_freq=10)
 
     optimizer_cls = SGD
     optimizer_args = dict(lr=0.01, momentum=0.9, weight_decay=5e-4)

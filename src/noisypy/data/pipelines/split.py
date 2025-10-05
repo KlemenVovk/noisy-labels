@@ -7,8 +7,8 @@ from .base import AugmentationPipeline
 
 # NOTE: cannot be used in compose unless at the end of the pipeline
 
-class Split(AugmentationPipeline):
 
+class Split(AugmentationPipeline):
     def __init__(self, train_size: float) -> None:
         super().__init__()
         self.ratio = train_size
@@ -17,23 +17,21 @@ class Split(AugmentationPipeline):
         r = self.ratio
 
         class TrainDataset(dataset_cls):
-
             def __init__(self, *args, **kwargs) -> None:
                 super().__init__(*args, **kwargs)
-                l = super().__len__()
-                cut = int(r * l)
+                n = super().__len__()
+                cut = int(r * n)
                 self.valid_idxs = list(range(cut))
 
             def __len__(self) -> int:
                 return len(self.valid_idxs)
 
         class ValDataset(dataset_cls):
-
             def __init__(self, *args, **kwargs) -> None:
                 super().__init__(*args, **kwargs)
-                l = super().__len__()
-                cut = int(r * l)
-                self.valid_idxs = list(range(cut, l))
+                n = super().__len__()
+                cut = int(r * n)
+                self.valid_idxs = list(range(cut, n))
 
             def __getitem__(self, index: int) -> tuple[Tensor, int, Any]:
                 return super().__getitem__(self.valid_idxs[index])
