@@ -1,0 +1,38 @@
+
+\begin{tabular}{ll|cc}
+    \toprule
+    Method & Hyperparameter & CIFAR10N & CIFAR100N \\
+    \midrule
+    \multirow{12}{*}{DISC} & optimizer & SGD & SGD \\
+     & lr & 0.1 & 0.1 \\
+     & weight\_decay & 0.001 & 0.001 \\
+     & SGD momentum & 0 & 0 \\
+     & scheduler & MultiStepLR ([80, 160], 0.1)& MultiStepLR ([80, 160], 0.1) \\
+     & epochs & 200 & 200 \\
+     & alpha & 5.0 & 5.0 \\
+     & start\_epoch & 15 & 15 \\
+     & sigma & 0.5 & 0.5 \\
+     & momentum & 0.99 & 0.99 \\
+     & lambda\_ce & 1.0 & 1.0 \\
+     & lambda\_h & 1.0 & 1.0 \\
+    \hline
+    \multirow{18}{*}{ProMix} & optimizer & SGD & SGD \\
+     & lr & 0.05 & 0.05 \\
+     & weight\_decay & 0.0005 & 0.0005 \\
+     & momentum & 0.9 & 0.9 \\
+     & scheduler & CosineAnnealingLR & CosineAnnealingLR\\
+     & epochs & 600 & 600 \\
+     & warmup\_epochs & 10 & 30 \\
+     & rampup\_epochs & 50 & 50 \\
+     & noise\_type & symmetric & symmetric \\
+     & rho\_start, rho\_end & (0.5, 0.5) & (0.5, 0.5) \\
+     & debias\_beta\_pl & 0.8 & 0.5 \\
+     & alpha\_output & 0.8 & 0.5 \\
+     & tau & 0.99 & 0.95 \\
+     & start\_expand & 250 & 250 \\
+     & threshold & 0.9 & 0.9 \\
+     & bias\_m & 0.9999 & 0.9999 \\
+     & temperature 0.5 & 0.5 \\
+     & feat\_dim & 128 & 128 \\
+     \bottomrule
+\end{tabular}
