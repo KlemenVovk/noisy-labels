@@ -155,6 +155,8 @@ From here on, we use the same formulation and procedures for the hypothesis test
 \label{sec:noise-memorization}
 
 To further investigate the differences between artificial and real-world noise, ~\cite{noisylabels-benchmark}, inspect the learning behavior of a classifier trained on both sets of noisy labels. Specifically, they compare the learning behavior on \textit{Aggregate}, \textit{Random1}, and \textit{Worst} sets of real-world labels with their synthetic counterparts.
+\newline
+
 The procedure to obtain synthetic labels remains the same as described in Section \ref{sec:noise-hypothesis}.
 They check whether the ratio of memorized examples increases faster for synthetic or real-world noisy labels. In a $K$-class classification task, given a classifier $f$, a feature $x$ and confidence threshold $\eta$, $x$ is memorized by $f$ if $\exists i \in [K]$ s.t. $P(f(x) = i) > \eta$.
 \newline
@@ -215,7 +217,7 @@ Given these findings, it is likely that the original authors followed a methodol
 We argue that this approach is flawed in several aspects and present a better evaluation procedure. When benchmarking LNL methods, the authors use a clean test set to measure accuracy every epoch, selecting the highest one at the end. This overestimates the real-world performance and is thus unreliable in practice~\citep{cawley2010over}.
 \newline
 
-During our experiments, we observed that the underlying classifier strongly influences the final performance. Given that the authors do not use the same ResNet model for all LNL methods (e.g., special treatment of DivideMix, ELR, and SOP), one cannot directly compare the entries on the benchmark. This is an issue as their results are currently published on a public leaderboard\footnote{\url{https://paperswithcode.com/task/learning-with-noisy-labels}}, making users unfamiliar with the testing methodology believe that the results are directly comparable between the entries. 
+During our experiments, we observed that the underlying classifier strongly influences the final performance. Given that the authors do not use the same ResNet model for all LNL methods (e.g., special treatment of DivideMix, ELR, and SOP), one cannot directly compare the entries on the benchmark. This is an issue as their results are currently published on a public leaderboard\footnote{\url{https://web.archive.org/web/20250405111513/https://paperswithcode.com/task/learning-with-noisy-labels}}, making users unfamiliar with the testing methodology believe that the results are directly comparable between the entries. 
 To ensure a fair comparison with state-of-the-art methods we also include two newer methods: ProMix\citep{xiao2023promix} and DISC \citep{li2023disc}.
 \newline
 
