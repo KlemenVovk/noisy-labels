@@ -1,5 +1,5 @@
 # Reproduction of "*Learning with Noisy Labels Revisited: A Study Using Real-World Human Annotations*"
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18401497.svg)](https://doi.org/10.5281/zenodo.18401497)
 ## About
 
 This is the repository for our reproduction of the paper "[*Learning with Noisy Labels Revisited: A Study Using Real-World Human Annotations*](https://openreview.net/forum?id=TBWA6PLJZQm)".
@@ -67,3 +67,20 @@ To rerun our experiments, refer to `src/reproducibility` folder:
     - `noise_hypothesis_testing` - Noise clustering hypothesis testing experiment - see `hypothesis_testing.ipynb`.
     - `noisy_labels` - Benchmark reproduction. `main.py` is for normal CIFAR-10N human and synthetic runs (`--synthetic` switch to run synthetic versions). `main_cifar100n.py` same thing for CIFAR-100N. `main_paper.py` runs CIFAR-10N authors claimed configs (with fixed learning rate, schedulers and optimizers) and `benchmark.py` for our version of the benchmark.
 - `tests` - Unit tests for some of the package modules.
+
+## Citation
+If you find our work useful, please consider citing it as follows:
+```
+@article{hudovernik_2026_18401497,
+  author  = {Valter Hudovernik and Žiga Rot and Klemen Vovk and
+             Luka Škodnik and Luka Čehovin Zajc},
+  title   = {Learning with Noisy Labels [~Re]visited},
+  journal = {ReScience C},
+  year    = 2026,
+  volume  = 11,
+  number  = 1,
+  month   = jan,
+  doi     = {10.5281/zenodo.18401497},
+  url     = {https://doi.org/10.5281/zenodo.18401497},
+}
+```
